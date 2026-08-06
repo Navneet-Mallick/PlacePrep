@@ -1,0 +1,6790 @@
+{
+  "summary": {
+    "quantitative": 160,
+    "logical": 303,
+    "technical": 102
+  },
+  "total": 565,
+  "questions": [
+    {
+      "id": "quantitative-1",
+      "section": "quantitative",
+      "question": "There are two examination rooms A and B. If 10 students are sent from A to B, then the number of students in each room is the same. If 20 candidates are sent from B to A, then the number of students in A is double the number of students in B. The number of students in room A is:",
+      "options": [
+        "20",
+        "80",
+        "100",
+        "200"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-2",
+      "section": "quantitative",
+      "question": "The price of commodity X increases by 40 paise every year, while the price of commodity Y increases by 15 paise every year. If in 2001, the price of commodity X was Rs. 4.20 and that of Y was Rs. 6.30, in which year will commodity X cost 40 paise more than commodity Y?",
+      "options": [
+        "2010",
+        "2011",
+        "2012",
+        "2013"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-3",
+      "section": "quantitative",
+      "question": "If a - b = 3 and a\u00b2 + b\u00b2 = 29, find the value of ab.",
+      "options": [
+        "10",
+        "12",
+        "15",
+        "18"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-4",
+      "section": "quantitative",
+      "question": "The salaries A, B, and C are in the ratio 2:3:5. If increments of 15%, 10%, and 20% are allowed in their salaries, then what will be the new ratio of their salaries?",
+      "options": [
+        "03:03:10",
+        "10:11:20",
+        "0.981944444",
+        "Cannot be determined"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-5",
+      "section": "quantitative",
+      "question": "A and B entered into a partnership with capitals in the ratio 4:5. After 3 months, A withdrew some capital and B withdrew some of his capital. The gain at the end of 10 months was Rs. 760. A's share in the profit is:",
+      "options": [
+        "Rs. 330",
+        "Rs. 360",
+        "Rs. 380",
+        "Rs. 430"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-6",
+      "section": "quantitative",
+      "question": "What is R's share of profit in a joint venture? I. Q started business investing Rs. 80,000. II. R joined him after 3 months. III. P joined after 4 months with a capital of Rs. 1,20,000 and got Rs. 6000 as his share profit.",
+      "options": [
+        "All I, II, and III",
+        "I and III only",
+        "II and III only",
+        "Even with all I, II, and III, the answer cannot be arrived at"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-7",
+      "section": "quantitative",
+      "question": "A alone can do a piece of work in 6 days and B alone in 8 days. A and B undertook to do it for Rs. 3200. With the help of C, they completed the work in 3 days. How much is to be paid to C?",
+      "options": [
+        "Rs. 375",
+        "Rs. 400",
+        "Rs. 600",
+        "Rs. 800"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-8",
+      "section": "quantitative",
+      "question": "A goods train runs at the speed of 72 kmph and crosses a 250 m long platform in 26 seconds. What is the length of the goods train?",
+      "options": [
+        "230 m",
+        "240 m",
+        "260 m",
+        "270 m"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-9",
+      "section": "quantitative",
+      "question": "If log10 2 = 0.3010, then log2 10 is equal to:",
+      "options": [
+        "699",
+        "1000",
+        "0.301",
+        "0.699"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-10",
+      "section": "quantitative",
+      "question": "An error of 2% in excess is made while measuring the side of a square. The percentage of error in the calculated area of the square is:",
+      "options": [
+        "2%",
+        "2.02%",
+        "4%",
+        "4.04%"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-11",
+      "section": "quantitative",
+      "question": "In a shower, 5 cm of rain falls. The volume of water that falls on 1.5 hectares of ground is:",
+      "options": [
+        "75 cu. m",
+        "750 cu. m",
+        "7500 cu. m",
+        "75000 cu. m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-12",
+      "section": "quantitative",
+      "question": "What is the volume of a cube? I. The area of each face of the cube is 64 square metres. II. The length of one side of the cube is 8 metres.",
+      "options": [
+        "I alone sufficient while II alone not sufficient",
+        "II alone sufficient while I alone not sufficient",
+        "Either I or II alone sufficient to answer",
+        "Both I and II are not sufficient"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-13",
+      "section": "quantitative",
+      "question": "The reflex angle between the hands of a clock at 10:25 is:",
+      "options": [
+        "180\u00ba",
+        "192.5\u00ba",
+        "195\u00ba",
+        "197.5\u00ba"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-14",
+      "section": "quantitative",
+      "question": "At what time between 4 and 5 o'clock will the hands of a watch point in opposite directions?",
+      "options": [
+        "45 min past 4",
+        "40 min past 4",
+        "50.4 min past 4",
+        "54.6 min past 4"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-15",
+      "section": "quantitative",
+      "question": "A 12% stock yielding 10% is quoted at:",
+      "options": [
+        "Rs. 83.33",
+        "Rs. 110",
+        "Rs. 112",
+        "Rs. 120"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-16",
+      "section": "quantitative",
+      "question": "In how many different ways can the letters of the word 'DETAIL' be arranged in such a way that the vowels occupy only the odd positions?",
+      "options": [
+        "32",
+        "48",
+        "36",
+        "60"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-17",
+      "section": "quantitative",
+      "question": "An observer 1.6 m tall is 203 m away from a tower. The angle of elevation from his eye to the top of the tower is 30\u00ba. The height of the tower is:",
+      "options": [
+        "21.6 m",
+        "23.2 m",
+        "24.72 m",
+        "None of these"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-18",
+      "section": "quantitative",
+      "question": "Find the odd one out: 1, 4, 9, 16, 23, 25, 36",
+      "options": [
+        "9",
+        "23",
+        "25",
+        "36"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-19",
+      "section": "quantitative",
+      "question": "Let N be the greatest number that will divide 1305, 4665, and 6905, leaving the same remainder in each case. The sum of the digits in N is:",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-20",
+      "section": "quantitative",
+      "question": "The average weight of 8 persons increases by 2.5 kg when a new person comes in place of one of them weighing 65 kg. What might be the weight of the new person?",
+      "options": [
+        "76 kg",
+        "76.5 kg",
+        "85 kg",
+        "Data inadequate"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-21",
+      "section": "quantitative",
+      "question": "The difference between a two-digit number and the number obtained by interchanging the digits is 36. What is the difference between the sum and the difference of the digits of the number if the ratio between the digits of the number is 1:2?",
+      "options": [
+        "4",
+        "8",
+        "16",
+        "None of these"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-22",
+      "section": "quantitative",
+      "question": "The sum of the present ages of a father and his son is 60 years. Six years ago, the father's age was five times the son's age. After 6 years, the son's age will be:",
+      "options": [
+        "12 years",
+        "14 years",
+        "18 years",
+        "20 years"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-23",
+      "section": "quantitative",
+      "question": "Three candidates contested an election and received 1136, 7636, and 11628 votes, respectively. What percentage of the total votes did the winning candidate get?",
+      "options": [
+        "57%",
+        "60%",
+        "65%",
+        "90%"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-24",
+      "section": "quantitative",
+      "question": "In a certain store, the profit is 320% of the cost. If the cost increases by 25% but the selling price remains constant, approximately what percentage of the selling price is the profit?",
+      "options": [
+        "30%",
+        "70%",
+        "100%",
+        "250%"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-25",
+      "section": "quantitative",
+      "question": "If the cost of x meters of wire is d rupees, then what is the cost of y meters of wire at the same rate?",
+      "options": [
+        "Rs. (xy/d)",
+        "Rs. (xd)",
+        "Rs. (yd)",
+        "Rs. (yd/x)"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-26",
+      "section": "quantitative",
+      "question": "A flagstaff 17.5 m high casts a shadow of length 40.25 m. The height of a building, which casts a shadow of length 28.75 m under similar conditions, will be:",
+      "options": [
+        "10 m",
+        "12.5 m",
+        "17.5 m",
+        "21.25 m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-27",
+      "section": "quantitative",
+      "question": "In how many days can 10 women finish a work? I. 10 men can complete the work in 6 days. II. 10 men and 10 women together can complete the work in 3 3/7 days. III. If 10 men work for 3 days and then 10 women replace them, the remaining work is completed in 4 days.",
+      "options": [
+        "Any two of the three",
+        "I and II only",
+        "II and III only",
+        "I and III only"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-28",
+      "section": "quantitative",
+      "question": "8 men and 14 women are working together in a field. After 3 days, 5 men and 8 women leave. How many more days will be required to complete the work? I. 19 men and 12 women together can complete the work in 18 days. II. 16 men can complete two-thirds of the work in 16 days. III. In 1 day, the work done by three men is equal to the work done by four women.",
+      "options": [
+        "I only",
+        "II only",
+        "III only",
+        "I, II, or III"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-29",
+      "section": "quantitative",
+      "question": "A towel, when bleached, was found to have lost 20% of its length and 10% of its breadth. The percentage decrease in area is:",
+      "options": [
+        "10%",
+        "10.08%",
+        "20%",
+        "28%"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-30",
+      "section": "quantitative",
+      "question": "What is the capacity of a cylindrical tank? I. Radius of the base is half of its height which is 28 metres. II. Area of the base is 616 sq. metres and its height is 28 metres.",
+      "options": [
+        "I alone sufficient while II alone not sufficient",
+        "II alone sufficient while I alone not sufficient",
+        "Either I or II alone sufficient to answer",
+        "Both I and II are not sufficient"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-31",
+      "section": "quantitative",
+      "question": "In a 100 m race, A covers the distance in 36 seconds and B in 45 seconds. In this race, A beats B by:",
+      "options": [
+        "20 m",
+        "25 m",
+        "22.5 m",
+        "9 m"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-32",
+      "section": "quantitative",
+      "question": "A 6% stock yields 8%. The market value of the stock is:",
+      "options": [
+        "Rs. 48",
+        "Rs. 75",
+        "Rs. 96",
+        "Rs. 133.33"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-33",
+      "section": "quantitative",
+      "question": "A box contains 2 white balls, 3 black balls, and 4 red balls. In how many ways can 3 balls be drawn from the box, if at least one black ball is to be included in the draw?",
+      "options": [
+        "32",
+        "48",
+        "64",
+        "96"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-34",
+      "section": "quantitative",
+      "question": "If Rs. 10 is allowed as true discount on a bill of Rs. 110 due at the end of a certain time, then the discount allowed on the same sum due at the end of double the time is:",
+      "options": [
+        "Rs. 20",
+        "Rs. 21.81",
+        "Rs. 22",
+        "Rs. 18.33"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-35",
+      "section": "quantitative",
+      "question": "10, 14, 16, 18, 21, 24, 26 \u2013 find the odd one out.",
+      "options": [
+        "26",
+        "24",
+        "21",
+        "18"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-36",
+      "section": "quantitative",
+      "question": "835, 734, 642, 751, 853, 981, 532 \u2013 find the odd one out.",
+      "options": [
+        "751",
+        "853",
+        "981",
+        "532"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-37",
+      "section": "quantitative",
+      "question": "1, 2, 6, 15, 31, 56, 91 \u2013 find the wrong number in the sequence.",
+      "options": [
+        "31",
+        "91",
+        "56",
+        "15"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-38",
+      "section": "quantitative",
+      "question": "7, 26, 63, 124, 215, 342 \u2013 find the next number in the series.",
+      "options": [
+        "481",
+        "511",
+        "391",
+        "421"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-39",
+      "section": "quantitative",
+      "question": "Two trains running in opposite directions cross a man standing on the platform in 27 seconds and 17 seconds respectively and they cross each other in 23 seconds. The ratio of their speeds is:",
+      "options": [
+        "1:3",
+        "3:2",
+        "3:4",
+        "None of these"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-40",
+      "section": "quantitative",
+      "question": "A train overtakes two persons walking along a railway track. The first one walks at 4.5 km/hr, and the other at 5.4 km/hr. The train needs 8.4 and 8.5 seconds respectively to overtake them. What is the speed of the train if both the persons are walking in the same direction as the train?",
+      "options": [
+        "66 km/hr",
+        "72 km/hr",
+        "78 km/hr",
+        "81 km/hr"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-41",
+      "section": "quantitative",
+      "question": "A runs 1.5 times as fast as B. If A gives B a start of 80 m, how far must the winning post be so that A and B might reach it at the same time?",
+      "options": [
+        "200 m",
+        "300 m",
+        "270 m",
+        "160 m"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-42",
+      "section": "quantitative",
+      "question": "Q is as much younger than R as he is older than T. If the sum of the ages of R and T is 50 years, what is definitely the difference between R and Q's age?",
+      "options": [
+        "1 year",
+        "2 years",
+        "25 years",
+        "Data inadequate"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-43",
+      "section": "quantitative",
+      "question": "The value of log2 16 is:",
+      "options": [
+        "1/8",
+        "4",
+        "8",
+        "16"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-44",
+      "section": "quantitative",
+      "question": "In a two-digit number, it is known that its unit\u2019s digit exceeds its ten\u2019s digit by 2 and that the product of the given number and the sum of its digits is equal to 144. The number is:",
+      "options": [
+        "24",
+        "26",
+        "42",
+        "46"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-45",
+      "section": "quantitative",
+      "question": "The square root of 64009 is:",
+      "options": [
+        "253",
+        "347",
+        "363",
+        "803"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-46",
+      "section": "quantitative",
+      "question": "What should come in place of both 'x' in the equation x/128 = 162/x?",
+      "options": [
+        "12",
+        "14",
+        "144",
+        "196"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-47",
+      "section": "quantitative",
+      "question": "A, B, and C can do a piece of work in 20, 30, and 60 days respectively. In how many days can A do the work if he is assisted by B and C on every third day?",
+      "options": [
+        "12 days",
+        "15 days",
+        "16 days",
+        "18 days"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-48",
+      "section": "quantitative",
+      "question": "The value of 489.1375 \u00d7 0.0483 \u00d7 1.956 is closest to:",
+      "options": [
+        "0.006",
+        "0.06",
+        "0.6",
+        "6"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-49",
+      "section": "quantitative",
+      "question": "Three numbers are in the ratio of 3:4:5, and their LCM is 2400. Their HCF is:",
+      "options": [
+        "40",
+        "80",
+        "120",
+        "200"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-50",
+      "section": "quantitative",
+      "question": "Which of the following fractions is the largest?",
+      "options": [
+        "7/8",
+        "13/16",
+        "31/40",
+        "63/80"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-51",
+      "section": "quantitative",
+      "question": "A sum of Rs. 725 is lent at the beginning of a year at a certain rate of interest. After 8 months, a sum of Rs. 362.50 more is lent, but at double the previous rate. At the end of the year, Rs. 33.50 is earned as interest from both loans. What was the original rate of interest?",
+      "options": [
+        "3.60%",
+        "4.50%",
+        "5%",
+        "None of these"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-52",
+      "section": "quantitative",
+      "question": "An accurate clock shows 8 o'clock in the morning. Through how many degrees will the hour hand rotate when the clock shows 2 o'clock in the afternoon?",
+      "options": [
+        "144\u00ba",
+        "150\u00ba",
+        "168\u00ba",
+        "180\u00ba"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-53",
+      "section": "quantitative",
+      "question": "From a group of 7 men and 6 women, five persons are to be selected to form a committee so that at least 3 men are on the committee. In how many ways can it be done?",
+      "options": [
+        "564",
+        "645",
+        "735",
+        "756"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-54",
+      "section": "quantitative",
+      "question": "A dishonest milkman professes to sell his milk at cost price but he mixes it with water and thereby gains 25%. The percentage of water in the mixture is:",
+      "options": [
+        "4%",
+        "6%",
+        "20%",
+        "25%"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-55",
+      "section": "quantitative",
+      "question": "A vessel is filled with liquid, 3 parts of which are water and 5 parts syrup. How much of the mixture must be drawn off and replaced with water so that the mixture may be half water and half syrup?",
+      "options": [
+        "1/3",
+        "1/4",
+        "1/5",
+        "1/6"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-56",
+      "section": "quantitative",
+      "question": "The cost price of Rs. 100 stock at 4% discount, when brokerage is 1/4%, is:",
+      "options": [
+        "Rs. 95.75",
+        "Rs. 96",
+        "Rs. 96.25",
+        "Rs. 104.25"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-57",
+      "section": "quantitative",
+      "question": "If 40% of a number is equal to two-third of another number, what is the ratio of the first number to the second number?",
+      "options": [
+        "02:05",
+        "03:07",
+        "05:03",
+        "07:03"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-58",
+      "section": "quantitative",
+      "question": "In a bag, there are coins of 25 p, 10 p, and 5 p in the ratio of 1 : 2 : 3. If there is Rs. 30 in all, how many 5 p coins are there?",
+      "options": [
+        "50",
+        "100",
+        "150",
+        "200"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-59",
+      "section": "quantitative",
+      "question": "A man takes loan from a bank at 12% p.a. simple interest. After 3 years, he paid Rs. 5400 as interest. What was the principal amount?",
+      "options": [
+        "Rs. 2000",
+        "Rs. 10,000",
+        "Rs. 15,000",
+        "Rs. 20,000"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-60",
+      "section": "quantitative",
+      "question": "A flagstaff 17.5 m high casts a shadow 40.25 m long. What is the height of a building that casts a shadow 28.75 m long under similar conditions?",
+      "options": [
+        "10 m",
+        "12.5 m",
+        "17.5 m",
+        "21.25 m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-61",
+      "section": "quantitative",
+      "question": "The reflex angle between the hands of a clock at 10:25 is:",
+      "options": [
+        "180\u00ba",
+        "192 \u00bd\u00ba",
+        "195\u00ba",
+        "197 \u00bd\u00ba"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-62",
+      "section": "quantitative",
+      "question": "The diagonal of a rectangle is 41 cm, and its area is 20 cm\u00b2. What is the perimeter of the rectangle?",
+      "options": [
+        "9 cm",
+        "18 cm",
+        "20 cm",
+        "41 cm"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-63",
+      "section": "quantitative",
+      "question": "A, B, and C can complete a task in 24, 6, and 12 days respectively. How many days will they take to finish the task if working together?",
+      "options": [
+        "1 day",
+        "7/24 day",
+        "3 3/7 days",
+        "4 days"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-64",
+      "section": "quantitative",
+      "question": "A train overtakes two persons walking along a railway track. The first one walks at 4.5 km/hr, and the other one at 5.4 km/hr. The train needs 8.4 and 8.5 seconds respectively to overtake them. What is the speed of the train?",
+      "options": [
+        "66 km/hr",
+        "72 km/hr",
+        "78 km/hr",
+        "81 km/hr"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-65",
+      "section": "quantitative",
+      "question": "A train of 240 meters long passes a pole in 24 seconds. How long will it take to pass a platform 650 meters long?",
+      "options": [
+        "65 sec",
+        "89 sec",
+        "100 sec",
+        "150 sec"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-66",
+      "section": "quantitative",
+      "question": "How many seconds will a 500-meter-long train take to cross a man walking with a speed of 3 km/hr in the direction of the moving train if the speed of the train is 63 km/hr?",
+      "options": [
+        "25 sec",
+        "30 sec",
+        "40 sec",
+        "45 sec"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-67",
+      "section": "quantitative",
+      "question": "In a 500 m race, the ratio of the speeds of two contestants A and B is 3 : 4. A has a start of 140 m. Then, A wins by:",
+      "options": [
+        "60 m",
+        "40 m",
+        "20 m",
+        "10 m"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-68",
+      "section": "quantitative",
+      "question": "A boatman goes 2 km against the current of the stream in 1 hour and goes 1 km along the current in 10 minutes. How long will it take to go 5 km in stationary water?",
+      "options": [
+        "40 minutes",
+        "1 hour",
+        "1 hr 15 min",
+        "1 hr 30 min"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-69",
+      "section": "quantitative",
+      "question": "Two goods trains each 500 m long are running in opposite directions on parallel tracks at 45 km/hr and 30 km/hr, respectively. The time taken by the slower train to pass the driver of the faster one is:",
+      "options": [
+        "12 sec",
+        "24 sec",
+        "48 sec",
+        "60 sec"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-70",
+      "section": "quantitative",
+      "question": "A man sells two buffaloes for Rs. 7,820 each. On one he gains 15% and on the other, he loses 15%. His total gain or loss in the transaction is",
+      "options": [
+        "2.5% gain",
+        "2.25% loss",
+        "2% loss",
+        "5% loss"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-71",
+      "section": "quantitative",
+      "question": "One ship goes along the stream direction 28 km and in opposite direction 13 km in 5 hrs for each direction. What is the velocity of the stream?",
+      "options": [
+        "1.5 kmph",
+        "2.5 kmph",
+        "1.8 kmph",
+        "2 kmph"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-72",
+      "section": "quantitative",
+      "question": "Which one of the words given below is different from others?",
+      "options": [
+        "Orange",
+        "Grape",
+        "Apricot",
+        "Raspberry"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-73",
+      "section": "quantitative",
+      "question": "Complete the series: 5, 20, 24, 6, 2, 8, ?",
+      "options": [
+        "12",
+        "32",
+        "34",
+        "36"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-74",
+      "section": "quantitative",
+      "question": "A can have a piece of work done in 8 days, B can work three times faster than A, C can work five times faster than A. How many days will they take to do the work together?",
+      "options": [
+        "3 days",
+        "8/9 days",
+        "4 days",
+        "None of the above"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-75",
+      "section": "quantitative",
+      "question": "A sum of Rs. 427 is to be divided among A, B, and C in such a way that 3 times A's share, 4 times B's share, and 7 times C's share are all equal. The share of C is",
+      "options": [
+        "Rs. 84",
+        "Rs. 76",
+        "Rs. 98",
+        "Rs. 34"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-76",
+      "section": "quantitative",
+      "question": "In a race of 200 m, A can beat B by 31 m and C by 18 m. In a race of 350 m, C will beat B by",
+      "options": [
+        "22.75 m",
+        "25 m",
+        "19.5 m",
+        "7"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-77",
+      "section": "quantitative",
+      "question": "A man took a loan from a bank at the rate of 12% p.a. simple interest. After 3 years, he had to pay Rs. 5400 as interest only for the period. The principal amount borrowed by him was",
+      "options": [
+        "Rs. 2000",
+        "Rs. 10,000",
+        "Rs. 15,000",
+        "Rs. 20,000"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-78",
+      "section": "quantitative",
+      "question": "A man walked diagonally across a square lot. Approximately, what was the percent saved by not walking along the edges?",
+      "options": [
+        "20%",
+        "24%",
+        "30%",
+        "33%"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-79",
+      "section": "quantitative",
+      "question": "How much time will the leak take to empty the full cistern? (I. The cistern is normally filled in 9 hours. II. It takes one hour more than usual to fill the cistern because of the leak.)",
+      "options": [
+        "I alone sufficient",
+        "II alone sufficient",
+        "Either I or II alone",
+        "Both I and II are necessary"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-80",
+      "section": "quantitative",
+      "question": "A metallic sheet is of rectangular shape with dimensions 48 m x 36 m. From each of its corners, a square is cut off to make an open box. If the length of the square is 8 m, the volume of the box is:",
+      "options": [
+        "4830 m\u00b3",
+        "5120 m\u00b3",
+        "6420 m\u00b3",
+        "8960 m\u00b3"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-81",
+      "section": "quantitative",
+      "question": "The reflex angle between the hands of a clock at 10:25 is:",
+      "options": [
+        "180\u00ba",
+        "192.5\u00ba",
+        "195\u00ba",
+        "197.5\u00ba"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-82",
+      "section": "quantitative",
+      "question": "The cost price of Rs. 100 stock at 4% discount, when brokerage is 1/4%, is:",
+      "options": [
+        "Rs. 96",
+        "Rs. 96.25",
+        "Rs. 96.50",
+        "Rs. 97"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-83",
+      "section": "quantitative",
+      "question": "Three candidates contested an election and received 1136, 7636, and 11628 votes respectively. What percentage of the total votes did the winning candidate get?",
+      "options": [
+        "57%",
+        "60%",
+        "65%",
+        "90%"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-84",
+      "section": "quantitative",
+      "question": "A man buys a watch for Rs. 1950 in cash and sells it for Rs. 2200 at a credit of 1 year. If the rate of interest is 10% per annum, the man:",
+      "options": [
+        "gains Rs. 55",
+        "gains Rs. 50",
+        "loses Rs. 30",
+        "gains Rs. 30"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-85",
+      "section": "quantitative",
+      "question": "An error of 2% in excess is made while measuring the side of a square. The percentage of error in the calculated area is:",
+      "options": [
+        "2%",
+        "2.02%",
+        "4%",
+        "4.04%"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-86",
+      "section": "quantitative",
+      "question": "In a shower, 5 cm of rain falls. The volume of water that falls on 1.5 hectares of ground is:",
+      "options": [
+        "75 cu. m",
+        "750 cu. m",
+        "7500 cu. m",
+        "75000 cu. m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-87",
+      "section": "quantitative",
+      "question": "The ratio between the length and breadth of a rectangular park is 3:2. If a man cycling along the boundary at 12 km/hr completes one round in 8 minutes, the area of the park is:",
+      "options": [
+        "15360 sq. m",
+        "153600 sq. m",
+        "30720 sq. m",
+        "307200 sq. m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-88",
+      "section": "quantitative",
+      "question": "The slant height of a right circular cone is 10 m and its height is 8 m. Find the area of its curved surface:",
+      "options": [
+        "30 m\u00b2",
+        "40 m\u00b2",
+        "60 m\u00b2",
+        "80 m\u00b2"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-89",
+      "section": "quantitative",
+      "question": "If 40% of a number is equal to two-third of another number, what is the ratio of the first number to the second number?",
+      "options": [
+        "02:05",
+        "03:07",
+        "05:03",
+        "07:03"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-90",
+      "section": "quantitative",
+      "question": "In a bag, there are coins of 25 p, 10 p, and 5 p in the ratio of 1 : 2 : 3. If there is Rs. 30 in all, how many 5 p coins are there?",
+      "options": [
+        "50",
+        "100",
+        "150",
+        "200"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-91",
+      "section": "quantitative",
+      "question": "A man takes loan from a bank at 12% p.a. simple interest. After 3 years, he paid Rs. 5400 as interest. What was the principal amount?",
+      "options": [
+        "Rs. 2000",
+        "Rs. 10,000",
+        "Rs. 15,000",
+        "Rs. 20,000"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-92",
+      "section": "quantitative",
+      "question": "A flagstaff 17.5 m high casts a shadow 40.25 m long. What is the height of a building that casts a shadow 28.75 m long under similar conditions?",
+      "options": [
+        "10 m",
+        "12.5 m",
+        "17.5 m",
+        "21.25 m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-93",
+      "section": "quantitative",
+      "question": "The reflex angle between the hands of a clock at 10:25 is:",
+      "options": [
+        "180\u00ba",
+        "192.5\u00ba",
+        "195\u00ba",
+        "197.5\u00ba"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-94",
+      "section": "quantitative",
+      "question": "The diagonal of a rectangle is 41 cm, and its area is 20 cm\u00b2. What is the perimeter of the rectangle?",
+      "options": [
+        "9 cm",
+        "18 cm",
+        "20 cm",
+        "41 cm"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-95",
+      "section": "quantitative",
+      "question": "A, B, and C can complete a task in 24, 6, and 12 days respectively. How many days will they take to finish the task if working together?",
+      "options": [
+        "1 day",
+        "7/24 day",
+        "3 3/7 days",
+        "4 days"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-96",
+      "section": "quantitative",
+      "question": "Two trains running in opposite directions cross a man standing on the platform in 27 seconds and 17 seconds respectively, and they cross each other in 23 seconds. The ratio of their speeds is:",
+      "options": [
+        "1:3",
+        "3:2",
+        "3:4",
+        "None of these"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-97",
+      "section": "quantitative",
+      "question": "A train overtakes two persons walking along a railway track. The first one walks at 4.5 km/hr, and the other one at 5.4 km/hr. The train needs 8.4 and 8.5 seconds respectively to overtake them. What is the speed of the train?",
+      "options": [
+        "66 km/hr",
+        "72 km/hr",
+        "78 km/hr",
+        "81 km/hr"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-98",
+      "section": "quantitative",
+      "question": "A train of 240 meters long passes a pole in 24 seconds. How long will it take to pass a platform 650 meters long?",
+      "options": [
+        "65 sec",
+        "89 sec",
+        "100 sec",
+        "150 sec"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-99",
+      "section": "quantitative",
+      "question": "How many seconds will a 500-meter-long train take to cross a man walking with a speed of 3 km/hr in the direction of the moving train if the speed of the train is 63 km/hr?",
+      "options": [
+        "25 sec",
+        "30 sec",
+        "40 sec",
+        "45 sec"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-100",
+      "section": "quantitative",
+      "question": "In a 500 m race, the ratio of the speeds of two contestants A and B is 3 : 4. A has a start of 140 m. Then, A wins by:",
+      "options": [
+        "60 m",
+        "40 m",
+        "20 m",
+        "10 m"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-101",
+      "section": "quantitative",
+      "question": "A boatman goes 2 km against the current of the stream in 1 hour and goes 1 km along the current in 10 minutes. How long will it take to go 5 km in stationary water?",
+      "options": [
+        "40 minutes",
+        "1 hour",
+        "1 hr 15 min",
+        "1 hr 30 min"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-102",
+      "section": "quantitative",
+      "question": "Two goods trains each 500 m long are running in opposite directions on parallel tracks at 45 km/hr and 30 km/hr, respectively. The time taken by the slower train to pass the driver of the faster one is:",
+      "options": [
+        "12 sec",
+        "24 sec",
+        "48 sec",
+        "60 sec"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-103",
+      "section": "quantitative",
+      "question": "A man sells two buffaloes for Rs. 7,820 each. On one he gains 15% and on the other, he loses 15%. His total gain or loss in the transaction is:",
+      "options": [
+        "2.5% gain",
+        "2.25% loss",
+        "2% loss",
+        "5% loss"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-104",
+      "section": "quantitative",
+      "question": "A metallic sheet is of rectangular shape with dimensions 48 m x 36 m. From each of its corners, a square is cut off to make an open box. If the length of the square is 8 m, the volume of the box is:",
+      "options": [
+        "4830 m\u00b3",
+        "5120 m\u00b3",
+        "6420 m\u00b3",
+        "8960 m\u00b3"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-105",
+      "section": "quantitative",
+      "question": "The cost price of Rs. 100 stock at 4% discount, when brokerage is 1/4%, is:",
+      "options": [
+        "Rs. 96",
+        "Rs. 96.25",
+        "Rs. 96.50",
+        "Rs. 97"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-106",
+      "section": "quantitative",
+      "question": "Three candidates contested an election and received 1136, 7636, and 11628 votes respectively. What percentage of the total votes did the winning candidate get?",
+      "options": [
+        "57%",
+        "60%",
+        "65%",
+        "90%"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-107",
+      "section": "quantitative",
+      "question": "A man buys a watch for Rs. 1950 in cash and sells it for Rs. 2200 at a credit of 1 year. If the rate of interest is 10% per annum, the man:",
+      "options": [
+        "gains Rs. 55",
+        "gains Rs. 50",
+        "loses Rs. 30",
+        "gains Rs. 30"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-108",
+      "section": "quantitative",
+      "question": "An error of 2% in excess is made while measuring the side of a square. The percentage of error in the calculated area is:",
+      "options": [
+        "2%",
+        "2.02%",
+        "4%",
+        "4.04%"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-109",
+      "section": "quantitative",
+      "question": "In a shower, 5 cm of rain falls. The volume of water that falls on 1.5 hectares of ground is:",
+      "options": [
+        "75 cu. m",
+        "750 cu. m",
+        "7500 cu. m",
+        "75000 cu. m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-110",
+      "section": "quantitative",
+      "question": "The ratio between the length and breadth of a rectangular park is 3:2. If a man cycling along the boundary at 12 km/hr completes one round in 8 minutes, the area of the park is:",
+      "options": [
+        "15360 sq. m",
+        "153600 sq. m",
+        "30720 sq. m",
+        "307200 sq. m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-111",
+      "section": "quantitative",
+      "question": "The slant height of a right circular cone is 10 m and its height is 8 m. Find the area of its curved surface:",
+      "options": [
+        "30 m\u00b2",
+        "40 m\u00b2",
+        "60 m\u00b2",
+        "80 m\u00b2"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-112",
+      "section": "quantitative",
+      "question": "A man wants to sell his scooter. There are two offers, one at Rs. 12,000 cash and the other a credit of Rs. 12,880 to be paid after 8 months, money being at 18% per annum. Which is the better offer?",
+      "options": [
+        "Rs. 12,000 in cash",
+        "Rs. 12,880 at credit",
+        "Both are equally good",
+        "NIL"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-113",
+      "section": "quantitative",
+      "question": "A man standing at a point P is watching the top of a tower, which makes an angle of elevation of 30\u00ba with the man's eye. The man walks some distance towards the tower to watch its top and the angle of the elevation becomes 60\u00ba. What is the distance between the base of the tower and the point P?",
+      "options": [
+        "43 units",
+        "8 units",
+        "12 units",
+        "Data inadequate"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-114",
+      "section": "quantitative",
+      "question": "In how many different ways can the letters of the word 'DETAIL' be arranged in such a way that the vowels occupy only the odd positions?",
+      "options": [
+        "32",
+        "48",
+        "36",
+        "60"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-115",
+      "section": "quantitative",
+      "question": "Two dice are tossed. The probability that the total score is a prime number is:",
+      "options": [
+        "1",
+        "5/12",
+        "1/2",
+        "7/9"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-116",
+      "section": "quantitative",
+      "question": "An observer 1.6 m tall is 203 m away from a tower. The angle of elevation from his eye to the top of the tower is 30\u00ba. The height of the tower is:",
+      "options": [
+        "21.6 m",
+        "23.2 m",
+        "24.72 m",
+        "None of these"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-117",
+      "section": "quantitative",
+      "question": "The cost price of a Rs. 100 stock at 4% discount, when brokerage is 1/4%, is:",
+      "options": [
+        "Rs. 95.75",
+        "Rs. 96",
+        "Rs. 96.25",
+        "Rs. 104.25"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-118",
+      "section": "quantitative",
+      "question": "If 40% of a number is equal to two-thirds of another number, what is the ratio of the first number to the second number?",
+      "options": [
+        "2:5",
+        "3:7",
+        "5:3",
+        "7:3"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-119",
+      "section": "quantitative",
+      "question": "In a bag, there are coins of 25 p, 10 p, and 5 p in the ratio of 1:2:3. If there is Rs. 30 in all, how many 5 p coins are there?",
+      "options": [
+        "50",
+        "100",
+        "150",
+        "200"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-120",
+      "section": "quantitative",
+      "question": "A fires 5 shots to B's 3, but A kills only once in 3 shots while B kills once in 2 shots. When B has missed 27 times, A has killed:",
+      "options": [
+        "30 birds",
+        "60 birds",
+        "72 birds",
+        "90 birds"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-121",
+      "section": "quantitative",
+      "question": "A train covers a certain distance at a speed of 300 km/hr, and the same distance at 200 km/hr. Find the average speed of the train:",
+      "options": [
+        "240 km/hr",
+        "225 km/hr",
+        "250 km/hr",
+        "275 km/hr"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-122",
+      "section": "quantitative",
+      "question": "Two students appeared at an examination. One of them secured 9 marks more than the other, and his marks were 56% of the sum of their marks. What are the marks obtained by them?",
+      "options": [
+        "42, 33",
+        "42, 36",
+        "44, 33",
+        "44, 36"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-123",
+      "section": "quantitative",
+      "question": "Two trains are running in opposite directions at 60 km/hr and 90 km/hr. If the length of each train is 500 m, how long will it take for the trains to cross each other?",
+      "options": [
+        "20 sec",
+        "25 sec",
+        "30 sec",
+        "35 sec"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-124",
+      "section": "quantitative",
+      "question": "A certain amount earns simple interest of Rs. 1200 after 10 years. Had the interest been 2% more, how much more interest would it have earned?",
+      "options": [
+        "Rs. 25",
+        "None of these",
+        "Rs. 120",
+        "Cannot be determined"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-125",
+      "section": "quantitative",
+      "question": "A man took a loan from a bank at the rate of 8% p.a. simple interest. After 4 years he had to pay Rs. 6200 as interest only for the period. The principal amount borrowed by him was:",
+      "options": [
+        "Rs. 17322",
+        "Rs. 20245",
+        "Rs. 18230",
+        "Rs. 19375"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-126",
+      "section": "quantitative",
+      "question": "A and B can do a piece of work in 45 days and 40 days, respectively. They began to work together, but A leaves after some days and B completes the remaining work in 23 days. After how many days did A leave?",
+      "options": [
+        "9",
+        "11",
+        "12",
+        "15"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-127",
+      "section": "quantitative",
+      "question": "The sum of ages of 5 children born at intervals of 3 years each is 50 years. What is the age of the youngest child?",
+      "options": [
+        "4 years",
+        "8 years",
+        "10 years",
+        "None of these"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-128",
+      "section": "quantitative",
+      "question": "A father said to his son, \"I was as old as you are at the present at the time of your birth\". If the father's age is 38 years now, the son's age five years back was:",
+      "options": [
+        "14 years",
+        "19 years",
+        "33 years",
+        "38 years"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-129",
+      "section": "quantitative",
+      "question": "A sum of Rs. 1360 has been divided among A, B, and C such that A gets 1/2 of what B gets, and B gets 1/3 of what C gets. B's share is:",
+      "options": [
+        "Rs. 120",
+        "Rs. 160",
+        "Rs. 240",
+        "Rs. 300"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-130",
+      "section": "quantitative",
+      "question": "A man can swim downstream at 6 km/hr and upstream at 2 km/hr. His speed in still water is:",
+      "options": [
+        "4 km/hr",
+        "2 km/hr",
+        "6 km/hr",
+        "1 km/hr"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-131",
+      "section": "quantitative",
+      "question": "Robert is traveling on his cycle and has calculated to reach point A at 2 P.M. if he travels at 10 kmph, he will reach there at 12 noon if he travels at 15 kmph. At what speed must he travel to reach A at 1 P.M.?",
+      "options": [
+        "8 kmph",
+        "11 kmph",
+        "12 kmph",
+        "14 kmph"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-132",
+      "section": "quantitative",
+      "question": "A man rows to a place 48 km distant and comes back in 14 hours. He finds that he can row 4 km with the stream in the same time as 3 km against the stream. The rate of the stream is:",
+      "options": [
+        "1 km/hr",
+        "1.5 km/hr",
+        "2 km/hr",
+        "2.5 km/hr"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-133",
+      "section": "quantitative",
+      "question": "In what ratio must a grocer mix two varieties of pulses costing Rs. 15 and Rs. 20 per kg respectively so as to get a mixture worth Rs. 16.50 per kg?",
+      "options": [
+        "3:7",
+        "5:7",
+        "7:3",
+        "7:5"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-134",
+      "section": "quantitative",
+      "question": "A, B, and C can do a piece of work in 20, 30, and 60 days, respectively. In how many days can A do the work if he is assisted by B and C on every third day?",
+      "options": [
+        "12 days",
+        "15 days",
+        "16 days",
+        "18 days"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-135",
+      "section": "quantitative",
+      "question": "Two trains are running at 40 km/hr and 20 km/hr respectively in the same direction. The fast train completely passes a man sitting in the slower train in 5 seconds. What is the length of the fast train?",
+      "options": [
+        "23 m",
+        "27 m",
+        "29 m",
+        "50 m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-136",
+      "section": "quantitative",
+      "question": "A train moves past a telegraph post and a bridge 264 m long in 8 seconds and 20 seconds respectively. What is the speed of the train?",
+      "options": [
+        "69.5 km/hr",
+        "70 km/hr",
+        "79 km/hr",
+        "79.2 km/hr"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-137",
+      "section": "quantitative",
+      "question": "How many seconds will a 500-meter long train take to cross a man walking with a speed of 3 km/hr in the direction of the moving train if the speed of the train is 63 km/hr?",
+      "options": [
+        "25",
+        "30",
+        "40",
+        "45"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-138",
+      "section": "quantitative",
+      "question": "The salaries of A, B, and C are in the ratio 2 : 3 : 5. If increments of 15%, 10%, and 20% are allowed respectively in their salaries, what will be the new ratio of their salaries?",
+      "options": [
+        "3:3:10",
+        "10:11:20",
+        "23:33:60",
+        "Cannot be determined"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-139",
+      "section": "quantitative",
+      "question": "The sum of ages of 5 children born at intervals of 3 years each is 50 years. What is the age of the youngest child?",
+      "options": [
+        "4 years",
+        "8 years",
+        "10 years",
+        "None of these"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-140",
+      "section": "quantitative",
+      "question": "A sum of Rs. 1360 has been divided among A, B, and C such that A gets 1/2 of what B gets, and B gets 1/3 of what C gets. B's share is:",
+      "options": [
+        "Rs. 120",
+        "Rs. 160",
+        "Rs. 240",
+        "Rs. 300"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-141",
+      "section": "quantitative",
+      "question": "An error of 2% in excess is made while measuring the side of a square. The percentage of error in the calculated area is:",
+      "options": [
+        "2%",
+        "2.02%",
+        "4%",
+        "4.04%"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-142",
+      "section": "quantitative",
+      "question": "In a shower, 5 cm of rain falls. The volume of water that falls on 1.5 hectares of ground is:",
+      "options": [
+        "75 cu. m",
+        "750 cu. m",
+        "7500 cu. m",
+        "75000 cu. m"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-143",
+      "section": "quantitative",
+      "question": "The reflex angle between the hands of a clock at 10:25 is:",
+      "options": [
+        "180\u00ba",
+        "192.5\u00ba",
+        "195\u00ba",
+        "197.5\u00ba"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-144",
+      "section": "quantitative",
+      "question": "Two goods trains each 500 m long are running in opposite directions on parallel tracks at 45 km/hr and 30 km/hr respectively. The time taken by the slower train to pass the driver of the faster one is:",
+      "options": [
+        "12 sec",
+        "24 sec",
+        "48 sec",
+        "60 sec"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-145",
+      "section": "quantitative",
+      "question": "A metallic sheet is of rectangular shape with dimensions 48 m x 36 m. From each of its corners, a square is cut off to make an open box. If the length of the square is 8 m, the volume of the box is:",
+      "options": [
+        "4830 m\u00b3",
+        "5120 m\u00b3",
+        "6420 m\u00b3",
+        "8960 m\u00b3"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-146",
+      "section": "quantitative",
+      "question": "A man sells two buffaloes for Rs. 7,820 each. On one he gains 15% and on the other, he loses 15%. His total gain or loss in the transaction is:",
+      "options": [
+        "2.5% gain",
+        "2.25% loss",
+        "2% loss",
+        "5% loss"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-147",
+      "section": "quantitative",
+      "question": "A train overtakes two persons walking along a railway track. The first one walks at 4.5 km/hr, and the other at 5.4 km/hr. The train needs 8.4 and 8.5 seconds respectively to overtake them. What is the speed of the train?",
+      "options": [
+        "66 km/hr",
+        "72 km/hr",
+        "78 km/hr",
+        "81 km/hr"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-148",
+      "section": "quantitative",
+      "question": "A boatman goes 2 km against the current of the stream in 1 hour and goes 1 km along the current in 10 minutes. How long will it take to go 5 km in stationary water?",
+      "options": [
+        "40 minutes",
+        "1 hour",
+        "1 hr 15 min",
+        "1 hr 30 min"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-149",
+      "section": "quantitative",
+      "question": "What is the volume of a 32-meter high cylindrical tank?",
+      "options": [
+        "4928 m\u00b3",
+        "4820 m\u00b3",
+        "5040 m\u00b3",
+        "4600 m\u00b3"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-150",
+      "section": "quantitative",
+      "question": "A, B, and C subscribe Rs. 50,000 for a business. A subscribes Rs. 4000 more than B and B Rs. 5000 more than C. Out of a total profit of Rs. 35,000, A receives:",
+      "options": [
+        "Rs. 8400",
+        "Rs. 11,900",
+        "Rs. 13,600",
+        "Rs. 14,700"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "quantitative-151",
+      "section": "quantitative",
+      "question": "The present worth of Rs. 2310 due 2 years hence, the rate of interest being 15% per annum, is:",
+      "options": [
+        "Rs. 1750",
+        "Rs. 1680",
+        "Rs. 1840",
+        "Rs. 1443.75"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-152",
+      "section": "quantitative",
+      "question": "The average age of husband, wife, and their child 3 years ago was 27 years, and that of the wife and the child 5 years ago was 20 years. The present age of the husband is:",
+      "options": [
+        "35 years",
+        "40 years",
+        "50 years",
+        "None of these"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-153",
+      "section": "quantitative",
+      "question": "The price of 2 sarees and 4 shirts is Rs. 1600. With the same money, one can buy 1 saree and 6 shirts. If one wants to buy 12 shirts, how much shall he have to pay?",
+      "options": [
+        "Rs. 1200",
+        "Rs. 2400",
+        "Rs. 4800",
+        "Cannot be determined"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-154",
+      "section": "quantitative",
+      "question": "A sum of Rs. 725 is lent in the beginning of a year at a certain rate of interest. After 8 months, a sum of Rs. 362.50 more is lent but at the rate twice the former. At the end of the year, Rs. 33.50 is earned as interest from both loans. What was the original rate of interest?",
+      "options": [
+        "3.60%",
+        "4.50%",
+        "5%",
+        "6%"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-155",
+      "section": "quantitative",
+      "question": "The ratio between the length and breadth of a rectangular park is 3:2. If a man cycling along the boundary of the park at 12 km/hr completes one round in 8 minutes, the area of the park (in sq. m) is:",
+      "options": [
+        "15360",
+        "153600",
+        "30720",
+        "307200"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-156",
+      "section": "quantitative",
+      "question": "The slant height of a right circular cone is 10 m and its height is 8 m. Find the area of its curved surface:",
+      "options": [
+        "30 m\u00b2",
+        "40 m\u00b2",
+        "60 m\u00b2",
+        "80 m\u00b2"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "quantitative-157",
+      "section": "quantitative",
+      "question": "A man wants to sell his scooter. There are two offers, one at Rs. 12,000 cash and the other a credit of Rs. 12,880 to be paid after 8 months, money being at 18% per annum. Which is the better offer?",
+      "options": [
+        "Rs. 12,000 in cash",
+        "Rs. 12,880 at credit",
+        "Both are equally good",
+        "Neither is good"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "quantitative-158",
+      "section": "quantitative",
+      "question": "If log10 2 = 0.3010, then log2 10 is equal to:",
+      "options": [
+        "0.301",
+        "0.699",
+        "0.301",
+        "1.301"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-159",
+      "section": "quantitative",
+      "question": "The product of two numbers is 120, and the sum of their squares is 289. The sum of the numbers is:",
+      "options": [
+        "20",
+        "23",
+        "169",
+        "None of these"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "quantitative-160",
+      "section": "quantitative",
+      "question": "The banker's discount of a certain sum of money is Rs. 72 and the true discount on the same sum for the same time is Rs. 60. The sum due is:",
+      "options": [
+        "Rs. 360",
+        "Rs. 432",
+        "Rs. 540",
+        "Rs. 1080"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-1",
+      "section": "logical",
+      "question": "Look at this series: -16, -25, -34, -43, ... What number should come next?",
+      "options": [
+        "-41.0",
+        "-52.0",
+        "-50.0",
+        "-54.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-2",
+      "section": "logical",
+      "question": "Look at this series: 97, 89, 81, 73, ... What number should come next?",
+      "options": [
+        "61.0",
+        "65.0",
+        "67.0",
+        "80.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-3",
+      "section": "logical",
+      "question": "Look at this series: 2, 4, 8, 16, ... What number should come next?",
+      "options": [
+        "38.0",
+        "32.0",
+        "28.0",
+        "48.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-4",
+      "section": "logical",
+      "question": "Look at this series: 0, 1, 2, 3, ... What number should come next?",
+      "options": [
+        "4.0",
+        "19.0",
+        "8.0",
+        "-4.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-5",
+      "section": "logical",
+      "question": "Look at this series: -1, -3, -5, -7, ... What number should come next?",
+      "options": [
+        "-9.0",
+        "-17.0",
+        "-3.0",
+        "6.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-6",
+      "section": "logical",
+      "question": "Look at this series: 7, 8, 0, 1, ... What number should come next?",
+      "options": [
+        "17.0",
+        "-6.0",
+        "9.0",
+        "2.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-7",
+      "section": "logical",
+      "question": "Look at this series: 6, 7, 0, 1, ... What number should come next?",
+      "options": [
+        "6.0",
+        "16.0",
+        "2.0",
+        "-8.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-8",
+      "section": "logical",
+      "question": "Look at this series: 200, 100, 50, 25, ... What number should come next?",
+      "options": [
+        "30.0",
+        "7.0",
+        "12.5",
+        "20.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-9",
+      "section": "logical",
+      "question": "Look at this series: 1.2, 2.6, 4.0, 5.4, ... What number should come next?",
+      "options": [
+        "6.8",
+        "16.8",
+        "26.8",
+        "-1.2"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-10",
+      "section": "logical",
+      "question": "Look at this series: 3, 9, 27, 81, ... What number should come next?",
+      "options": [
+        "243.0",
+        "233.0",
+        "259.0",
+        "251.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-11",
+      "section": "logical",
+      "question": "Look at this series: 3.7, 4.5, 5.3, 6.1, ... What number should come next?",
+      "options": [
+        "6.9",
+        "20.9",
+        "1.9",
+        "13.9"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-12",
+      "section": "logical",
+      "question": "Look at this series: -16, -22, -28, -34, ... What number should come next?",
+      "options": [
+        "-50.0",
+        "-30.0",
+        "-35.0",
+        "-40.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-13",
+      "section": "logical",
+      "question": "Look at this series: 81, 76, 71, 66, ... What number should come next?",
+      "options": [
+        "53.0",
+        "78.0",
+        "70.0",
+        "61.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-14",
+      "section": "logical",
+      "question": "Look at this series: -20, -21, -22, -23, ... What number should come next?",
+      "options": [
+        "-16.0",
+        "-24.0",
+        "-10.0",
+        "-34.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-15",
+      "section": "logical",
+      "question": "Look at this series: 1, 4, 16, 64, ... What number should come next?",
+      "options": [
+        "256.0",
+        "264.0",
+        "272.0",
+        "253.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-16",
+      "section": "logical",
+      "question": "Look at this series: 141, 35, 8, 2, ... What number should come next?",
+      "options": [
+        "15.0",
+        "8.0",
+        "0.0",
+        "-1.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-17",
+      "section": "logical",
+      "question": "Look at this series: -18, -28, -38, -48, ... What number should come next?",
+      "options": [
+        "-48.0",
+        "-68.0",
+        "-58.0",
+        "-48.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-18",
+      "section": "logical",
+      "question": "Look at this series: 59, 47, 35, 23, ... What number should come next?",
+      "options": [
+        "11.0",
+        "8.0",
+        "21.0",
+        "31.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-19",
+      "section": "logical",
+      "question": "Look at this series: 2, 3, 4, 5, ... What number should come next?",
+      "options": [
+        "21.0",
+        "6.0",
+        "1.0",
+        "14.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-20",
+      "section": "logical",
+      "question": "Look at this series: 4, 16, 64, 256, ... What number should come next?",
+      "options": [
+        "1016.0",
+        "1036.0",
+        "1024.0",
+        "1026.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-21",
+      "section": "logical",
+      "question": "Look at this series: 56, 44, 32, 20, ... What number should come next?",
+      "options": [
+        "8.0",
+        "20.0",
+        "12.0",
+        "-2.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-22",
+      "section": "logical",
+      "question": "Look at this series: 67, 57, 47, 37, ... What number should come next?",
+      "options": [
+        "27.0",
+        "18.0",
+        "40.0",
+        "31.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-23",
+      "section": "logical",
+      "question": "Look at this series: -3, -5, -7, -9, ... What number should come next?",
+      "options": [
+        "-21.0",
+        "3.0",
+        "-11.0",
+        "-9.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-24",
+      "section": "logical",
+      "question": "Look at this series: 2.3, 3.7, 5.1, 6.5, ... What number should come next?",
+      "options": [
+        "0.9",
+        "7.9",
+        "27.9",
+        "15.9"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-25",
+      "section": "logical",
+      "question": "Look at this series: 163, 54, 18, 6, ... What number should come next?",
+      "options": [
+        "2.0",
+        "-1.0",
+        "7.0",
+        "22.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-26",
+      "section": "logical",
+      "question": "Look at this series: -6, -10, -14, -18, ... What number should come next?",
+      "options": [
+        "-9.0",
+        "-22.0",
+        "-19.0",
+        "-27.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-27",
+      "section": "logical",
+      "question": "Look at this series: 9, 27, 81, 243, ... What number should come next?",
+      "options": [
+        "732.0",
+        "729.0",
+        "728.0",
+        "739.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-28",
+      "section": "logical",
+      "question": "Look at this series: 2, 8, 32, 128, ... What number should come next?",
+      "options": [
+        "526.0",
+        "512.0",
+        "504.0",
+        "521.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-29",
+      "section": "logical",
+      "question": "Look at this series: 10, 15, 20, 25, ... What number should come next?",
+      "options": [
+        "30.0",
+        "27.0",
+        "44.0",
+        "34.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-30",
+      "section": "logical",
+      "question": "Look at this series: 5, 15, 45, 135, ... What number should come next?",
+      "options": [
+        "424.0",
+        "414.0",
+        "405.0",
+        "399.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-31",
+      "section": "logical",
+      "question": "Look at this series: -15, -23, -31, -39, ... What number should come next?",
+      "options": [
+        "-47.0",
+        "-39.0",
+        "-57.0",
+        "-27.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-32",
+      "section": "logical",
+      "question": "Look at this series: 16, 22, 28, 34, ... What number should come next?",
+      "options": [
+        "31.0",
+        "40.0",
+        "48.0",
+        "54.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-33",
+      "section": "logical",
+      "question": "Look at this series: 74, 66, 58, 50, ... What number should come next?",
+      "options": [
+        "57.0",
+        "49.0",
+        "42.0",
+        "34.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-34",
+      "section": "logical",
+      "question": "Look at this series: 18, 20, 22, 24, ... What number should come next?",
+      "options": [
+        "26.0",
+        "40.0",
+        "23.0",
+        "35.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-35",
+      "section": "logical",
+      "question": "Look at this series: -4, -10, -16, -22, ... What number should come next?",
+      "options": [
+        "-13.0",
+        "-28.0",
+        "-32.0",
+        "-20.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-36",
+      "section": "logical",
+      "question": "Look at this series: 1, 2, 3, 4, ... What number should come next?",
+      "options": [
+        "0.0",
+        "14.0",
+        "8.0",
+        "-3.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-37",
+      "section": "logical",
+      "question": "Look at this series: -10, -16, -22, -28, ... What number should come next?",
+      "options": [
+        "-38.0",
+        "-34.0",
+        "-15.0",
+        "-25.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-38",
+      "section": "logical",
+      "question": "Look at this series: 4, 10, 16, 22, ... What number should come next?",
+      "options": [
+        "45.0",
+        "27.0",
+        "32.0",
+        "28.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-39",
+      "section": "logical",
+      "question": "Look at this series: 3.7, 5.1, 6.5, 7.9, ... What number should come next?",
+      "options": [
+        "21.3",
+        "9.3",
+        "10.3",
+        "2.3"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-40",
+      "section": "logical",
+      "question": "Look at this series: 1, 4, 9, 16, ... What number should come next?",
+      "options": [
+        "17.0",
+        "28.0",
+        "42.0",
+        "25.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-41",
+      "section": "logical",
+      "question": "Look at this series: 8, 16, 32, 64, ... What number should come next?",
+      "options": [
+        "137.0",
+        "123.0",
+        "138.0",
+        "128.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-42",
+      "section": "logical",
+      "question": "Look at this series: -11, -19, -27, -35, ... What number should come next?",
+      "options": [
+        "-23.0",
+        "-35.0",
+        "-43.0",
+        "-53.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-43",
+      "section": "logical",
+      "question": "Look at this series: 86, 80, 74, 68, ... What number should come next?",
+      "options": [
+        "62.0",
+        "72.0",
+        "80.0",
+        "54.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-44",
+      "section": "logical",
+      "question": "Look at this series: 16, 64, 256, 1024, ... What number should come next?",
+      "options": [
+        "4096.0",
+        "4087.0",
+        "4105.0",
+        "4111.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-45",
+      "section": "logical",
+      "question": "Look at this series: 14, 22, 30, 38, ... What number should come next?",
+      "options": [
+        "45.0",
+        "63.0",
+        "46.0",
+        "54.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-46",
+      "section": "logical",
+      "question": "Look at this series: 165, 41, 10, 2, ... What number should come next?",
+      "options": [
+        "-6.0",
+        "0.0",
+        "8.0",
+        "16.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-47",
+      "section": "logical",
+      "question": "Look at this series: -10, -11, -12, -13, ... What number should come next?",
+      "options": [
+        "-4.0",
+        "-14.0",
+        "-23.0",
+        "-1.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-48",
+      "section": "logical",
+      "question": "Look at this series: 0.5, 1.9, 3.3, 4.7, ... What number should come next?",
+      "options": [
+        "22.1",
+        "15.1",
+        "-0.9",
+        "6.1"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-49",
+      "section": "logical",
+      "question": "Look at this series: 69, 64, 59, 54, ... What number should come next?",
+      "options": [
+        "50.0",
+        "41.0",
+        "66.0",
+        "49.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-50",
+      "section": "logical",
+      "question": "Look at this series: 4, 9, 16, 25, ... What number should come next?",
+      "options": [
+        "36.0",
+        "35.0",
+        "50.0",
+        "40.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-51",
+      "section": "logical",
+      "question": "Look at this series: -6, -14, -22, -30, ... What number should come next?",
+      "options": [
+        "-38.0",
+        "-31.0",
+        "-44.0",
+        "-19.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-52",
+      "section": "logical",
+      "question": "Look at this series: 9, 14, 19, 24, ... What number should come next?",
+      "options": [
+        "36.0",
+        "43.0",
+        "22.0",
+        "29.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-53",
+      "section": "logical",
+      "question": "Look at this series: 1.5, 2.9, 4.3, 5.7, ... What number should come next?",
+      "options": [
+        "24.1",
+        "6.1",
+        "11.1",
+        "7.1"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-54",
+      "section": "logical",
+      "question": "Look at this series: -13, -17, -21, -25, ... What number should come next?",
+      "options": [
+        "-12.0",
+        "-34.0",
+        "-22.0",
+        "-29.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-55",
+      "section": "logical",
+      "question": "Look at this series: 2.5, 4.1, 5.7, 7.3, ... What number should come next?",
+      "options": [
+        "22.9",
+        "2.9",
+        "8.9",
+        "10.9"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-56",
+      "section": "logical",
+      "question": "Look at this series: 162, 54, 18, 6, ... What number should come next?",
+      "options": [
+        "13.0",
+        "9.0",
+        "-8.0",
+        "2.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-57",
+      "section": "logical",
+      "question": "Look at this series: 56, 51, 46, 41, ... What number should come next?",
+      "options": [
+        "36.0",
+        "54.0",
+        "44.0",
+        "29.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-58",
+      "section": "logical",
+      "question": "Look at this series: 60, 51, 42, 33, ... What number should come next?",
+      "options": [
+        "24.0",
+        "14.0",
+        "41.0",
+        "32.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-59",
+      "section": "logical",
+      "question": "Look at this series: -1, -6, -11, -16, ... What number should come next?",
+      "options": [
+        "-1.0",
+        "-24.0",
+        "-21.0",
+        "-14.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-60",
+      "section": "logical",
+      "question": "Look at this series: -6, -9, -12, -15, ... What number should come next?",
+      "options": [
+        "-25.0",
+        "-14.0",
+        "-18.0",
+        "-7.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-61",
+      "section": "logical",
+      "question": "Look at this series: 64, 256, 1024, 4096, ... What number should come next?",
+      "options": [
+        "16394.0",
+        "16384.0",
+        "16380.0",
+        "16392.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-62",
+      "section": "logical",
+      "question": "Look at this series: 1.0, 1.8, 2.6, 3.4, ... What number should come next?",
+      "options": [
+        "15.2",
+        "7.2",
+        "4.2",
+        "-3.8"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-63",
+      "section": "logical",
+      "question": "Look at this series: 161, 32, 6, 1, ... What number should come next?",
+      "options": [
+        "12.0",
+        "0.0",
+        "-7.0",
+        "2.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-64",
+      "section": "logical",
+      "question": "Look at this series: 9, 16, 25, 36, ... What number should come next?",
+      "options": [
+        "48.0",
+        "49.0",
+        "67.0",
+        "51.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-65",
+      "section": "logical",
+      "question": "Look at this series: 3.0, 3.6, 4.2, 4.8, ... What number should come next?",
+      "options": [
+        "5.4",
+        "-1.59",
+        "8.4",
+        "19.4"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-66",
+      "section": "logical",
+      "question": "Look at this series: 1, 5, 25, 125, ... What number should come next?",
+      "options": [
+        "634.0",
+        "637.0",
+        "625.0",
+        "617.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-67",
+      "section": "logical",
+      "question": "Look at this series: 160, 32, 6, 1, ... What number should come next?",
+      "options": [
+        "0.0",
+        "-3.0",
+        "2.0",
+        "17.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-68",
+      "section": "logical",
+      "question": "Look at this series: 3, 4, 5, 6, ... What number should come next?",
+      "options": [
+        "10.0",
+        "21.0",
+        "7.0",
+        "5.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-69",
+      "section": "logical",
+      "question": "Look at this series: 3.8, 5.2, 6.6, 8.0, ... What number should come next?",
+      "options": [
+        "21.4",
+        "16.4",
+        "5.4",
+        "9.4"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-70",
+      "section": "logical",
+      "question": "Look at this series: -20, -24, -28, -32, ... What number should come next?",
+      "options": [
+        "-26.0",
+        "-24.0",
+        "-40.0",
+        "-36.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-71",
+      "section": "logical",
+      "question": "Look at this series: 0.6, 1.0, 1.4, 1.8, ... What number should come next?",
+      "options": [
+        "15.2",
+        "-6.8",
+        "4.2",
+        "2.2"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-72",
+      "section": "logical",
+      "question": "Look at this series: 135, 67, 33, 16, ... What number should come next?",
+      "options": [
+        "3.0",
+        "8.0",
+        "18.0",
+        "28.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-73",
+      "section": "logical",
+      "question": "Look at this series: 162, 81, 40, 20, ... What number should come next?",
+      "options": [
+        "24.0",
+        "13.0",
+        "10.0",
+        "1.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-74",
+      "section": "logical",
+      "question": "Look at this series: 69, 56, 43, 30, ... What number should come next?",
+      "options": [
+        "15.0",
+        "37.0",
+        "17.0",
+        "20.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-75",
+      "section": "logical",
+      "question": "Look at this series: 73, 58, 43, 28, ... What number should come next?",
+      "options": [
+        "9.0",
+        "21.0",
+        "27.0",
+        "13.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-76",
+      "section": "logical",
+      "question": "Look at this series: 4.5, 6.1, 7.7, 9.3, ... What number should come next?",
+      "options": [
+        "10.9",
+        "12.9",
+        "25.9",
+        "9.9"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-77",
+      "section": "logical",
+      "question": "Look at this series: 9, 11, 13, 15, ... What number should come next?",
+      "options": [
+        "17.0",
+        "16.0",
+        "36.0",
+        "19.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-78",
+      "section": "logical",
+      "question": "Look at this series: 14, 23, 32, 41, ... What number should come next?",
+      "options": [
+        "60.0",
+        "50.0",
+        "40.0",
+        "55.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-79",
+      "section": "logical",
+      "question": "Look at this series: 104, 52, 26, 13, ... What number should come next?",
+      "options": [
+        "15.0",
+        "4.0",
+        "6.0",
+        "22.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-80",
+      "section": "logical",
+      "question": "Look at this series: 0.6, 2.1, 3.6, 5.1, ... What number should come next?",
+      "options": [
+        "18.6",
+        "11.6",
+        "1.59",
+        "6.6"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-81",
+      "section": "logical",
+      "question": "Look at this series: 5, 0, 1, 2, ... What number should come next?",
+      "options": [
+        "-1.0",
+        "14.0",
+        "3.0",
+        "10.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-82",
+      "section": "logical",
+      "question": "Look at this series: 7, 16, 25, 34, ... What number should come next?",
+      "options": [
+        "53.0",
+        "49.0",
+        "40.0",
+        "43.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-83",
+      "section": "logical",
+      "question": "Look at this series: 190, 47, 11, 2, ... What number should come next?",
+      "options": [
+        "15.0",
+        "-4.0",
+        "3.0",
+        "0.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-84",
+      "section": "logical",
+      "question": "Look at this series: 165, 82, 41, 20, ... What number should come next?",
+      "options": [
+        "27.0",
+        "10.0",
+        "14.0",
+        "6.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-85",
+      "section": "logical",
+      "question": "Look at this series: 6, 7, 8, 0, ... What number should come next?",
+      "options": [
+        "13.0",
+        "-3.0",
+        "1.0",
+        "4.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-86",
+      "section": "logical",
+      "question": "Look at this series: 123, 61, 30, 15, ... What number should come next?",
+      "options": [
+        "4.0",
+        "25.0",
+        "9.0",
+        "7.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-87",
+      "section": "logical",
+      "question": "Look at this series: 2, 4, 6, 8, ... What number should come next?",
+      "options": [
+        "15.0",
+        "10.0",
+        "24.0",
+        "6.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-88",
+      "section": "logical",
+      "question": "Look at this series: 75, 63, 51, 39, ... What number should come next?",
+      "options": [
+        "45.0",
+        "27.0",
+        "21.0",
+        "30.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-89",
+      "section": "logical",
+      "question": "Look at this series: 1.1, 1.6, 2.1, 2.6, ... What number should come next?",
+      "options": [
+        "3.1",
+        "-6.9",
+        "10.1",
+        "22.1"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-90",
+      "section": "logical",
+      "question": "Look at this series: 5, 8, 11, 14, ... What number should come next?",
+      "options": [
+        "8.0",
+        "17.0",
+        "22.0",
+        "36.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-91",
+      "section": "logical",
+      "question": "Look at this series: 1, 7, 13, 19, ... What number should come next?",
+      "options": [
+        "30.0",
+        "15.0",
+        "43.0",
+        "25.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-92",
+      "section": "logical",
+      "question": "Look at this series: -3, -6, -9, -12, ... What number should come next?",
+      "options": [
+        "-5.0",
+        "-15.0",
+        "-5.0",
+        "-22.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-93",
+      "section": "logical",
+      "question": "Look at this series: 1, 3, 9, 27, ... What number should come next?",
+      "options": [
+        "84.0",
+        "81.0",
+        "77.0",
+        "97.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-94",
+      "section": "logical",
+      "question": "Look at this series: 91, 78, 65, 52, ... What number should come next?",
+      "options": [
+        "34.0",
+        "48.0",
+        "39.0",
+        "51.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-95",
+      "section": "logical",
+      "question": "Look at this series: 4.0, 4.7, 5.4, 6.1, ... What number should come next?",
+      "options": [
+        "-0.2",
+        "9.8",
+        "6.8",
+        "17.8"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-96",
+      "section": "logical",
+      "question": "Look at this series: 4.7, 5.9, 7.1, 8.3, ... What number should come next?",
+      "options": [
+        "16.5",
+        "4.5",
+        "19.5",
+        "9.5"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-97",
+      "section": "logical",
+      "question": "Look at this series: 5, 20, 80, 320, ... What number should come next?",
+      "options": [
+        "1273.0",
+        "1295.0",
+        "1280.0",
+        "1290.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-98",
+      "section": "logical",
+      "question": "Look at this series: -1, -5, -9, -13, ... What number should come next?",
+      "options": [
+        "1.0",
+        "-7.0",
+        "-17.0",
+        "-21.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-99",
+      "section": "logical",
+      "question": "Look at this series: 4, 5, 6, 7, ... What number should come next?",
+      "options": [
+        "17.0",
+        "0.0",
+        "4.0",
+        "-7.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-100",
+      "section": "logical",
+      "question": "Look at this series: 6, 0, 1, 2, ... What number should come next?",
+      "options": [
+        "0.0",
+        "22.0",
+        "11.0",
+        "3.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-101",
+      "section": "logical",
+      "question": "Look at this series: -6, -12, -18, -24, ... What number should come next?",
+      "options": [
+        "-37.0",
+        "-11.0",
+        "-30.0",
+        "-28.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-102",
+      "section": "logical",
+      "question": "Look at this series: 4.3, 4.7, 5.1, 5.5, ... What number should come next?",
+      "options": [
+        "5.9",
+        "14.9",
+        "-3.1",
+        "22.9"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-103",
+      "section": "logical",
+      "question": "Look at this series: -3, -10, -17, -24, ... What number should come next?",
+      "options": [
+        "-17.0",
+        "-29.0",
+        "-31.0",
+        "-38.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-104",
+      "section": "logical",
+      "question": "Look at this series: 96, 81, 66, 51, ... What number should come next?",
+      "options": [
+        "51.0",
+        "33.0",
+        "45.0",
+        "36.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-105",
+      "section": "logical",
+      "question": "Look at this series: 15, 23, 31, 39, ... What number should come next?",
+      "options": [
+        "47.0",
+        "57.0",
+        "65.0",
+        "39.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-106",
+      "section": "logical",
+      "question": "Look at this series: -18, -24, -30, -36, ... What number should come next?",
+      "options": [
+        "-42.0",
+        "-32.0",
+        "-38.0",
+        "-52.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-107",
+      "section": "logical",
+      "question": "Look at this series: 0.5, 1.8, 3.1, 4.4, ... What number should come next?",
+      "options": [
+        "3.7",
+        "5.7",
+        "8.7",
+        "15.7"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-108",
+      "section": "logical",
+      "question": "Look at this series: 185, 46, 11, 2, ... What number should come next?",
+      "options": [
+        "7.0",
+        "19.0",
+        "-8.0",
+        "0.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-109",
+      "section": "logical",
+      "question": "Look at this series: 95, 88, 81, 74, ... What number should come next?",
+      "options": [
+        "67.0",
+        "58.0",
+        "85.0",
+        "77.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-110",
+      "section": "logical",
+      "question": "Look at this series: 81, 72, 63, 54, ... What number should come next?",
+      "options": [
+        "45.0",
+        "57.0",
+        "38.0",
+        "54.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-111",
+      "section": "logical",
+      "question": "Look at this series: 112, 22, 4, 0, ... What number should come next?",
+      "options": [
+        "-7.0",
+        "6.0",
+        "15.0",
+        "0.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-112",
+      "section": "logical",
+      "question": "Look at this series: 115, 38, 12, 4, ... What number should come next?",
+      "options": [
+        "18.0",
+        "-7.0",
+        "1.0",
+        "9.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-113",
+      "section": "logical",
+      "question": "Look at this series: -15, -21, -27, -33, ... What number should come next?",
+      "options": [
+        "-45.0",
+        "-21.0",
+        "-38.0",
+        "-39.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-114",
+      "section": "logical",
+      "question": "Look at this series: 15, 18, 21, 24, ... What number should come next?",
+      "options": [
+        "22.0",
+        "34.0",
+        "27.0",
+        "47.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-115",
+      "section": "logical",
+      "question": "Look at this series: 158, 39, 9, 2, ... What number should come next?",
+      "options": [
+        "13.0",
+        "0.0",
+        "-1.0",
+        "2.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-116",
+      "section": "logical",
+      "question": "Look at this series: 67, 53, 39, 25, ... What number should come next?",
+      "options": [
+        "10.0",
+        "24.0",
+        "11.0",
+        "14.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-117",
+      "section": "logical",
+      "question": "Look at this series: -3, -7, -11, -15, ... What number should come next?",
+      "options": [
+        "0.0",
+        "-20.0",
+        "-19.0",
+        "-18.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-118",
+      "section": "logical",
+      "question": "Look at this series: 96, 89, 82, 75, ... What number should come next?",
+      "options": [
+        "88.0",
+        "68.0",
+        "71.0",
+        "64.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-119",
+      "section": "logical",
+      "question": "Look at this series: 3, 10, 17, 24, ... What number should come next?",
+      "options": [
+        "29.0",
+        "31.0",
+        "42.0",
+        "33.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-120",
+      "section": "logical",
+      "question": "Look at this series: 8, 0, 1, 2, ... What number should come next?",
+      "options": [
+        "3.0",
+        "2.0",
+        "9.0",
+        "22.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-121",
+      "section": "logical",
+      "question": "Look at this series: 152, 38, 9, 2, ... What number should come next?",
+      "options": [
+        "0.0",
+        "1.0",
+        "-1.0",
+        "13.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-122",
+      "section": "logical",
+      "question": "Look at this series: 13, 21, 29, 37, ... What number should come next?",
+      "options": [
+        "44.0",
+        "45.0",
+        "58.0",
+        "49.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-123",
+      "section": "logical",
+      "question": "Look at this series: 10, 16, 22, 28, ... What number should come next?",
+      "options": [
+        "33.0",
+        "34.0",
+        "35.0",
+        "48.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-124",
+      "section": "logical",
+      "question": "Look at this series: 3, 15, 75, 375, ... What number should come next?",
+      "options": [
+        "1875.0",
+        "1888.0",
+        "1866.0",
+        "1878.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-125",
+      "section": "logical",
+      "question": "Look at this series: -4, -14, -24, -34, ... What number should come next?",
+      "options": [
+        "-44.0",
+        "-31.0",
+        "-51.0",
+        "-35.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-126",
+      "section": "logical",
+      "question": "Look at this series: 27, 81, 243, 729, ... What number should come next?",
+      "options": [
+        "2187.0",
+        "2205.0",
+        "2196.0",
+        "2178.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-127",
+      "section": "logical",
+      "question": "Look at this series: 93, 78, 63, 48, ... What number should come next?",
+      "options": [
+        "53.0",
+        "38.0",
+        "33.0",
+        "27.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-128",
+      "section": "logical",
+      "question": "Look at this series: 1.1, 1.9, 2.7, 3.5, ... What number should come next?",
+      "options": [
+        "4.3",
+        "-4.7",
+        "6.3",
+        "14.3"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-129",
+      "section": "logical",
+      "question": "Look at this series: 156, 52, 17, 5, ... What number should come next?",
+      "options": [
+        "-1.0",
+        "10.0",
+        "1.0",
+        "20.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-130",
+      "section": "logical",
+      "question": "Look at this series: 4, 12, 36, 108, ... What number should come next?",
+      "options": [
+        "318.0",
+        "339.0",
+        "330.0",
+        "324.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-131",
+      "section": "logical",
+      "question": "Look at this series: 1, 2, 4, 8, ... What number should come next?",
+      "options": [
+        "9.0",
+        "30.0",
+        "16.0",
+        "19.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-132",
+      "section": "logical",
+      "question": "Look at this series: 88, 76, 64, 52, ... What number should come next?",
+      "options": [
+        "40.0",
+        "33.0",
+        "47.0",
+        "60.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-133",
+      "section": "logical",
+      "question": "Look at this series: 4, 9, 14, 19, ... What number should come next?",
+      "options": [
+        "26.0",
+        "24.0",
+        "40.0",
+        "18.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-134",
+      "section": "logical",
+      "question": "Look at this series: 71, 64, 57, 50, ... What number should come next?",
+      "options": [
+        "43.0",
+        "33.0",
+        "45.0",
+        "53.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-135",
+      "section": "logical",
+      "question": "Look at this series: 65, 53, 41, 29, ... What number should come next?",
+      "options": [
+        "33.0",
+        "12.0",
+        "17.0",
+        "25.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-136",
+      "section": "logical",
+      "question": "Look at this series: 72, 60, 48, 36, ... What number should come next?",
+      "options": [
+        "37.0",
+        "16.0",
+        "28.0",
+        "24.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-137",
+      "section": "logical",
+      "question": "Look at this series: 72, 67, 62, 57, ... What number should come next?",
+      "options": [
+        "42.0",
+        "67.0",
+        "58.0",
+        "52.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-138",
+      "section": "logical",
+      "question": "Look at this series: 94, 79, 64, 49, ... What number should come next?",
+      "options": [
+        "27.0",
+        "42.0",
+        "48.0",
+        "34.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-139",
+      "section": "logical",
+      "question": "Look at this series: 3, 6, 9, 12, ... What number should come next?",
+      "options": [
+        "10.0",
+        "15.0",
+        "33.0",
+        "23.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-140",
+      "section": "logical",
+      "question": "Look at this series: 4, 8, 16, 32, ... What number should come next?",
+      "options": [
+        "64.0",
+        "71.0",
+        "54.0",
+        "74.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-141",
+      "section": "logical",
+      "question": "Look at this series: 4.7, 6.1, 7.5, 8.9, ... What number should come next?",
+      "options": [
+        "10.3",
+        "21.3",
+        "14.3",
+        "8.3"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-142",
+      "section": "logical",
+      "question": "Look at this series: 119, 23, 4, 0, ... What number should come next?",
+      "options": [
+        "0.0",
+        "-4.0",
+        "16.0",
+        "2.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-143",
+      "section": "logical",
+      "question": "Look at this series: 2, 10, 50, 250, ... What number should come next?",
+      "options": [
+        "1242.0",
+        "1260.0",
+        "1250.0",
+        "1266.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-144",
+      "section": "logical",
+      "question": "Look at this series: 69, 61, 53, 45, ... What number should come next?",
+      "options": [
+        "28.0",
+        "37.0",
+        "48.0",
+        "40.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-145",
+      "section": "logical",
+      "question": "Look at this series: 188, 62, 20, 6, ... What number should come next?",
+      "options": [
+        "2.0",
+        "4.0",
+        "1.0",
+        "21.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-146",
+      "section": "logical",
+      "question": "Look at this series: 2, 6, 18, 54, ... What number should come next?",
+      "options": [
+        "176.0",
+        "160.0",
+        "169.0",
+        "162.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-147",
+      "section": "logical",
+      "question": "Look at this series: 4, 5, 6, 0, ... What number should come next?",
+      "options": [
+        "21.0",
+        "4.0",
+        "0.0",
+        "1.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-148",
+      "section": "logical",
+      "question": "Look at this series: 100, 20, 4, 0, ... What number should come next?",
+      "options": [
+        "0.0",
+        "10.0",
+        "-4.0",
+        "11.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-149",
+      "section": "logical",
+      "question": "Look at this series: 157, 52, 17, 5, ... What number should come next?",
+      "options": [
+        "18.0",
+        "2.0",
+        "-3.0",
+        "1.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-150",
+      "section": "logical",
+      "question": "Look at this series: 198, 99, 49, 24, ... What number should come next?",
+      "options": [
+        "12.0",
+        "17.0",
+        "26.0",
+        "2.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-151",
+      "section": "logical",
+      "question": "Look at this series: 79, 71, 63, 55, ... What number should come next?",
+      "options": [
+        "38.0",
+        "65.0",
+        "47.0",
+        "55.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-152",
+      "section": "logical",
+      "question": "Look at this series: -18, -23, -28, -33, ... What number should come next?",
+      "options": [
+        "-41.0",
+        "-24.0",
+        "-38.0",
+        "-36.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-153",
+      "section": "logical",
+      "question": "Look at this series: -7, -17, -27, -37, ... What number should come next?",
+      "options": [
+        "-50.0",
+        "-29.0",
+        "-47.0",
+        "-39.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-154",
+      "section": "logical",
+      "question": "Look at this series: -14, -23, -32, -41, ... What number should come next?",
+      "options": [
+        "-50.0",
+        "-56.0",
+        "-47.0",
+        "-37.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-155",
+      "section": "logical",
+      "question": "Look at this series: 5, 25, 125, 625, ... What number should come next?",
+      "options": [
+        "3127.0",
+        "3121.0",
+        "3141.0",
+        "3125.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-156",
+      "section": "logical",
+      "question": "Look at this series: 2.7, 3.6, 4.5, 5.4, ... What number should come next?",
+      "options": [
+        "7.3",
+        "24.3",
+        "6.3",
+        "-1.7"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-157",
+      "section": "logical",
+      "question": "Look at this series: 100, 93, 86, 79, ... What number should come next?",
+      "options": [
+        "81.0",
+        "72.0",
+        "62.0",
+        "84.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-158",
+      "section": "logical",
+      "question": "Look at this series: 4.4, 5.7, 7.0, 8.3, ... What number should come next?",
+      "options": [
+        "7.6",
+        "15.6",
+        "24.6",
+        "9.6"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-159",
+      "section": "logical",
+      "question": "Look at this series: 54, 42, 30, 18, ... What number should come next?",
+      "options": [
+        "25.0",
+        "2.0",
+        "6.0",
+        "12.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-160",
+      "section": "logical",
+      "question": "Look at this series: 16, 25, 34, 43, ... What number should come next?",
+      "options": [
+        "52.0",
+        "43.0",
+        "53.0",
+        "64.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-161",
+      "section": "logical",
+      "question": "Look at this series: -4, -8, -12, -16, ... What number should come next?",
+      "options": [
+        "-28.0",
+        "-20.0",
+        "-14.0",
+        "-7.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-162",
+      "section": "logical",
+      "question": "Look at this series: 86, 72, 58, 44, ... What number should come next?",
+      "options": [
+        "29.0",
+        "35.0",
+        "30.0",
+        "43.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-163",
+      "section": "logical",
+      "question": "Look at this series: 2.4, 3.3, 4.2, 5.1, ... What number should come next?",
+      "options": [
+        "12.0",
+        "25.0",
+        "-3.0",
+        "6.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-164",
+      "section": "logical",
+      "question": "Look at this series: 3, 12, 48, 192, ... What number should come next?",
+      "options": [
+        "781.0",
+        "760.0",
+        "768.0",
+        "773.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-165",
+      "section": "logical",
+      "question": "Look at this series: 19, 23, 27, 31, ... What number should come next?",
+      "options": [
+        "38.0",
+        "50.0",
+        "31.0",
+        "35.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-166",
+      "section": "logical",
+      "question": "Look at this series: 123, 41, 13, 4, ... What number should come next?",
+      "options": [
+        "21.0",
+        "-9.0",
+        "1.0",
+        "3.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-167",
+      "section": "logical",
+      "question": "Look at this series: 130, 43, 14, 4, ... What number should come next?",
+      "options": [
+        "-8.0",
+        "2.0",
+        "1.0",
+        "17.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-168",
+      "section": "logical",
+      "question": "Look at this series: 2.3, 3.9, 5.5, 7.1, ... What number should come next?",
+      "options": [
+        "7.7",
+        "20.7",
+        "8.7",
+        "13.7"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-169",
+      "section": "logical",
+      "question": "Look at this series: -19, -26, -33, -40, ... What number should come next?",
+      "options": [
+        "-28.0",
+        "-47.0",
+        "-48.0",
+        "-41.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-170",
+      "section": "logical",
+      "question": "Look at this series: 20, 21, 22, 23, ... What number should come next?",
+      "options": [
+        "24.0",
+        "43.0",
+        "20.0",
+        "28.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-171",
+      "section": "logical",
+      "question": "Look at this series: 20, 22, 24, 26, ... What number should come next?",
+      "options": [
+        "23.0",
+        "28.0",
+        "38.0",
+        "29.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-172",
+      "section": "logical",
+      "question": "Look at this series: 119, 59, 29, 14, ... What number should come next?",
+      "options": [
+        "27.0",
+        "-3.0",
+        "7.0",
+        "16.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-173",
+      "section": "logical",
+      "question": "Look at this series: 5, 10, 20, 40, ... What number should come next?",
+      "options": [
+        "80.0",
+        "78.0",
+        "95.0",
+        "89.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-174",
+      "section": "logical",
+      "question": "Look at this series: 120, 24, 4, 0, ... What number should come next?",
+      "options": [
+        "19.0",
+        "-6.0",
+        "8.0",
+        "0.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-175",
+      "section": "logical",
+      "question": "Look at this series: 99, 89, 79, 69, ... What number should come next?",
+      "options": [
+        "52.0",
+        "66.0",
+        "76.0",
+        "59.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-176",
+      "section": "logical",
+      "question": "Look at this series: -13, -22, -31, -40, ... What number should come next?",
+      "options": [
+        "-42.0",
+        "-58.0",
+        "-49.0",
+        "-34.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-177",
+      "section": "logical",
+      "question": "Look at this series: 6, 13, 20, 27, ... What number should come next?",
+      "options": [
+        "51.0",
+        "34.0",
+        "33.0",
+        "39.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-178",
+      "section": "logical",
+      "question": "Look at this series: -12, -21, -30, -39, ... What number should come next?",
+      "options": [
+        "-48.0",
+        "-53.0",
+        "-38.0",
+        "-41.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-179",
+      "section": "logical",
+      "question": "Look at this series: 65, 51, 37, 23, ... What number should come next?",
+      "options": [
+        "11.0",
+        "9.0",
+        "1.0",
+        "19.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-180",
+      "section": "logical",
+      "question": "Look at this series: 3, 4, 5, 0, ... What number should come next?",
+      "options": [
+        "1.0",
+        "14.0",
+        "5.0",
+        "0.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-181",
+      "section": "logical",
+      "question": "Look at this series: 78, 73, 68, 63, ... What number should come next?",
+      "options": [
+        "58.0",
+        "72.0",
+        "67.0",
+        "53.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-182",
+      "section": "logical",
+      "question": "Look at this series: -17, -18, -19, -20, ... What number should come next?",
+      "options": [
+        "-15.0",
+        "-24.0",
+        "-21.0",
+        "-3.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-183",
+      "section": "logical",
+      "question": "Look at this series: 3.7, 4.7, 5.7, 6.7, ... What number should come next?",
+      "options": [
+        "2.7",
+        "16.7",
+        "18.7",
+        "7.7"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-184",
+      "section": "logical",
+      "question": "Look at this series: 53, 44, 35, 26, ... What number should come next?",
+      "options": [
+        "14.0",
+        "34.0",
+        "17.0",
+        "26.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-185",
+      "section": "logical",
+      "question": "Look at this series: 122, 24, 4, 0, ... What number should come next?",
+      "options": [
+        "-4.0",
+        "0.0",
+        "20.0",
+        "5.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-186",
+      "section": "logical",
+      "question": "Look at this series: 169, 84, 42, 21, ... What number should come next?",
+      "options": [
+        "5.0",
+        "10.0",
+        "26.0",
+        "17.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-187",
+      "section": "logical",
+      "question": "Look at this series: 2.1, 3.7, 5.3, 6.9, ... What number should come next?",
+      "options": [
+        "8.5",
+        "5.5",
+        "24.5",
+        "12.5"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-188",
+      "section": "logical",
+      "question": "Look at this series: 5, 12, 19, 26, ... What number should come next?",
+      "options": [
+        "25.0",
+        "52.0",
+        "37.0",
+        "33.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-189",
+      "section": "logical",
+      "question": "Look at this series: 2.3, 3.8, 5.3, 6.8, ... What number should come next?",
+      "options": [
+        "1.3",
+        "13.3",
+        "24.3",
+        "8.3"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-190",
+      "section": "logical",
+      "question": "Look at this series: 69, 63, 57, 51, ... What number should come next?",
+      "options": [
+        "38.0",
+        "45.0",
+        "62.0",
+        "49.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-191",
+      "section": "logical",
+      "question": "Look at this series: 4.7, 6.3, 7.9, 9.5, ... What number should come next?",
+      "options": [
+        "20.1",
+        "30.1",
+        "4.1",
+        "11.1"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-192",
+      "section": "logical",
+      "question": "Look at this series: 1, 8, 15, 22, ... What number should come next?",
+      "options": [
+        "29.0",
+        "35.0",
+        "45.0",
+        "25.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-193",
+      "section": "logical",
+      "question": "Look at this series: 5.0, 5.3, 5.6, 5.9, ... What number should come next?",
+      "options": [
+        "19.2",
+        "2.2",
+        "11.2",
+        "6.2"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-194",
+      "section": "logical",
+      "question": "Look at this series: 66, 57, 48, 39, ... What number should come next?",
+      "options": [
+        "30.0",
+        "25.0",
+        "48.0",
+        "38.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-195",
+      "section": "logical",
+      "question": "Look at this series: -18, -19, -20, -21, ... What number should come next?",
+      "options": [
+        "-9.0",
+        "-14.0",
+        "-32.0",
+        "-22.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-196",
+      "section": "logical",
+      "question": "Look at this series: 54, 44, 34, 24, ... What number should come next?",
+      "options": [
+        "13.0",
+        "32.0",
+        "18.0",
+        "14.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-197",
+      "section": "logical",
+      "question": "Look at this series: 78, 72, 66, 60, ... What number should come next?",
+      "options": [
+        "47.0",
+        "54.0",
+        "64.0",
+        "56.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-198",
+      "section": "logical",
+      "question": "Look at this series: 1.7, 2.3, 2.9, 3.5, ... What number should come next?",
+      "options": [
+        "3.1",
+        "4.1",
+        "12.1",
+        "16.1"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-199",
+      "section": "logical",
+      "question": "Look at this series: 82, 74, 66, 58, ... What number should come next?",
+      "options": [
+        "44.0",
+        "52.0",
+        "65.0",
+        "50.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-200",
+      "section": "logical",
+      "question": "Look at this series: 126, 42, 14, 4, ... What number should come next?",
+      "options": [
+        "1.0",
+        "17.0",
+        "0.0",
+        "7.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-201",
+      "section": "logical",
+      "question": "Look at this series: 16, 26, 36, 46, ... What number should come next?",
+      "options": [
+        "56.0",
+        "76.0",
+        "60.0",
+        "53.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-202",
+      "section": "logical",
+      "question": "Look at this series: 11, 13, 15, 17, ... What number should come next?",
+      "options": [
+        "29.0",
+        "19.0",
+        "39.0",
+        "12.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-203",
+      "section": "logical",
+      "question": "Look at this series: 1, 3, 5, 7, ... What number should come next?",
+      "options": [
+        "21.0",
+        "18.0",
+        "9.0",
+        "0.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-204",
+      "section": "logical",
+      "question": "Look at this series: -7, -9, -11, -13, ... What number should come next?",
+      "options": [
+        "-20.0",
+        "-15.0",
+        "-1.0",
+        "-14.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-205",
+      "section": "logical",
+      "question": "Look at this series: 85, 80, 75, 70, ... What number should come next?",
+      "options": [
+        "66.0",
+        "65.0",
+        "55.0",
+        "84.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-206",
+      "section": "logical",
+      "question": "Look at this series: 12, 15, 18, 21, ... What number should come next?",
+      "options": [
+        "18.0",
+        "41.0",
+        "24.0",
+        "27.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-207",
+      "section": "logical",
+      "question": "Look at this series: 12, 20, 28, 36, ... What number should come next?",
+      "options": [
+        "52.0",
+        "59.0",
+        "44.0",
+        "35.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-208",
+      "section": "logical",
+      "question": "Look at this series: 74, 61, 48, 35, ... What number should come next?",
+      "options": [
+        "20.0",
+        "22.0",
+        "25.0",
+        "40.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-209",
+      "section": "logical",
+      "question": "Look at this series: -11, -16, -21, -26, ... What number should come next?",
+      "options": [
+        "-30.0",
+        "-31.0",
+        "-35.0",
+        "-13.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-210",
+      "section": "logical",
+      "question": "Look at this series: 3, 6, 12, 24, ... What number should come next?",
+      "options": [
+        "48.0",
+        "51.0",
+        "46.0",
+        "66.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-211",
+      "section": "logical",
+      "question": "Look at this series: 124, 41, 13, 4, ... What number should come next?",
+      "options": [
+        "-2.0",
+        "5.0",
+        "1.0",
+        "19.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-212",
+      "section": "logical",
+      "question": "Look at this series: 3.9, 5.1, 6.3, 7.5, ... What number should come next?",
+      "options": [
+        "8.7",
+        "24.7",
+        "2.7",
+        "14.7"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-213",
+      "section": "logical",
+      "question": "Look at this series: 153, 30, 6, 1, ... What number should come next?",
+      "options": [
+        "13.0",
+        "7.0",
+        "-9.0",
+        "0.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-214",
+      "section": "logical",
+      "question": "Look at this series: 102, 20, 4, 0, ... What number should come next?",
+      "options": [
+        "0.0",
+        "-9.0",
+        "1.0",
+        "16.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-215",
+      "section": "logical",
+      "question": "Look at this series: 93, 82, 71, 60, ... What number should come next?",
+      "options": [
+        "54.0",
+        "49.0",
+        "39.0",
+        "61.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-216",
+      "section": "logical",
+      "question": "Look at this series: 2, 11, 20, 29, ... What number should come next?",
+      "options": [
+        "34.0",
+        "58.0",
+        "42.0",
+        "38.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-217",
+      "section": "logical",
+      "question": "Look at this series: 148, 49, 16, 5, ... What number should come next?",
+      "options": [
+        "7.0",
+        "1.0",
+        "-3.0",
+        "19.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-218",
+      "section": "logical",
+      "question": "Look at this series: 90, 82, 74, 66, ... What number should come next?",
+      "options": [
+        "52.0",
+        "58.0",
+        "77.0",
+        "60.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-219",
+      "section": "logical",
+      "question": "Look at this series: 3, 4, 0, 1, ... What number should come next?",
+      "options": [
+        "2.0",
+        "5.0",
+        "21.0",
+        "1.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-220",
+      "section": "logical",
+      "question": "Look at this series: 135, 27, 5, 1, ... What number should come next?",
+      "options": [
+        "15.0",
+        "-9.0",
+        "0.0",
+        "8.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-221",
+      "section": "logical",
+      "question": "Look at this series: -12, -17, -22, -27, ... What number should come next?",
+      "options": [
+        "-32.0",
+        "-33.0",
+        "-31.0",
+        "-22.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-222",
+      "section": "logical",
+      "question": "Look at this series: 66, 53, 40, 27, ... What number should come next?",
+      "options": [
+        "14.0",
+        "9.0",
+        "21.0",
+        "33.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-223",
+      "section": "logical",
+      "question": "Look at this series: 4.4, 5.9, 7.4, 8.9, ... What number should come next?",
+      "options": [
+        "10.4",
+        "17.4",
+        "5.4",
+        "25.4"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-224",
+      "section": "logical",
+      "question": "Look at this series: 81, 75, 69, 63, ... What number should come next?",
+      "options": [
+        "69.0",
+        "67.0",
+        "57.0",
+        "52.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-225",
+      "section": "logical",
+      "question": "Look at this series: 4, 0, 1, 2, ... What number should come next?",
+      "options": [
+        "3.0",
+        "-5.0",
+        "7.0",
+        "17.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-226",
+      "section": "logical",
+      "question": "Look at this series: 142, 71, 35, 17, ... What number should come next?",
+      "options": [
+        "25.0",
+        "7.0",
+        "8.0",
+        "12.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-227",
+      "section": "logical",
+      "question": "Look at this series: -15, -25, -35, -45, ... What number should come next?",
+      "options": [
+        "-40.0",
+        "-61.0",
+        "-46.0",
+        "-55.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-228",
+      "section": "logical",
+      "question": "Look at this series: 4.4, 4.7, 5.0, 5.3, ... What number should come next?",
+      "options": [
+        "5.6",
+        "12.6",
+        "4.6",
+        "16.6"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-229",
+      "section": "logical",
+      "question": "Look at this series: 1.2, 1.9, 2.6, 3.3, ... What number should come next?",
+      "options": [
+        "14.0",
+        "6.0",
+        "4.0",
+        "1.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-230",
+      "section": "logical",
+      "question": "Look at this series: 74, 63, 52, 41, ... What number should come next?",
+      "options": [
+        "30.0",
+        "25.0",
+        "49.0",
+        "31.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-231",
+      "section": "logical",
+      "question": "Look at this series: 166, 33, 6, 1, ... What number should come next?",
+      "options": [
+        "0.0",
+        "9.0",
+        "15.0",
+        "-4.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-232",
+      "section": "logical",
+      "question": "Look at this series: 143, 35, 8, 2, ... What number should come next?",
+      "options": [
+        "0.0",
+        "7.0",
+        "14.0",
+        "-5.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-233",
+      "section": "logical",
+      "question": "Look at this series: -10, -14, -18, -22, ... What number should come next?",
+      "options": [
+        "-22.0",
+        "-33.0",
+        "-14.0",
+        "-26.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-234",
+      "section": "logical",
+      "question": "Look at this series: 99, 94, 89, 84, ... What number should come next?",
+      "options": [
+        "84.0",
+        "69.0",
+        "79.0",
+        "99.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-235",
+      "section": "logical",
+      "question": "Look at this series: 9, 18, 27, 36, ... What number should come next?",
+      "options": [
+        "45.0",
+        "59.0",
+        "40.0",
+        "50.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-236",
+      "section": "logical",
+      "question": "Look at this series: -9, -10, -11, -12, ... What number should come next?",
+      "options": [
+        "-3.0",
+        "-2.0",
+        "-13.0",
+        "-18.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-237",
+      "section": "logical",
+      "question": "Look at this series: 0.8, 2.1, 3.4, 4.7, ... What number should come next?",
+      "options": [
+        "10.0",
+        "26.0",
+        "6.0",
+        "2.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-238",
+      "section": "logical",
+      "question": "Look at this series: 13, 17, 21, 25, ... What number should come next?",
+      "options": [
+        "34.0",
+        "19.0",
+        "29.0",
+        "49.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-239",
+      "section": "logical",
+      "question": "Look at this series: 3.3, 4.7, 6.1, 7.5, ... What number should come next?",
+      "options": [
+        "8.9",
+        "15.9",
+        "7.9",
+        "28.9"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-240",
+      "section": "logical",
+      "question": "Look at this series: 2, 3, 4, 0, ... What number should come next?",
+      "options": [
+        "14.0",
+        "3.0",
+        "1.0",
+        "-8.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-241",
+      "section": "logical",
+      "question": "Look at this series: 2.6, 3.5, 4.4, 5.3, ... What number should come next?",
+      "options": [
+        "18.2",
+        "6.2",
+        "7.2",
+        "2.2"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-242",
+      "section": "logical",
+      "question": "Look at this series: -17, -20, -23, -26, ... What number should come next?",
+      "options": [
+        "-29.0",
+        "-14.0",
+        "-27.0",
+        "-35.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-243",
+      "section": "logical",
+      "question": "Look at this series: 7, 0, 1, 2, ... What number should come next?",
+      "options": [
+        "3.0",
+        "-5.0",
+        "8.0",
+        "20.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-244",
+      "section": "logical",
+      "question": "Look at this series: 146, 29, 5, 1, ... What number should come next?",
+      "options": [
+        "6.0",
+        "-2.0",
+        "0.0",
+        "14.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-245",
+      "section": "logical",
+      "question": "Look at this series: 16, 20, 24, 28, ... What number should come next?",
+      "options": [
+        "24.0",
+        "48.0",
+        "38.0",
+        "32.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-246",
+      "section": "logical",
+      "question": "Look at this series: 100, 86, 72, 58, ... What number should come next?",
+      "options": [
+        "44.0",
+        "51.0",
+        "39.0",
+        "64.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-247",
+      "section": "logical",
+      "question": "Look at this series: 86, 75, 64, 53, ... What number should come next?",
+      "options": [
+        "42.0",
+        "33.0",
+        "45.0",
+        "62.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-248",
+      "section": "logical",
+      "question": "Look at this series: 164, 41, 10, 2, ... What number should come next?",
+      "options": [
+        "10.0",
+        "0.0",
+        "7.0",
+        "-3.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-249",
+      "section": "logical",
+      "question": "Look at this series: 2, 3, 4, 0, ... What number should come next?",
+      "options": [
+        "1.0",
+        "0.0",
+        "5.0",
+        "19.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-250",
+      "section": "logical",
+      "question": "Look at this series: 3, 11, 19, 27, ... What number should come next?",
+      "options": [
+        "35.0",
+        "45.0",
+        "48.0",
+        "25.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-251",
+      "section": "logical",
+      "question": "Look at this series: 0.6, 2.2, 3.8, 5.4, ... What number should come next?",
+      "options": [
+        "25.0",
+        "10.0",
+        "4.0",
+        "7.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-252",
+      "section": "logical",
+      "question": "Look at this series: 195, 97, 48, 24, ... What number should come next?",
+      "options": [
+        "22.0",
+        "3.0",
+        "21.0",
+        "12.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-253",
+      "section": "logical",
+      "question": "Look at this series: 0.2, 1.5, 2.8, 4.1, ... What number should come next?",
+      "options": [
+        "-3.6",
+        "7.4",
+        "5.4",
+        "23.4"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-254",
+      "section": "logical",
+      "question": "Look at this series: -12, -22, -32, -42, ... What number should come next?",
+      "options": [
+        "-45.0",
+        "-52.0",
+        "-53.0",
+        "-42.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-255",
+      "section": "logical",
+      "question": "Look at this series: 94, 83, 72, 61, ... What number should come next?",
+      "options": [
+        "48.0",
+        "51.0",
+        "50.0",
+        "66.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-256",
+      "section": "logical",
+      "question": "Look at this series: 5, 6, 7, 8, ... What number should come next?",
+      "options": [
+        "5.0",
+        "0.0",
+        "15.0",
+        "-3.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-257",
+      "section": "logical",
+      "question": "Look at this series: 3.9, 5.5, 7.1, 8.7, ... What number should come next?",
+      "options": [
+        "10.3",
+        "5.3",
+        "23.3",
+        "12.3"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-258",
+      "section": "logical",
+      "question": "Look at this series: 76, 66, 56, 46, ... What number should come next?",
+      "options": [
+        "43.0",
+        "30.0",
+        "36.0",
+        "52.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-259",
+      "section": "logical",
+      "question": "Look at this series: 100, 50, 25, 12, ... What number should come next?",
+      "options": [
+        "20.0",
+        "6.0",
+        "8.0",
+        "-4.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-260",
+      "section": "logical",
+      "question": "Look at this series: 158, 52, 17, 5, ... What number should come next?",
+      "options": [
+        "12.0",
+        "8.0",
+        "1.0",
+        "-2.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-261",
+      "section": "logical",
+      "question": "Look at this series: 62, 53, 44, 35, ... What number should come next?",
+      "options": [
+        "22.0",
+        "35.0",
+        "26.0",
+        "36.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-262",
+      "section": "logical",
+      "question": "Look at this series: 3.0, 4.3, 5.6, 6.9, ... What number should come next?",
+      "options": [
+        "8.2",
+        "11.2",
+        "22.2",
+        "5.2"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-263",
+      "section": "logical",
+      "question": "Look at this series: 11, 20, 29, 38, ... What number should come next?",
+      "options": [
+        "57.0",
+        "47.0",
+        "38.0",
+        "55.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-264",
+      "section": "logical",
+      "question": "Look at this series: 11, 21, 31, 41, ... What number should come next?",
+      "options": [
+        "66.0",
+        "51.0",
+        "50.0",
+        "60.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-265",
+      "section": "logical",
+      "question": "Look at this series: 16, 18, 20, 22, ... What number should come next?",
+      "options": [
+        "19.0",
+        "25.0",
+        "42.0",
+        "24.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-266",
+      "section": "logical",
+      "question": "Look at this series: 1.4, 2.2, 3.0, 3.8, ... What number should come next?",
+      "options": [
+        "4.6",
+        "13.6",
+        "1.6",
+        "15.6"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-267",
+      "section": "logical",
+      "question": "Look at this series: 60, 50, 40, 30, ... What number should come next?",
+      "options": [
+        "20.0",
+        "32.0",
+        "12.0",
+        "27.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-268",
+      "section": "logical",
+      "question": "Look at this series: -10, -20, -30, -40, ... What number should come next?",
+      "options": [
+        "-48.0",
+        "-50.0",
+        "-32.0",
+        "-52.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-269",
+      "section": "logical",
+      "question": "Look at this series: -10, -12, -14, -16, ... What number should come next?",
+      "options": [
+        "-16.0",
+        "-8.0",
+        "-18.0",
+        "-21.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-270",
+      "section": "logical",
+      "question": "Look at this series: 0.6, 2.2, 3.8, 5.4, ... What number should come next?",
+      "options": [
+        "26.0",
+        "-1.0",
+        "7.0",
+        "17.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-271",
+      "section": "logical",
+      "question": "Look at this series: -14, -21, -28, -35, ... What number should come next?",
+      "options": [
+        "-27.0",
+        "-39.0",
+        "-42.0",
+        "-51.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-272",
+      "section": "logical",
+      "question": "Look at this series: 15, 22, 29, 36, ... What number should come next?",
+      "options": [
+        "59.0",
+        "43.0",
+        "33.0",
+        "45.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-273",
+      "section": "logical",
+      "question": "Look at this series: 98, 85, 72, 59, ... What number should come next?",
+      "options": [
+        "46.0",
+        "65.0",
+        "54.0",
+        "42.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-274",
+      "section": "logical",
+      "question": "Look at this series: 168, 56, 18, 6, ... What number should come next?",
+      "options": [
+        "-2.0",
+        "7.0",
+        "14.0",
+        "2.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-275",
+      "section": "logical",
+      "question": "Look at this series: -4, -13, -22, -31, ... What number should come next?",
+      "options": [
+        "-42.0",
+        "-26.0",
+        "-40.0",
+        "-31.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-276",
+      "section": "logical",
+      "question": "Look at this series: 134, 67, 33, 16, ... What number should come next?",
+      "options": [
+        "12.0",
+        "7.0",
+        "19.0",
+        "8.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-277",
+      "section": "logical",
+      "question": "Look at this series: -11, -17, -23, -29, ... What number should come next?",
+      "options": [
+        "-42.0",
+        "-22.0",
+        "-35.0",
+        "-31.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-278",
+      "section": "logical",
+      "question": "Look at this series: 0.9, 2.5, 4.1, 5.7, ... What number should come next?",
+      "options": [
+        "1.3",
+        "13.3",
+        "7.3",
+        "27.3"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-279",
+      "section": "logical",
+      "question": "Look at this series: 4, 7, 10, 13, ... What number should come next?",
+      "options": [
+        "6.0",
+        "21.0",
+        "16.0",
+        "30.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-280",
+      "section": "logical",
+      "question": "Look at this series: 2.8, 3.2, 3.6, 4.0, ... What number should come next?",
+      "options": [
+        "1.4",
+        "8.4",
+        "24.4",
+        "4.4"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-281",
+      "section": "logical",
+      "question": "Look at this series: 100, 25, 6, 1, ... What number should come next?",
+      "options": [
+        "11.0",
+        "9.0",
+        "-5.0",
+        "0.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-282",
+      "section": "logical",
+      "question": "Look at this series: -7, -10, -13, -16, ... What number should come next?",
+      "options": [
+        "-8.0",
+        "-21.0",
+        "-16.0",
+        "-19.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-283",
+      "section": "logical",
+      "question": "Look at this series: 0.4, 1.5, 2.6, 3.7, ... What number should come next?",
+      "options": [
+        "4.8",
+        "9.8",
+        "19.8",
+        "-3.2"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-284",
+      "section": "logical",
+      "question": "Look at this series: 4.4, 5.5, 6.6, 7.7, ... What number should come next?",
+      "options": [
+        "24.8",
+        "8.8",
+        "15.8",
+        "3.8"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-285",
+      "section": "logical",
+      "question": "Look at this series: 2, 12, 22, 32, ... What number should come next?",
+      "options": [
+        "37.0",
+        "58.0",
+        "48.0",
+        "42.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-286",
+      "section": "logical",
+      "question": "Look at this series: 95, 83, 71, 59, ... What number should come next?",
+      "options": [
+        "47.0",
+        "53.0",
+        "45.0",
+        "61.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-287",
+      "section": "logical",
+      "question": "Look at this series: 3.4, 5.0, 6.6, 8.2, ... What number should come next?",
+      "options": [
+        "3.8",
+        "11.8",
+        "9.8",
+        "19.8"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-288",
+      "section": "logical",
+      "question": "Look at this series: 4, 20, 100, 500, ... What number should come next?",
+      "options": [
+        "2491.0",
+        "2500.0",
+        "2512.0",
+        "2510.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-289",
+      "section": "logical",
+      "question": "Look at this series: 4, 5, 0, 1, ... What number should come next?",
+      "options": [
+        "18.0",
+        "-8.0",
+        "2.0",
+        "3.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-290",
+      "section": "logical",
+      "question": "Look at this series: 58, 50, 42, 34, ... What number should come next?",
+      "options": [
+        "26.0",
+        "16.0",
+        "35.0",
+        "40.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-291",
+      "section": "logical",
+      "question": "Look at this series: 57, 43, 29, 15, ... What number should come next?",
+      "options": [
+        "-8.0",
+        "18.0",
+        "11.0",
+        "1.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-292",
+      "section": "logical",
+      "question": "Look at this series: 20, 30, 40, 50, ... What number should come next?",
+      "options": [
+        "60.0",
+        "80.0",
+        "56.0",
+        "62.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-293",
+      "section": "logical",
+      "question": "Look at this series: 166, 83, 41, 20, ... What number should come next?",
+      "options": [
+        "1.0",
+        "10.0",
+        "14.0",
+        "28.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-294",
+      "section": "logical",
+      "question": "Look at this series: 122, 61, 30, 15, ... What number should come next?",
+      "options": [
+        "27.0",
+        "7.0",
+        "6.0",
+        "16.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-295",
+      "section": "logical",
+      "question": "Look at this series: -9, -14, -19, -24, ... What number should come next?",
+      "options": [
+        "-18.0",
+        "-35.0",
+        "-29.0",
+        "-28.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "logical-296",
+      "section": "logical",
+      "question": "Look at this series: 20, 25, 30, 35, ... What number should come next?",
+      "options": [
+        "40.0",
+        "60.0",
+        "31.0",
+        "47.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-297",
+      "section": "logical",
+      "question": "Look at this series: -7, -14, -21, -28, ... What number should come next?",
+      "options": [
+        "-35.0",
+        "-37.0",
+        "-33.0",
+        "-24.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-298",
+      "section": "logical",
+      "question": "Look at this series: -16, -23, -30, -37, ... What number should come next?",
+      "options": [
+        "-45.0",
+        "-34.0",
+        "-29.0",
+        "-44.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-299",
+      "section": "logical",
+      "question": "Look at this series: 181, 45, 11, 2, ... What number should come next?",
+      "options": [
+        "0.0",
+        "13.0",
+        "-6.0",
+        "7.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-300",
+      "section": "logical",
+      "question": "Look at this series: 154, 30, 6, 1, ... What number should come next?",
+      "options": [
+        "0.0",
+        "16.0",
+        "4.0",
+        "-10.0"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "logical-301",
+      "section": "logical",
+      "question": "Look at this series: 75, 65, 55, 45, ... What number should come next?",
+      "options": [
+        "36.0",
+        "35.0",
+        "49.0",
+        "34.0"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "logical-302",
+      "section": "logical",
+      "question": "Look at this series: 0.8, 2.6, 4.4, 6.2, ... What number should come next?",
+      "options": [
+        "18.0",
+        "14.0",
+        "1.0",
+        "8.0"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "logical-303",
+      "section": "logical",
+      "question": "Look at this series: -8, -18, -28, -38, ... What number should come next?",
+      "options": [
+        "-31.0",
+        "-51.0",
+        "-48.0",
+        "-42.0"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-1",
+      "section": "technical",
+      "question": "Which if the following is/are the levels of implementation of data structure ?",
+      "options": [
+        "Abstract level",
+        "Application level",
+        "Implementation level",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-2",
+      "section": "technical",
+      "question": "A binary search tree whose left subtree and right subtree differ in hight by at most 1 unit is called ?",
+      "options": [
+        "AVL tree",
+        "Red-black tree",
+        "Lemma tree",
+        "None of the above"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-3",
+      "section": "technical",
+      "question": "What is the time complexity of inserting an element at the end of an array?",
+      "options": [
+        "O(1)",
+        "O(nlogn)",
+        "O(log n)",
+        "O(n)"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-4",
+      "section": "technical",
+      "question": "Which data structure is best suited for implementing a recursive algorithm?",
+      "options": [
+        "Stack",
+        "Queue",
+        "Array",
+        "Linked List"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-5",
+      "section": "technical",
+      "question": "In a binary search tree which traversal visits the nodes in ascending order?",
+      "options": [
+        "Preorder",
+        "Inorder",
+        "Postorder",
+        "Levelorder"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-6",
+      "section": "technical",
+      "question": "Which sorting algorithm has the best average-case time complexity?",
+      "options": [
+        "Merge Sort",
+        "Selection sort",
+        "Insertion Sort",
+        "Bubble sort"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-7",
+      "section": "technical",
+      "question": "What is the worst-case time complexity of quicksort?",
+      "options": [
+        "O(n)",
+        "O(nlogn)",
+        "O(n^2)",
+        "O(log n)"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-8",
+      "section": "technical",
+      "question": "Which data structure is used in Depth First Search (DFS) algorithm?",
+      "options": [
+        "Queue",
+        "Stack",
+        "Heap",
+        "Linked List"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-9",
+      "section": "technical",
+      "question": "What is the purpose of a hash table in data structures?",
+      "options": [
+        "To store data in a sorted manner",
+        "To implement priority queues",
+        "To provide constant-time access to elements",
+        "To sort elements efficiently"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-10",
+      "section": "technical",
+      "question": "Which data structure is used to implement a LIFO behavior?",
+      "options": [
+        "Queue",
+        "Stack",
+        "Heap",
+        "Tree"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-11",
+      "section": "technical",
+      "question": "What is the time complexity of finding an element in a binary search tree?",
+      "options": [
+        "O(n)",
+        "O(nlogn)",
+        "O(log n)",
+        "O(n^2)"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-12",
+      "section": "technical",
+      "question": "Which data structure is suitable for implementing a breadth-first search (BFS) algorithm?",
+      "options": [
+        "Queue",
+        "Stack",
+        "LinkedList",
+        "Heap"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-13",
+      "section": "technical",
+      "question": "Which data structure is typically used to implement a priority queue?",
+      "options": [
+        "Heap",
+        "Stack",
+        "Queue",
+        "LinkedList"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-14",
+      "section": "technical",
+      "question": "What is the time complexity of searching for an element in a hash table with a good hash function?",
+      "options": [
+        "O(n)",
+        "O(nlogn)",
+        "O(n^2)",
+        "O(1)"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-15",
+      "section": "technical",
+      "question": "Which sorting algorithm is known for its stability?",
+      "options": [
+        "Merge Sort",
+        "Selection sort",
+        "Quick Sort",
+        "Insertion Sort"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-16",
+      "section": "technical",
+      "question": "In a binary search tree which operation is used to find the minimum element?",
+      "options": [
+        "findMin()",
+        "getMin()",
+        "minElement()",
+        "minValue()"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-17",
+      "section": "technical",
+      "question": "Which data structure is used to implement a disjoint-set data structure efficiently?",
+      "options": [
+        "Array",
+        "Heap",
+        "Disjoint-Set Forest",
+        "Linked List"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-18",
+      "section": "technical",
+      "question": "What is the time complexity of finding the shortest path in a weighted graph using Dijkstra's algorithm?",
+      "options": [
+        "O(E log V)",
+        "O( E )",
+        "O(V)",
+        "O(V log V)"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-19",
+      "section": "technical",
+      "question": "Which data structure is used to implement a cache with a least recently used (LRU) eviction policy?",
+      "options": [
+        "Queue",
+        "Stack",
+        "LinkedList",
+        "Hash Table"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-20",
+      "section": "technical",
+      "question": "What is the time complexity of inserting an element in a heap data structure?",
+      "options": [
+        "O(n)",
+        "O(nlogn)",
+        "O(1)",
+        "O(log n)"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-21",
+      "section": "technical",
+      "question": "Which algorithm is used to find the strongly connected components in a directed graph?",
+      "options": [
+        "Dijkstra's Algorithm",
+        "Prim's Algorithm",
+        "Bellman-Ford Algorithm",
+        "Tarjan's Algorithm"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-22",
+      "section": "technical",
+      "question": "What is the time complexity of the best-case scenario for quicksort?",
+      "options": [
+        "O(n)",
+        "O(nlogn)",
+        "O(n^2)",
+        "O(log n)"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-23",
+      "section": "technical",
+      "question": "Worst Case Time complexity of accessing an element from a Linked List",
+      "options": [
+        "O(n)",
+        "O(nlogn)",
+        "O(n^2)",
+        "O(log n)"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-24",
+      "section": "technical",
+      "question": "Which of the following is not a fundamental data type in C?",
+      "options": [
+        "int",
+        "String",
+        "double",
+        "float"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-25",
+      "section": "technical",
+      "question": "Which of the following is not a valid access specifier in Java?",
+      "options": [
+        "private",
+        "public",
+        "internal",
+        "protected"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-26",
+      "section": "technical",
+      "question": "What is the purpose of the final keyword in Java?",
+      "options": [
+        "To declare a constant variable",
+        "To prevent method overriding",
+        "To prevent class inheritance",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-27",
+      "section": "technical",
+      "question": "Which of the following is not a valid loop statement in Python?",
+      "options": [
+        "for",
+        "while",
+        "do-while",
+        "None of the above"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-28",
+      "section": "technical",
+      "question": "What is the purpose of the __init__ method in Python?",
+      "options": [
+        "To define a constructor for a class",
+        "To define a destructor for a class",
+        "To define a static method for a class",
+        "To define a class method"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-29",
+      "section": "technical",
+      "question": "Which of the following is not a valid HTTP method?",
+      "options": [
+        "GET",
+        "POST",
+        "PUT",
+        "EXECUTE"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-30",
+      "section": "technical",
+      "question": "What is the purpose of the JOIN clause in SQL?",
+      "options": [
+        "To combine rows from two or more tables based on a related column between them",
+        "To filter rows based on a specified condition",
+        "To group rows that have the same values into summary rows",
+        "To sort the result set in ascending or descending order"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-31",
+      "section": "technical",
+      "question": "Which of the following is not a valid normalization form?",
+      "options": [
+        "1NF",
+        "2NF",
+        "3NF",
+        "5NF"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-32",
+      "section": "technical",
+      "question": "What is the purpose of the HAVING clause in SQL?",
+      "options": [
+        "To filter rows based on a specified condition",
+        "To group rows that have the same values into summary rows",
+        "To filter groups based on a specified condition",
+        "To sort the result set in ascending or descending order"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-33",
+      "section": "technical",
+      "question": "What is the primary goal of machine learning?",
+      "options": [
+        "To program computers without human intervention",
+        "To enable computers to learn from data and improve performance over time",
+        "To create AI systems that can outperform humans",
+        "To develop complex algorithms for data processing"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-34",
+      "section": "technical",
+      "question": "Which type of machine learning algorithm is trained on labeled data to make predictions on new unseen data?",
+      "options": [
+        "Unsupervised Learning",
+        "Reinforcement Learning",
+        "Semi-supervised Learning",
+        "Supervised Learning"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-35",
+      "section": "technical",
+      "question": "What is the process of preparing raw data by cleaning transforming and normalizing it for machine learning?",
+      "options": [
+        "Data Preprocessing",
+        "Data Engineering",
+        "Data Wrangling",
+        "Data Augmentation"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-36",
+      "section": "technical",
+      "question": "In unsupervised learning the primary task is:",
+      "options": [
+        "Predicting an output value based on input data",
+        "Discovering patterns or structures in data",
+        "Maximizing cumulative rewards through interactions with the environment",
+        "Learning from expert demonstrations"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-37",
+      "section": "technical",
+      "question": "Which machine learning algorithm is inspired by the behavior of neurons in the human brain?",
+      "options": [
+        "Decision Trees",
+        "k-Nearest Neighbors (k-NN)",
+        "Support Vector Machines (SVM)",
+        "Artificial Neural Networks (ANN)"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-38",
+      "section": "technical",
+      "question": "What is the process of feeding a machine learning model with data to adjust its internal parameters and improve performance?",
+      "options": [
+        "Model Validation",
+        "Model Optimization",
+        "Model Training",
+        "Model Testing"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-39",
+      "section": "technical",
+      "question": "The loss function in a machine learning model measures:",
+      "options": [
+        "The number of features used in the model",
+        "The complexity of the model",
+        "The difference between predicted and actual values",
+        "The time taken to train the model"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-40",
+      "section": "technical",
+      "question": "What is the name of the technique used to deal with overfitting in machine learning models?",
+      "options": [
+        "Underfitting",
+        "Regularization",
+        "Feature Engineering",
+        "Cross-validation"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-41",
+      "section": "technical",
+      "question": "Which machine learning algorithm is commonly used for classification tasks and is based on finding the best hyperplane that separates data points into different classes?",
+      "options": [
+        "Decision Trees",
+        "Support Vector Machines (SVM)",
+        "Random Forest",
+        "k-Nearest Neighbors (k-NN)"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-42",
+      "section": "technical",
+      "question": "What is the purpose of feature scaling in machine learning?",
+      "options": [
+        "To normalize the range of independent variables",
+        "To add new features to the dataset",
+        "To reduce the number of features",
+        "To remove outliers from the dataset"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-43",
+      "section": "technical",
+      "question": "What is the purpose of the bias term in a machine learning model?",
+      "options": [
+        "To introduce randomness into the model",
+        "To shift the decision boundary of the model",
+        "To control the complexity of the model",
+        "To provide a constant offset for the model's predictions"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-44",
+      "section": "technical",
+      "question": "Which machine learning algorithm is used for dimensionality reduction and can capture the most important features in a dataset?",
+      "options": [
+        "Principal Component Analysis (PCA)",
+        "Linear Discriminant Analysis (LDA)",
+        "t-SNE (t-Distributed Stochastic Neighbor Embedding)",
+        "Autoencoders"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-45",
+      "section": "technical",
+      "question": "What is the purpose of the activation function in an artificial neural network?",
+      "options": [
+        "To introduce non-linearity into the model",
+        "To control the learning rate of the model",
+        "To prevent overfitting in the model",
+        "To initialize the weights of the model"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-46",
+      "section": "technical",
+      "question": "Which machine learning algorithm is used for clustering data points into groups based on their similarity?",
+      "options": [
+        "k-Means Clustering",
+        "Hierarchical Clustering",
+        "DBSCAN (Density-Based Spatial Clustering of Applications with Noise)",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-47",
+      "section": "technical",
+      "question": "What is the purpose of the validation set in machine learning?",
+      "options": [
+        "To train the model",
+        "To evaluate the performance of the model during training",
+        "To tune the hyperparameters of the model",
+        "To test the final performance of the model"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-48",
+      "section": "technical",
+      "question": "Which machine learning algorithm is used for anomaly detection and can identify outliers in a dataset?",
+      "options": [
+        "Isolation Forest",
+        "One-Class SVM",
+        "Local Outlier Factor (LOF)",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-49",
+      "section": "technical",
+      "question": "What is the purpose of the learning rate in a machine learning model?",
+      "options": [
+        "To control the step size during optimization",
+        "To prevent overfitting in the model",
+        "To initialize the weights of the model",
+        "To introduce randomness into the model"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-50",
+      "section": "technical",
+      "question": "Which machine learning algorithm is used for recommendation systems and can predict the preferences of users based on their past behavior?",
+      "options": [
+        "Collaborative Filtering",
+        "Content-Based Filtering",
+        "Matrix Factorization",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-51",
+      "section": "technical",
+      "question": "What is the purpose of the regularization parameter in a machine learning model?",
+      "options": [
+        "To control the complexity of the model",
+        "To introduce non-linearity into the model",
+        "To prevent overfitting in the model",
+        "To tune the learning rate of the model"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-52",
+      "section": "technical",
+      "question": "Which machine learning algorithm is used for natural language processing tasks and can generate human-like text?",
+      "options": [
+        "Recurrent Neural Networks (RNNs)",
+        "Long Short-Term Memory (LSTMs)",
+        "Transformers",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-53",
+      "section": "technical",
+      "question": "Which Experiment says that light is a wave?",
+      "options": [
+        "young's double slith Experiment",
+        "Fizeu's method",
+        "compton scattering",
+        "Michel-Morley Experiment"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-54",
+      "section": "technical",
+      "question": "What is the purpose of the const keyword in C++?",
+      "options": [
+        "To declare a constant variable",
+        "To declare a static variable",
+        "To declare a pointer to a constant variable",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-55",
+      "section": "technical",
+      "question": "Which of the following is not a valid access specifier in Java?",
+      "options": [
+        "public",
+        "private",
+        "protected",
+        "internal"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-56",
+      "section": "technical",
+      "question": "What is the purpose of the break statement in a loop?",
+      "options": [
+        "To exit the current iteration of the loop",
+        "To exit the entire loop",
+        "To skip the current iteration of the loop",
+        "To continue to the next iteration of the loop"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-57",
+      "section": "technical",
+      "question": "What is the purpose of the continue statement in a loop?",
+      "options": [
+        "To exit the current iteration of the loop",
+        "To exit the entire loop",
+        "To continue to the next iteration of the loop",
+        "To skip the current iteration of the loop"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-58",
+      "section": "technical",
+      "question": "What is the purpose of the static keyword in C++?",
+      "options": [
+        "To declare a variable with global scope",
+        "To declare a variable with local scope",
+        "To declare a variable with static storage duration",
+        "To declare a variable with dynamic storage duration"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-59",
+      "section": "technical",
+      "question": "What is the purpose of the virtual keyword in C++?",
+      "options": [
+        "To declare a virtual function",
+        "To declare a pure virtual function",
+        "To declare a virtual base class",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-60",
+      "section": "technical",
+      "question": "What is the purpose of the abstract keyword in Java?",
+      "options": [
+        "To declare an abstract class",
+        "To declare an abstract method",
+        "To declare an interface",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-61",
+      "section": "technical",
+      "question": "What is the purpose of the interface keyword in Java?",
+      "options": [
+        "To define a contract for classes to implement",
+        "To define a class that cannot be instantiated",
+        "To define a class that can be extended by other classes",
+        "To define a class that can be used as a template for creating objects"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-62",
+      "section": "technical",
+      "question": "What is the purpose of the yield statement in Python?",
+      "options": [
+        "To exit a function and return a value",
+        "To pause the execution of a function and return a value",
+        "To raise an exception in a function",
+        "To define a generator function"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-63",
+      "section": "technical",
+      "question": "What is the purpose of the lambda keyword in Python?",
+      "options": [
+        "To define a function with a single expression",
+        "To define a function with multiple expressions",
+        "To define a function with a name",
+        "To define a function with a return statement"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-64",
+      "section": "technical",
+      "question": "What is the purpose of the try-except block in Python?",
+      "options": [
+        "To handle exceptions that may occur during the execution of a program",
+        "To define a function that may raise an exception",
+        "To define a module that may raise an exception",
+        "To define a class that may raise an exception"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-65",
+      "section": "technical",
+      "question": "What is the purpose of the super() function in Python",
+      "options": [
+        "To call a method in a parent class from a child class",
+        "To create a new instance of a class",
+        "To define a class method",
+        "To define a static method"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-66",
+      "section": "technical",
+      "question": "Which of the following is not a programming language?",
+      "options": [
+        "Python",
+        "C++",
+        "ASCII",
+        "Java"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-67",
+      "section": "technical",
+      "question": "Which of the following is not a data structure?",
+      "options": [
+        "Algorithm",
+        "Stack",
+        "Linked List",
+        "Array"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-68",
+      "section": "technical",
+      "question": "What is the time complexity of the binary search algorithm?",
+      "options": [
+        "O(n)",
+        "O(nlogn)",
+        "O(n^2)",
+        "O(log n)"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-69",
+      "section": "technical",
+      "question": "Which of the following is not a type of software testing?",
+      "options": [
+        "Unit testing",
+        "System testing",
+        "Integration testing",
+        "Functional testing"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-70",
+      "section": "technical",
+      "question": "What is the primary purpose of a database management system (DBMS)?",
+      "options": [
+        "To provide a user interface for the database",
+        "To store data in the database",
+        "To manage and manipulate data in the database",
+        "To provide security for the database"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-71",
+      "section": "technical",
+      "question": "What is the primary function of a switch in a network?",
+      "options": [
+        "To provide a firewall",
+        "To connect multiple networks",
+        "To forward data packets to the appropriate device",
+        "To convert data from analog to digital"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-72",
+      "section": "technical",
+      "question": "Which of the following is not a type of malware?",
+      "options": [
+        "Worm",
+        "Virus",
+        "Trojan horse",
+        "Firewall"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-73",
+      "section": "technical",
+      "question": "What is the primary purpose of normalization in a database?",
+      "options": [
+        "To reduce data redundancy and improve data integrity",
+        "To increase data redundancy and improve data security",
+        "To provide a user interface for the database",
+        "To store data in the database"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-74",
+      "section": "technical",
+      "question": "Which of the following is not a type of cloud computing?",
+      "options": [
+        "IaaS",
+        "Paas",
+        "Saas",
+        "Laas"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-75",
+      "section": "technical",
+      "question": "What is the primary purpose of a compiler in programming?",
+      "options": [
+        "To convert high-level language into machine language",
+        "To find errors in the program",
+        "To provide a user interface for the program",
+        "To document the program"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-76",
+      "section": "technical",
+      "question": "What is the primary function of a router in a network?",
+      "options": [
+        "To provide a firewall",
+        "To connect multiple networks",
+        "To amplify the signal",
+        "To forward data packets to the appropriate device"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-77",
+      "section": "technical",
+      "question": "Which of the following is not a type of virtualization?",
+      "options": [
+        "Server virtualization",
+        "Desktop virtualization",
+        "Network virtualization",
+        "None of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-78",
+      "section": "technical",
+      "question": "What is the primary purpose of a load balancer in a network?",
+      "options": [
+        "To provide a firewall",
+        "To connect multiple networks",
+        "To distribute network traffic evenly across multiple servers",
+        "To convert data from analog to digital"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-79",
+      "section": "technical",
+      "question": "What is the primary purpose of a cache in computing?",
+      "options": [
+        "To provide a backup for the data",
+        "To store data permanently",
+        "To provide security for the data",
+        "To provide temporary storage for frequently used data"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-80",
+      "section": "technical",
+      "question": "Which of the following is not a type of search algorithm?",
+      "options": [
+        "Binary search",
+        "Linear search",
+        "Depth-first search",
+        "None of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-81",
+      "section": "technical",
+      "question": "Which of the following is not a principle of object-oriented programming?",
+      "options": [
+        "Encapsulation",
+        "Inheritance",
+        "Polymorphism",
+        "Multiprocessing"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-82",
+      "section": "technical",
+      "question": "Which of the following is not a type of network?",
+      "options": [
+        "LAN",
+        "MAN",
+        "WAN",
+        "CAN"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-83",
+      "section": "technical",
+      "question": "In the context of databases what does ACID stand for?",
+      "options": [
+        "Atomicity Consistency Isolation Durability",
+        "Access Consistency Integrity Database",
+        "Atomicity Completeness Isolation Durability",
+        "Availability Concurrency Integrity Durability"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-84",
+      "section": "technical",
+      "question": "What is the main difference between a stack and a queue?",
+      "options": [
+        "Stacks are static & queues are dynamic data structures",
+        "Stacks follow LIFO order & queues follow FIFO order",
+        "Stacks can only store integers & queues can store any data type",
+        "There is no difference & they are the same thing"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-85",
+      "section": "technical",
+      "question": "What is the purpose of the virtual keyword in C++?",
+      "options": [
+        "To create a pure virtual function",
+        "To overload operators",
+        "To declare a friend function",
+        "To create a virtual base class"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-86",
+      "section": "technical",
+      "question": "What is the main purpose of a Trie data structure?",
+      "options": [
+        "Efficient information retrieval",
+        "Efficient sorting of data",
+        "Efficient searching of keys",
+        "Efficient compression of data"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "technical-87",
+      "section": "technical",
+      "question": "In the context of computer networks what does TCP stand for?",
+      "options": [
+        "Transmission Control Protocol",
+        "Transfer Connected Protocol",
+        "Transformative Connecting Protocol",
+        "Transparent Connectivity Protocol"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-88",
+      "section": "technical",
+      "question": "What is the purpose of the finally block in Java exception handling?",
+      "options": [
+        "To define an alternative execution path",
+        "To execute code regardless of whether an exception is thrown or not",
+        "To handle a specific type of exception",
+        "To explicitly throw an exception"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "technical-89",
+      "section": "technical",
+      "question": "What is the key difference between public and private inheritance in C++?",
+      "options": [
+        "Public inheritance preserves base class member access but private does not",
+        "Private inheritance is more memory efficient than public inheritance",
+        "There is no difference they are the same thing",
+        "Private inheritance allows accessing private members but public does not"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-90",
+      "section": "technical",
+      "question": "In the context of machine learning what is overfitting?",
+      "options": [
+        "When a model performs well on training data but poorly on new data",
+        "When a model fails to capture underlying patterns in data",
+        "When a model is too simple to learn from data effectively",
+        "When a model has high bias and high variance"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-91",
+      "section": "technical",
+      "question": "What is the key difference between GPU and CPU?",
+      "options": [
+        "GPUs are better for parallel processing & CPUs are better for serial processing",
+        "GPUs consume more power than CPUs",
+        "GPUs are faster than CPUs for all types of computations",
+        "There is no difference they are interchangeable"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-92",
+      "section": "technical",
+      "question": "What is the purpose of the volatile keyword in C/C++?",
+      "options": [
+        "To declare a global variable",
+        "To prevent compiler optimizations that reorder operations",
+        "To create a thread-safe variable",
+        "To indicate that a value may change unexpectedly"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-93",
+      "section": "technical",
+      "question": "In the context of operating systems what is thrashing?",
+      "options": [
+        "Excessive swapping of processes between main memory and disk",
+        "A type of memory leak caused by frequent allocation and deallocation",
+        "A condition where the CPU is constantly busy but no processes are making progress",
+        "A security vulnerability that allows unauthorized access to system resources"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-94",
+      "section": "technical",
+      "question": "What is the purpose of the static keyword in Java?",
+      "options": [
+        "To declare a static method",
+        "To create a singleton class",
+        "To allocate memory for a variable at compile-time",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-95",
+      "section": "technical",
+      "question": "In the context of databases what is denormalization?",
+      "options": [
+        "The process of optimizing the database for better read performance",
+        "The process of removing redundant data from a database",
+        "The process of converting data into a more readable format",
+        "The process of creating additional indexes for faster queries"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-96",
+      "section": "technical",
+      "question": "What is the purpose of the final keyword in Java?",
+      "options": [
+        "To declare a constant variable",
+        "To prevent a class from being subclassed",
+        "To create an immutable object",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-97",
+      "section": "technical",
+      "question": "In the context of computer networks what is a NAT (Network Address Translation)?",
+      "options": [
+        "A protocol for translating private IP addresses to public IP addresses",
+        "A type of firewall used to protect networks from unauthorized access",
+        "A technique for load balancing network traffic across multiple servers",
+        "A method for compressing network data to reduce bandwidth usage"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-98",
+      "section": "technical",
+      "question": "What is the purpose of the friend keyword in C++?",
+      "options": [
+        "To declare a function or class as a friend of another class",
+        "To create a friendship between two objects",
+        "To overload operators for a class",
+        "To optimize a function for better performance"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-99",
+      "section": "technical",
+      "question": "In the context of machine learning what is a convolutional neural network (CNN)?",
+      "options": [
+        "A type of neural network used for image classification and recognition",
+        "A neural network designed for time series forecasting",
+        "A type of unsupervised learning algorithm for clustering",
+        "A type of supervised learning"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-100",
+      "section": "technical",
+      "question": "What is the key difference between depth-first search (DFS) and breadth-first search (BFS)?",
+      "options": [
+        "DFS explores as far as possible along each branch before backtracking & BFS explores all nodes at the current depth before moving to the next level",
+        "DFS is more memory-efficient than BFS",
+        "BFS is guaranteed to find the shortest path & DFS is not",
+        "All of the above"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": "technical-101",
+      "section": "technical",
+      "question": "In the context of computer architecture what is pipelining?",
+      "options": [
+        "A technique to improve CPU performance by breaking down instruction execution into a series of smaller steps",
+        "A way to connect multiple CPUs to increase processing power",
+        "A method for compressing data to improve storage efficiency",
+        "A parallel processing technique used in GPUs"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "technical-102",
+      "section": "technical",
+      "question": "In the context of databases what is an index?",
+      "options": [
+        "A data structure used to optimize search and retrieval operations",
+        "A type of database query used for data manipulation",
+        "A technique for securing sensitive data in a database",
+        "A method for compressing data in a database to save storage space"
+      ],
+      "answer": "A"
+    }
+  ]
+}

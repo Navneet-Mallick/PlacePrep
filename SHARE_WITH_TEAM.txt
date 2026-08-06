@@ -1,0 +1,205 @@
+================================================================================
+PlacementPrep - Team Project Setup Guide
+================================================================================
+
+Hi Team! 👋
+
+This is a group project for 4 people. Here's what you need to do:
+
+================================================================================
+STEP 1: GITHUB SETUP (Project Lead Only - Usually Navneet)
+================================================================================
+
+1. Open: GITHUB_SETUP.md
+2. Follow instructions to:
+   - Create PRIVATE repository on GitHub
+   - Add 3 teammates as collaborators
+   - Send GitHub link to teammates
+
+================================================================================
+STEP 2: EACH TEAMMATE (Everyone except project lead)
+================================================================================
+
+1. Accept GitHub invitation email
+2. Clone the repository:
+   git clone <github-link-from-team-lead>
+
+3. Run TEAM_TESTING.md installation steps
+
+4. Verify setup:
+   python test_platform.py
+   
+   (Should show: ✓ ALL TESTS PASSED)
+
+5. Let team know you're ready!
+
+================================================================================
+STEP 3: EVERYONE - RUN THE PROJECT
+================================================================================
+
+Start these in 3 separate terminals:
+
+Terminal 1:
+python manage.py runserver 8001
+
+Terminal 2:
+python ml/api/server.py
+
+Terminal 3:
+cd frontend
+npm run dev
+
+Then open: http://localhost:5173
+
+Login with:
+Email: admin@localhost.com
+Password: admin123
+
+================================================================================
+KEY FILES TO READ
+================================================================================
+
+1. START_HERE.md
+   → Quick overview (5 min read)
+
+2. GITHUB_SETUP.md
+   → How to set up GitHub collaboration (15 min read)
+
+3. TEAM_TESTING.md
+   → Complete guide for setup, testing, and development (30+ min read)
+
+4. # ML-Based Resume Analysis & Aptitu.md
+   → Full project specifications
+
+================================================================================
+COLLABORATION WORKFLOW
+================================================================================
+
+Everyone follows this:
+
+1. Pull latest: git pull origin main
+
+2. Create branch: git checkout -b feature/your-feature-name
+
+3. Make changes and test: python test_platform.py
+
+4. Commit: git commit -m "Add: your description"
+
+5. Push: git push origin feature/your-feature-name
+
+6. Create PR on GitHub
+
+7. Teammates review and approve
+
+8. Merge on GitHub
+
+9. Everyone pulls latest: git pull origin main
+
+================================================================================
+QUICK REFERENCE
+================================================================================
+
+Read/Don't Skip:
+☑ START_HERE.md (entry point)
+☑ GITHUB_SETUP.md (collaboration)
+☑ TEAM_TESTING.md (complete guide)
+
+Commands to memorize:
+- git pull origin main
+- git checkout -b feature/name
+- git commit -m "message"
+- git push origin feature/name
+- python test_platform.py
+
+Server URLs:
+- App: http://localhost:5173
+- API: http://localhost:8001/api
+- ML: http://localhost:8000/api
+
+Demo Login:
+- Email: admin@localhost.com
+- Password: admin123
+
+================================================================================
+FEATURES TO TRY
+================================================================================
+
+After setup, test these:
+
+✓ Login/Register
+✓ Resume Upload & Analysis
+✓ Aptitude Test
+✓ Technical Assessment
+✓ Dashboard
+
+Each should work without errors.
+
+================================================================================
+IMPORTANT SECURITY NOTES
+================================================================================
+
+⚠️ NEVER commit these to GitHub:
+- .env file (keep API keys secret)
+- Passwords
+- Database files
+
+✓ DO commit:
+- Code files
+- .env.example (template only)
+- Configuration structures
+
+================================================================================
+GETTING HELP
+================================================================================
+
+Issues?
+
+1. Check Troubleshooting in TEAM_TESTING.md
+2. Ask in team chat
+3. Review existing solutions
+
+Git problems?
+- See GITHUB_SETUP.md for detailed git guide
+
+Setup problems?
+- See TEAM_TESTING.md Installation section
+
+================================================================================
+PROJECT STRUCTURE
+================================================================================
+
+├── GITHUB_SETUP.md       ← GitHub collaboration guide
+├── TEAM_TESTING.md       ← Complete technical guide  
+├── START_HERE.md         ← Quick start (read first!)
+│
+├── frontend/             ← React app
+├── api/                  ← Django backend
+├── ml/                   ← FastAPI + ML scripts
+│
+├── test_platform.py      ← Verification test
+├── .env                  ← Configuration (keep secret!)
+└── db.sqlite3            ← Database
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Project Lead: Set up GitHub (GITHUB_SETUP.md)
+2. Everyone: Clone and install (TEAM_TESTING.md)
+3. Everyone: Run and test
+4. Team: Decide who works on what feature
+5. Start developing using git workflow
+
+================================================================================
+QUESTIONS?
+================================================================================
+
+Check the guides first. They have everything you need.
+
+If still stuck, discuss with team or project lead.
+
+================================================================================
+Ready to build something awesome? Let's go! 🚀
+================================================================================
+
+Start by reading: START_HERE.md

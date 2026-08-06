@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+ml/models/*.joblib
+node_modules/
+frontend/dist/
