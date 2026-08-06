@@ -42,7 +42,7 @@ def main() -> None:
     y = df["role"]
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
+        X, y, test_size=0.25, random_state=42, stratify=y  # Increased test size for better validation
     )
 
     pipeline = Pipeline(
@@ -52,21 +52,48 @@ def main() -> None:
                 TfidfVectorizer(
                     lowercase=True,
                     stop_words="english",
-                    max_features=10000,
+                    max_features=5000,  # Reduced from 10000
                     ngram_range=(1, 2),
+                    min_df=2,  # Minimum document frequency
+                    max_df=0.95,  # Maximum document frequency
                 ),
             ),
             (
                 "clf",
-                LogisticRegression(max_iter=1000, class_weight="balanced"),
+                LogisticRegression(
+                    max_iter=1000, 
+                    class_weight="balanced",
+                    C=1.0,  # Regularization parameter
+                    penalty='l2',  # L2 regularization
+                    solver='lbfgs',
+                    random_state=42
+                ),
             ),
         ]
     )
 
     pipeline.fit(X_train, y_train)
+    
+    # Evaluate on training and test sets to check for overfitting
+    train_score = pipeline.score(X_train, y_train)
+    test_score = pipeline.score(X_test, y_test)
     y_pred = pipeline.predict(X_test)
 
-    print("Classification report:\n")
+    print("="*60)
+    print("MODEL PERFORMANCE")
+    print("="*60)
+    print(f"Training accuracy: {train_score:.4f}")
+    print(f"Test accuracy: {test_score:.4f}")
+    print(f"Difference: {abs(train_score - test_score):.4f}")
+    
+    if abs(train_score - test_score) > 0.1:
+        print("⚠️  Warning: Large gap between train and test accuracy suggests overfitting")
+    else:
+        print("✓ Good generalization - low overfitting")
+    
+    print("\n" + "="*60)
+    print("CLASSIFICATION REPORT")
+    print("="*60)
     print(classification_report(y_test, y_pred))
 
     MODEL_DIR.mkdir(parents=True, exist_ok=True)

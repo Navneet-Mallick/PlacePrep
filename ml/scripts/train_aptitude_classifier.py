@@ -86,25 +86,45 @@ def train_model():
     print(f"Training samples: {len(X_train)}")
     print(f"Test samples: {len(X_test)}")
     
-    # Train Random Forest
+    # Train Random Forest with better hyperparameters to prevent overfitting
     print("\nTraining Random Forest classifier...")
     rf_classifier = RandomForestClassifier(
-        n_estimators=100,
-        max_depth=10,
-        min_samples_split=5,
-        min_samples_leaf=2,
+        n_estimators=100,  # Number of trees
+        max_depth=8,  # Reduced from 10 to prevent overfitting
+        min_samples_split=10,  # Increased from 5 (more conservative splits)
+        min_samples_leaf=4,  # Increased from 2 (larger leaf nodes)
+        max_features='sqrt',  # Use sqrt of features at each split
         random_state=42,
-        class_weight='balanced'
+        class_weight='balanced',
+        bootstrap=True,  # Use bootstrap samples
+        oob_score=True,  # Out-of-bag score for validation
+        n_jobs=-1  # Use all CPU cores
     )
     
     rf_classifier.fit(X_train, y_train)
     
-    # Evaluate
+    # Evaluate with overfitting check
     train_score = rf_classifier.score(X_train, y_train)
     test_score = rf_classifier.score(X_test, y_test)
+    oob_score = rf_classifier.oob_score_
     
-    print(f"\nTraining accuracy: {train_score:.4f}")
+    print("\n" + "="*60)
+    print("MODEL PERFORMANCE")
+    print("="*60)
+    print(f"Training accuracy: {train_score:.4f}")
     print(f"Test accuracy: {test_score:.4f}")
+    print(f"Out-of-bag score: {oob_score:.4f}")
+    print(f"Train-Test difference: {abs(train_score - test_score):.4f}")
+    
+    # Check for overfitting
+    if abs(train_score - test_score) > 0.1:
+        print("⚠️  Warning: Potential overfitting detected (train-test gap > 0.1)")
+    elif abs(train_score - oob_score) > 0.1:
+        print("⚠️  Warning: Potential overfitting detected (train-oob gap > 0.1)")
+    else:
+        print("✓ Good generalization - low overfitting risk")
+    
+    print("="*60)
     
     # Cross-validation
     cv_scores = cross_val_score(rf_classifier, X_train, y_train, cv=5)

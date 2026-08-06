@@ -85,8 +85,7 @@ export const technicalAPI = {
   }),
   getByCategory: (category) => api.get(`/technical/questions/by_category/?category=${category}`),
   submitAnswer: (data) => api.post('/technical/answers/', data),
-  getHistory: () => api.get('/technical/answers/history/'),
-  getByCategory: (category) => api.get(`/technical/answers/by_category/?category=${category}`),
+  getHistory: () => api.get('/technical/answers/'),
 }
 
 // Dashboard endpoints

@@ -45,30 +45,54 @@ class Command(BaseCommand):
                     
                     # Map CSV category to our model categories
                     category_mapping = {
+                        # General Programming -> DSA
                         'general programming': 'dsa',
                         'general program': 'dsa',
+                        
+                        # Data Structures -> DSA
                         'data structures': 'dsa',
+                        'algorithms': 'dsa',
+                        
+                        # Database -> DBMS
                         'database and sql': 'dbms',
                         'database': 'dbms',
+                        
+                        # Web Development -> Web
                         'web development': 'web',
                         'front-end': 'web',
                         'back-end': 'web',
                         'full-stack': 'web',
                         'languages and frameworks': 'web',
+                        
+                        # Version Control -> Git
                         'version control': 'git',
+                        
+                        # DevOps -> Git (since it's related to deployment)
                         'devops': 'git',
+                        
+                        # System Design -> OS
                         'system design': 'os',
+                        
+                        # Software Testing -> DSA (logic/algorithms)
                         'software testing': 'dsa',
+                        
+                        # Security -> CN (networks/security)
                         'security': 'cn',
                     }
                     
-                    # Find matching category
+                    # Find matching category with better logic
                     category = 'dsa'  # default
                     category_lower = category_from_csv.lower()
-                    for key, value in category_mapping.items():
-                        if key in category_lower:
-                            category = value
-                            break
+                    
+                    # Direct match
+                    if category_lower in category_mapping:
+                        category = category_mapping[category_lower]
+                    else:
+                        # Partial match
+                        for key, value in category_mapping.items():
+                            if key in category_lower:
+                                category = value
+                                break
                     
                     # Map difficulty
                     difficulty_map = {

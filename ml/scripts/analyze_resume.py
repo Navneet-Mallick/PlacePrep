@@ -23,70 +23,166 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def compute_resume_score(entities: dict) -> int:
+    """Compute resume score based on entities found"""
     score = 0
-    if entities["person"]:
+    
+    # Personal info (20 points)
+    if entities.get("person"):
         score += 10
-    if entities["email"]:
+    if entities.get("email"):
         score += 10
-    if entities["phone"]:
+    
+    # Contact info (5 points)
+    if entities.get("phone"):
         score += 5
-    if entities["skills"]:
-        score += min(len(entities["skills"]) * 4, 30)
-    if entities["education"]:
+    
+    # Skills (30 points max)
+    skills_count = len(entities.get("skills", []))
+    score += min(skills_count * 3, 30)
+    
+    # Education (15 points)
+    if entities.get("education"):
         score += 15
-    if entities["certifications"]:
+    
+    # Certifications (10 points)
+    if entities.get("certifications"):
         score += 10
-    if entities["experience"]:
-        score += 15
+    
+    # Experience (20 points)
+    if entities.get("experience"):
+        score += 20
+    
+    # Organizations mentioned (5 points)
+    if entities.get("organizations"):
+        score += 5
+    
     return min(score, 100)
 
 
-def build_suggestions(entities: dict, resume_score: int) -> list[str]:
+def build_suggestions(entities: dict, resume_score: int) -> list:
+    """Generate actionable suggestions based on resume analysis"""
     suggestions = []
-    if not entities["email"]:
-        suggestions.append("Add a professional email address.")
-    if not entities["phone"]:
-        suggestions.append("Include a contact phone number.")
-    if len(entities["skills"]) < 5:
-        suggestions.append("List more relevant technical skills.")
-    if not entities["education"]:
-        suggestions.append("Add education details with degree and institution.")
-    if not entities["experience"]:
-        suggestions.append("Highlight internships, projects, or work experience.")
-    if resume_score < 70:
-        suggestions.append("Improve resume completeness before applying to placements.")
-    if not suggestions:
-        suggestions.append("Resume structure looks good. Tailor skills to your target role.")
+    
+    # Critical missing info
+    if not entities.get("person"):
+        suggestions.append("❌ Add your full name at the top of the resume")
+    
+    if not entities.get("email"):
+        suggestions.append("❌ Include a professional email address")
+    
+    if not entities.get("phone"):
+        suggestions.append("❌ Add a contact phone number")
+    
+    # Skills section
+    skills_count = len(entities.get("skills", []))
+    if skills_count < 3:
+        suggestions.append("⚠️  List more technical skills (aim for at least 5-8)")
+    elif skills_count < 8:
+        suggestions.append("📝 Consider adding more relevant technical skills")
+    
+    # Education
+    if not entities.get("education"):
+        suggestions.append("📚 Add your education section with degree, institution, and year")
+    
+    # Experience
+    if not entities.get("experience"):
+        suggestions.append("💼 Add work experience, internships, or significant projects")
+    
+    # Certifications
+    if not entities.get("certifications") and resume_score < 70:
+        suggestions.append("🏆 Add professional certifications to boost credibility")
+    
+    # Organizations
+    if not entities.get("organizations"):
+        suggestions.append("🏢 Mention companies you've worked with or organizations")
+    
+    # Overall score feedback
+    if resume_score < 50:
+        suggestions.append("🔴 Resume is incomplete. Fill in major sections to improve score")
+    elif resume_score < 70:
+        suggestions.append("🟡 Resume could be more complete. Add missing information")
+    elif resume_score < 85:
+        suggestions.append("🟢 Good resume structure. Fine-tune for better ATS compatibility")
+    else:
+        suggestions.append("✅ Excellent resume structure! Ready for application")
+    
     return suggestions
 
 
 def analyze_text(text: str, use_gemini: bool = True) -> dict:
-    entities = extract_entities(text)
-    role_result = predict_role(text)
-    resume_score = compute_resume_score(entities)
-
-    result = {
-        "parsed_text": text,
-        "resume_score": resume_score,
-        "predicted_role": role_result["predicted_role"],
-        "confidence": role_result["confidence"],
-        "entities": entities,
-        "suggestions": build_suggestions(entities, resume_score),
-    }
-
-    if use_gemini:
-        result["recommendations"] = generate_recommendations_safe(result, text)
-
-    return result
+    """Analyze resume text and extract information"""
+    try:
+        # Extract entities
+        entities = extract_entities(text)
+        
+        # Predict role
+        try:
+            role_result = predict_role(text)
+        except Exception as e:
+            print(f"Warning: Role prediction failed - {e}", file=sys.stderr)
+            role_result = {
+                "predicted_role": "Unknown",
+                "confidence": 0.0
+            }
+        
+        # Compute score
+        resume_score = compute_resume_score(entities)
+        
+        result = {
+            "parsed_text": text,
+            "resume_score": resume_score,
+            "predicted_role": role_result.get("predicted_role", "Unknown"),
+            "confidence": role_result.get("confidence", 0.0),
+            "entities": entities,
+            "suggestions": build_suggestions(entities, resume_score),
+        }
+        
+        # Add recommendations if Gemini is available
+        if use_gemini:
+            try:
+                recommendations = generate_recommendations_safe(result, text)
+                if recommendations:
+                    result["recommendations"] = recommendations
+            except Exception as e:
+                print(f"Warning: Gemini recommendations failed - {e}", file=sys.stderr)
+        
+        return result
+    
+    except Exception as e:
+        return {
+            "error": f"Analysis failed: {str(e)}",
+            "parsed_text": text,
+            "resume_score": 0,
+            "predicted_role": "Unknown",
+            "confidence": 0.0,
+            "entities": {},
+            "suggestions": ["Please ensure your resume contains valid text content"]
+        }
 
 
 def analyze_file(path: Path) -> dict:
-    text = extract_text(path)
-    result = analyze_text(text)
-    result["parsed_text"] = text
-    result["source_file"] = path.name
-    result["text_length"] = len(text)
-    return result
+    """Analyze resume file (PDF or DOCX)"""
+    try:
+        text = extract_text(path)
+        
+        if not text or len(text.strip()) < 50:
+            return {
+                "error": "Could not extract text from file or file is too short",
+                "source_file": path.name,
+                "suggestions": ["Ensure your resume file is valid and contains at least 50 characters"]
+            }
+        
+        result = analyze_text(text)
+        result["source_file"] = path.name
+        result["text_length"] = len(text)
+        return result
+    
+    except Exception as e:
+        return {
+            "error": f"File analysis failed: {str(e)}",
+            "source_file": path.name,
+            "suggestions": [f"Error reading file: {str(e)}"]
+        }
 
 
 def main() -> None:
