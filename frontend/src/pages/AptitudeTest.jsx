@@ -117,7 +117,7 @@ export default function AptitudeTest() {
       const result = response.data
       setCurrentProctoringStatus(result)
       
-      // Log violations
+      // Handle violations with user notification
       if (result.status === 'violation') {
         const violation = {
           timestamp: Date.now(),
@@ -128,17 +128,39 @@ export default function AptitudeTest() {
         
         setProctoringViolations(prev => [...prev, violation])
         
-        // Alert user on violation
+        // Show alert and notification to user
         if (result.violation_type === 'no_face') {
-          console.warn('⚠️ Proctoring: No face detected')
+          console.warn('⚠️ Proctoring Violation: No face detected - Look at the camera!')
+          // Show browser notification
+          if (Notification.permission === 'granted') {
+            new Notification('⚠️ Proctoring Alert', {
+              body: 'No face detected! Please look at the camera.',
+              icon: '🎥',
+              tag: 'no-face-violation'
+            })
+          }
         } else if (result.violation_type === 'multiple_faces') {
-          console.warn(`⚠️ Proctoring: Multiple faces detected (${result.face_count})`)
+          console.warn(`⚠️ Proctoring Violation: Multiple faces detected (${result.face_count})`)
+          if (Notification.permission === 'granted') {
+            new Notification('⚠️ Proctoring Alert', {
+              body: `Multiple people detected (${result.face_count})! Only one person should be present.`,
+              icon: '👥',
+              tag: 'multiple-faces-violation'
+            })
+          }
         }
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
     }
   }
+
+  // Request notification permission on mount
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission()
+    }
+  }, [])
 
   // Cleanup camera on unmount
   useEffect(() => {
@@ -568,28 +590,33 @@ export default function AptitudeTest() {
       {(tabSwitches > 0 || proctoringViolations.length > 0 || currentProctoringStatus) && (
         <div className={`rounded-lg border p-4 ${
           tabSwitches > 3 || proctoringViolations.length > 5
-            ? 'border-red-500/40 bg-red-500/10 text-red-100' 
+            ? 'border-red-500/40 bg-red-500/10 text-red-100 animate-pulse' 
             : proctoringViolations.length > 0
             ? 'border-amber-500/40 bg-amber-500/10 text-amber-100'
             : 'border-green-500/40 bg-green-500/10 text-green-100'
         }`}>
           <div className="flex items-center justify-between">
-            <div className="space-y-1">
+            <div className="space-y-2 flex-1">
               <p className="font-medium flex items-center gap-2">
                 {cameraEnabled ? '🎥' : '📷'} Proctoring Monitor 
-                {currentProctoringStatus?.status === 'ok' && <span className="text-green-400">✓ Active</span>}
-                {currentProctoringStatus?.status === 'violation' && <span className="text-red-400">⚠ Violation</span>}
+                {currentProctoringStatus?.status === 'ok' && <span className="text-green-400 font-bold">✓ Active</span>}
+                {currentProctoringStatus?.status === 'violation' && <span className="text-red-400 font-bold animate-pulse">⚠ VIOLATION</span>}
               </p>
-              <div className="text-sm space-y-1">
-                <p>Tab switches: {tabSwitches}</p>
-                <p>Camera violations: {proctoringViolations.length}</p>
+              <div className="text-sm space-y-1 ml-6">
+                <p>📋 Tab switches: <span className="font-bold">{tabSwitches}</span></p>
+                <p>🚨 Camera violations: <span className="font-bold">{proctoringViolations.length}</span></p>
                 {currentProctoringStatus && (
-                  <p className="text-xs opacity-80">{currentProctoringStatus.message}</p>
+                  <p className="text-xs opacity-90 font-semibold">
+                    {currentProctoringStatus.message}
+                  </p>
                 )}
               </div>
             </div>
             {(tabSwitches > 3 || proctoringViolations.length > 5) && (
-              <p className="text-sm font-bold">⚠️ Multiple violations detected!</p>
+              <div className="text-right">
+                <p className="text-sm font-bold animate-pulse">⚠️ Multiple</p>
+                <p className="text-xs">Violations</p>
+              </div>
             )}
           </div>
         </div>
@@ -597,9 +624,21 @@ export default function AptitudeTest() {
 
       {/* Camera Status Indicator */}
       {cameraEnabled && (
-        <div className="flex items-center gap-2 text-sm text-slate-400">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-          <span>Camera monitoring active</span>
+        <div className={`flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-lg ${
+          currentProctoringStatus?.status === 'violation'
+            ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+            : 'bg-green-500/20 text-green-300 border border-green-500/30'
+        }`}>
+          <div className={`w-3 h-3 rounded-full ${
+            currentProctoringStatus?.status === 'violation'
+              ? 'bg-red-500 animate-pulse'
+              : 'bg-green-500 animate-pulse'
+          }`}></div>
+          <span>
+            {currentProctoringStatus?.status === 'violation'
+              ? `⚠️ ${currentProctoringStatus.message}`
+              : '✓ Camera monitoring active'}
+          </span>
         </div>
       )}
       {/* Header */}

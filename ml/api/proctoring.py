@@ -70,13 +70,13 @@ class ProctoringSystem:
             # Convert to grayscale for Haar Cascade
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
-            # Detect faces
-            # Parameters: scaleFactor, minNeighbors, minSize
+            # Detect faces with more sensitive parameters
             faces = self.face_cascade.detectMultiScale(
                 gray,
-                scaleFactor=1.1,
-                minNeighbors=5,
-                minSize=(30, 30)
+                scaleFactor=1.05,  # Reduced from 1.1 for better sensitivity
+                minNeighbors=4,    # Reduced from 5 for better sensitivity
+                minSize=(20, 20),  # Reduced from (30, 30)
+                maxSize=(400, 400) # Add max size to avoid false positives
             )
             
             face_count = len(faces)
