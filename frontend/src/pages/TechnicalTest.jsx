@@ -303,6 +303,14 @@ export default function TechnicalTest() {
             Finish & Return
           </button>
         )}
+        
+        <button
+          onClick={() => setSelectedCategory(null)}
+          className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-500 transition-colors font-semibold"
+          title="Exit and return to category selection"
+        >
+          🚪 Exit
+        </button>
       </div>
 
       {error && (

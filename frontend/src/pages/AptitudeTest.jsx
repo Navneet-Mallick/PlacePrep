@@ -123,7 +123,9 @@ export default function AptitudeTest() {
           timestamp: Date.now(),
           type: result.violation_type,
           message: result.message,
-          face_count: result.face_count
+          face_count: result.face_count,
+          severity: result.severity,
+          foreign_objects: result.foreign_objects || []
         }
         
         setProctoringViolations(prev => [...prev, violation])
@@ -148,6 +150,18 @@ export default function AptitudeTest() {
               tag: 'multiple-faces-violation'
             })
           }
+        } else if (result.violation_type === 'foreign_object_detected') {
+          console.error('🚨 STRICT VIOLATION: Foreign object detected!')
+          if (Notification.permission === 'granted') {
+            new Notification('🚨 VIOLATION: Foreign Object Detected', {
+              body: result.message,
+              icon: '🚨',
+              tag: 'foreign-object-violation',
+              requireInteraction: true
+            })
+          }
+          // This is a critical violation, log it prominently
+          console.error('PROCTORING VIOLATION - Foreign object:', result.foreign_objects)
         }
       }
     } catch (err) {
@@ -448,6 +462,49 @@ export default function AptitudeTest() {
                       </div>
                     )
                   })}
+                </div>
+              </div>
+            )}
+
+            {/* Proctoring Violations Detail */}
+            {proctoringViolations.length > 0 && (
+              <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-950/40 to-red-950/20 p-8 backdrop-blur-sm">
+                <h2 className="text-2xl font-bold text-orange-100 mb-6 flex items-center gap-3">
+                  <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30">
+                    🚨
+                  </span>
+                  Proctoring Report
+                </h2>
+                <div className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="rounded-lg border border-orange-500/20 bg-orange-500/5 p-4">
+                      <p className="text-sm text-orange-200/80 mb-1">Total Violations</p>
+                      <p className="text-3xl font-bold text-orange-100">{proctoringViolations.length}</p>
+                    </div>
+                    <div className="rounded-lg border border-blue-500/20 bg-blue-500/5 p-4">
+                      <p className="text-sm text-blue-200/80 mb-1">Tab Switches</p>
+                      <p className="text-3xl font-bold text-blue-100">{tabSwitches}</p>
+                    </div>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto space-y-2">
+                    {proctoringViolations.map((violation, idx) => (
+                      <div key={idx} className={`rounded-lg border p-3 text-sm ${
+                        violation.severity === 'high'
+                          ? 'border-red-500/30 bg-red-500/10 text-red-200'
+                          : violation.severity === 'medium'
+                          ? 'border-orange-500/30 bg-orange-500/10 text-orange-200'
+                          : 'border-yellow-500/30 bg-yellow-500/10 text-yellow-200'
+                      }`}>
+                        <div className="font-semibold capitalize">{violation.type?.replace(/_/g, ' ')}</div>
+                        <div className="text-xs mt-1 opacity-90">{violation.message}</div>
+                        {violation.foreign_objects && violation.foreign_objects.length > 0 && (
+                          <div className="text-xs mt-2 p-2 bg-black/20 rounded italic">
+                            🔍 Detected objects: {violation.foreign_objects.length} item(s)
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -754,6 +811,15 @@ export default function AptitudeTest() {
             {loading ? 'Submitting...' : 'Submit Test'}
           </button>
         )}
+        
+        <button
+          onClick={() => handleSubmit(true)}
+          disabled={loading}
+          className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-500 disabled:opacity-50 transition-colors font-semibold"
+          title="Exit test anytime and see your score based on answered questions"
+        >
+          {loading ? 'Exiting...' : '🚪 Exit & See Score'}
+        </button>
       </div>
 
       {error && (
