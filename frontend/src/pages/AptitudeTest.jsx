@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { aptitudeAPI } from '../services/api'
+import axios from 'axios'
 
 const SECTIONS = [
   { 
@@ -40,13 +41,111 @@ export default function AptitudeTest() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [tabSwitches, setTabSwitches] = useState(0)
   const [isTestActive, setIsTestActive] = useState(false)
+  
+  // Proctoring states
+  const [proctoringViolations, setProctoringViolations] = useState([])
+  const [cameraEnabled, setCameraEnabled] = useState(false)
+  const [currentProctoringStatus, setCurrentProctoringStatus] = useState(null)
+  const videoRef = useRef(null)
+  const canvasRef = useRef(null)
+  const streamRef = useRef(null)
+  const proctoringIntervalRef = useRef(null)
 
   useEffect(() => {
     if (currentSection) {
       loadQuestions(currentSection)
       setIsTestActive(true)
+      startCamera()
     }
   }, [currentSection])
+
+  // Camera and Proctoring Functions
+  async function startCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { width: 640, height: 480 } 
+      })
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+        streamRef.current = stream
+        setCameraEnabled(true)
+        
+        // Start proctoring checks every 5 seconds
+        proctoringIntervalRef.current = setInterval(checkProctoring, 5000)
+      }
+    } catch (err) {
+      console.error('Camera access denied:', err)
+      alert('⚠️ Camera access is required for proctoring. Please allow camera access and refresh.')
+    }
+  }
+
+  function stopCamera() {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current = null
+    }
+    if (proctoringIntervalRef.current) {
+      clearInterval(proctoringIntervalRef.current)
+      proctoringIntervalRef.current = null
+    }
+    setCameraEnabled(false)
+  }
+
+  async function checkProctoring() {
+    if (!videoRef.current || !canvasRef.current) return
+
+    try {
+      // Capture frame from video
+      const canvas = canvasRef.current
+      const video = videoRef.current
+      
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(video, 0, 0)
+      
+      // Convert to base64
+      const imageData = canvas.toDataURL('image/jpeg', 0.8)
+      
+      // Send to backend
+      const response = await axios.post('http://localhost:8001/api/proctoring/check', {
+        image: imageData
+      })
+      
+      const result = response.data
+      setCurrentProctoringStatus(result)
+      
+      // Log violations
+      if (result.status === 'violation') {
+        const violation = {
+          timestamp: Date.now(),
+          type: result.violation_type,
+          message: result.message,
+          face_count: result.face_count
+        }
+        
+        setProctoringViolations(prev => [...prev, violation])
+        
+        // Alert user on violation
+        if (result.violation_type === 'no_face') {
+          console.warn('⚠️ Proctoring: No face detected')
+        } else if (result.violation_type === 'multiple_faces') {
+          console.warn(`⚠️ Proctoring: Multiple faces detected (${result.face_count})`)
+        }
+      }
+    } catch (err) {
+      console.error('Proctoring check failed:', err)
+    }
+  }
+
+  // Cleanup camera on unmount
+  useEffect(() => {
+    return () => {
+      stopCamera()
+    }
+  }, [])
 
   // Proctoring System
   useEffect(() => {
@@ -158,12 +257,15 @@ export default function AptitudeTest() {
         answers,
         time_taken: timeTaken,
         is_partial: isPartialExit,
+        tab_switches: tabSwitches,
+        proctoring_violations: proctoringViolations
       })
       
       setResult(data)
       setSubmitted(true)
       setCurrentSection(null)
       setIsTestActive(false)
+      stopCamera()
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to submit test')
     } finally {
@@ -263,17 +365,15 @@ export default function AptitudeTest() {
                 </div>
               </div>
 
-              <div className="group relative overflow-hidden rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-950/40 to-amber-950/20 p-6 backdrop-blur-sm card-hover">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="group relative overflow-hidden rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-950/40 to-blue-950/20 p-6 backdrop-blur-sm card-hover">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-orange-200/80">Time Taken</p>
-                    <span className="text-2xl">⏱️</span>
+                    <p className="text-sm font-medium text-cyan-200/80">Proctoring</p>
+                    <span className="text-2xl">🎥</span>
                   </div>
-                  <p className="text-3xl font-bold text-orange-100 mb-1">
-                    {Math.floor(result.time_taken / 60)}:{String(result.time_taken % 60).padStart(2, '0')}
-                  </p>
-                  <p className="text-xs text-orange-300/60 mt-2">Minutes : Seconds</p>
+                  <p className="text-4xl font-bold text-cyan-100 mb-1">{result.proctoring_score || 100}</p>
+                  <p className="text-xs text-cyan-300/60 mt-2">Integrity score</p>
                 </div>
               </div>
             </div>
@@ -349,6 +449,8 @@ export default function AptitudeTest() {
                       setResult(null)
                       setAnswers({})
                       setTabSwitches(0)
+                      setProctoringViolations([])
+                      setCurrentProctoringStatus(null)
                     }}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/50 transition-all transform hover:scale-105"
                   >
@@ -456,22 +558,48 @@ export default function AptitudeTest() {
 
   return (
     <div className="space-y-6">
+      {/* Camera Preview (hidden) */}
+      <div style={{ display: 'none' }}>
+        <video ref={videoRef} autoPlay playsInline muted />
+        <canvas ref={canvasRef} />
+      </div>
+
       {/* Proctoring Status Bar */}
-      {tabSwitches > 0 && (
+      {(tabSwitches > 0 || proctoringViolations.length > 0 || currentProctoringStatus) && (
         <div className={`rounded-lg border p-4 ${
-          tabSwitches > 3 
+          tabSwitches > 3 || proctoringViolations.length > 5
             ? 'border-red-500/40 bg-red-500/10 text-red-100' 
-            : 'border-amber-500/40 bg-amber-500/10 text-amber-100'
+            : proctoringViolations.length > 0
+            ? 'border-amber-500/40 bg-amber-500/10 text-amber-100'
+            : 'border-green-500/40 bg-green-500/10 text-green-100'
         }`}>
           <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">🔍 Proctoring Monitor Active</p>
-              <p className="text-sm">Tab switches detected: {tabSwitches}</p>
+            <div className="space-y-1">
+              <p className="font-medium flex items-center gap-2">
+                {cameraEnabled ? '🎥' : '📷'} Proctoring Monitor 
+                {currentProctoringStatus?.status === 'ok' && <span className="text-green-400">✓ Active</span>}
+                {currentProctoringStatus?.status === 'violation' && <span className="text-red-400">⚠ Violation</span>}
+              </p>
+              <div className="text-sm space-y-1">
+                <p>Tab switches: {tabSwitches}</p>
+                <p>Camera violations: {proctoringViolations.length}</p>
+                {currentProctoringStatus && (
+                  <p className="text-xs opacity-80">{currentProctoringStatus.message}</p>
+                )}
+              </div>
             </div>
-            {tabSwitches > 3 && (
-              <p className="text-sm font-bold">⚠️ WARNING: Multiple violations detected!</p>
+            {(tabSwitches > 3 || proctoringViolations.length > 5) && (
+              <p className="text-sm font-bold">⚠️ Multiple violations detected!</p>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Camera Status Indicator */}
+      {cameraEnabled && (
+        <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+          <span>Camera monitoring active</span>
         </div>
       )}
       {/* Header */}
@@ -498,6 +626,7 @@ export default function AptitudeTest() {
                 setCurrentSection(null)
                 setIsTestActive(false)
                 setAnswers({})
+                stopCamera()
               }
             }}
             className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
