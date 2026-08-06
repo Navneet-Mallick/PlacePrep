@@ -137,7 +137,7 @@ def analyze_text(text: str, use_gemini: bool = True) -> dict:
             "suggestions": build_suggestions(entities, resume_score),
         }
         
-        # Add recommendations if Gemini is available
+        # Add recommendations if Gemini is available and not disabled
         if use_gemini:
             try:
                 recommendations = generate_recommendations_safe(result, text)
@@ -145,6 +145,7 @@ def analyze_text(text: str, use_gemini: bool = True) -> dict:
                     result["recommendations"] = recommendations
             except Exception as e:
                 print(f"Warning: Gemini recommendations failed - {e}", file=sys.stderr)
+                # Don't add recommendations if it fails
         
         return result
     

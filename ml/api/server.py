@@ -71,24 +71,47 @@ async def analyze_resume(
     text: str = Form(None),
 ):
     """Analyze a resume from file or text"""
-    if resume and resume.filename:
-        suffix = Path(resume.filename).suffix.lower()
-        if suffix not in {".pdf", ".docx"}:
-            return {"error": "Only PDF and DOCX files are supported."}
+    try:
+        if resume and resume.filename:
+            suffix = Path(resume.filename).suffix.lower()
+            if suffix not in {".pdf", ".docx"}:
+                return {"error": "Only PDF and DOCX files are supported."}
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-            tmp.write(await resume.read())
-            tmp_path = Path(tmp.name)
+            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                content = await resume.read()
+                if not content:
+                    return {"error": "Resume file is empty"}
+                tmp.write(content)
+                tmp_path = Path(tmp.name)
 
-        try:
-            return analyze_file(tmp_path)
-        finally:
-            tmp_path.unlink(missing_ok=True)
+            try:
+                result = analyze_file(tmp_path)
+                return result
+            except Exception as e:
+                print(f"Error analyzing file: {e}")
+                return {
+                    "error": f"Failed to analyze resume: {str(e)}",
+                    "resume_score": 0,
+                    "predicted_role": "Unknown",
+                    "entities": {}
+                }
+            finally:
+                tmp_path.unlink(missing_ok=True)
 
-    if text and text.strip():
-        return analyze_text(text.strip())
-
-    return {"error": "Provide a resume file or text."}
+        elif text and text.strip():
+            result = analyze_text(text.strip(), use_gemini=False)
+            return result
+        else:
+            return {"error": "Please provide either a resume file or text"}
+    
+    except Exception as e:
+        print(f"Resume analysis endpoint error: {e}")
+        return {
+            "error": f"Server error: {str(e)}",
+            "resume_score": 0,
+            "predicted_role": "Unknown",
+            "entities": {}
+        }    return {"error": "Provide a resume file or text."}
 
 
 @app.post("/api/technical/evaluate")
