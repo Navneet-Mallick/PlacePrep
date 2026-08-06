@@ -101,18 +101,22 @@ def extract_entities(text: str) -> dict:
 
     emails = sorted(set(EMAIL_PATTERN.findall(text)))
     phones = sorted(set(PHONE_PATTERN.findall(text)))
+    
+    # Clean null bytes from all strings
+    def clean_strings(items):
+        return [str(item).replace('\x00', '').strip() for item in items if item]
 
     return {
-        "person": persons[:3],
-        "email": emails,
-        "phone": phones,
-        "organizations": organizations[:10],
-        "locations": locations[:5],
-        "dates": dates[:10],
-        "skills": extract_skills(text),
-        "education": extract_education_lines(text),
-        "certifications": extract_certifications(text),
-        "experience": extract_experience_mentions(text),
+        "person": clean_strings(persons[:3]),
+        "email": clean_strings(emails),
+        "phone": clean_strings(phones),
+        "organizations": clean_strings(organizations[:10]),
+        "locations": clean_strings(locations[:5]),
+        "dates": clean_strings(dates[:10]),
+        "skills": clean_strings(extract_skills(text)),
+        "education": clean_strings(extract_education_lines(text)),
+        "certifications": clean_strings(extract_certifications(text)),
+        "experience": clean_strings(extract_experience_mentions(text)),
     }
 
 

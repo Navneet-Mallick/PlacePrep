@@ -342,10 +342,13 @@ export default function AptitudeTest() {
                 <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-green-200/80">Total Score</p>
+                    <p className="text-sm font-medium text-green-200/80">Final Score</p>
                     <span className="text-2xl">🎯</span>
                   </div>
                   <p className="text-5xl font-bold text-green-100 mb-1">{result.total_score}</p>
+                  <p className="text-xs text-green-300/60 mt-2">
+                    {result.total_answered}/{result.total_questions || questions.length} answered
+                  </p>
                   <div className="h-1 bg-green-500/20 rounded-full overflow-hidden mt-3">
                     <div 
                       className="h-full bg-gradient-to-r from-green-400 to-emerald-400 progress-animate"
@@ -359,11 +362,13 @@ export default function AptitudeTest() {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-blue-200/80">Accuracy</p>
+                    <p className="text-sm font-medium text-blue-200/80">Answered Accuracy</p>
                     <span className="text-2xl">📊</span>
                   </div>
-                  <p className="text-4xl font-bold text-blue-100 mb-1">{result.accuracy_percent.toFixed(1)}%</p>
-                  <p className="text-xs text-blue-300/60 mt-2">Precision metric</p>
+                  <p className="text-4xl font-bold text-blue-100 mb-1">
+                    {(result.answered_accuracy || result.accuracy_percent).toFixed(1)}%
+                  </p>
+                  <p className="text-xs text-blue-300/60 mt-2">Of questions attempted</p>
                 </div>
               </div>
 

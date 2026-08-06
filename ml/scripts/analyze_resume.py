@@ -145,7 +145,6 @@ def analyze_text(text: str, use_gemini: bool = True) -> dict:
                     result["recommendations"] = recommendations
             except Exception as e:
                 print(f"Warning: Gemini recommendations failed - {e}", file=sys.stderr)
-                # Don't add recommendations if it fails
         
         return result
     

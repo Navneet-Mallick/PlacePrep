@@ -392,7 +392,15 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
 
             # Calculate overall accuracy and score
             accuracy = (total_correct / total_questions * 100) if total_questions > 0 else 0
-            total_score = int((total_correct / total_questions * 100)) if total_questions > 0 else 0
+            
+            # Industry-standard scoring: penalize unanswered questions
+            all_questions_count = AptitudeQuestion.objects.count()
+            
+            # Total score accounts for unanswered questions (industry standard)
+            total_score = int((total_correct / all_questions_count * 100)) if all_questions_count > 0 else 0
+            
+            # Answered accuracy (for reporting precision)
+            answered_accuracy = accuracy
 
             # Use ML API to predict aptitude level
             try:
@@ -431,14 +439,20 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
                 else:
                     aptitude_level = 'beginner'
 
-            # Calculate proctoring score
-            proctoring_score = max(0, 100 - (tab_switches * 5) - (len(proctoring_violations) * 10))
+            # Calculate proctoring score (industry standard: deductions for violations)
+            proctoring_score = 100
+            proctoring_score -= min(tab_switches * 3, 30)  # Max 30% deduction for tab switches
+            proctoring_score -= min(len(proctoring_violations) * 5, 40)  # Max 40% for violations
+            proctoring_score = max(proctoring_score, 0)  # Floor at 0
+            
+            # Overall integrity score (weighted)
+            integrity_score = int((proctoring_score * 0.7) + (total_score * 0.3))
 
             # Create test attempt
             attempt = AptitudeTestAttempt.objects.create(
                 user=request.user,
                 total_score=total_score,
-                accuracy_percent=accuracy,
+                accuracy_percent=answered_accuracy,  # Use answered accuracy
                 time_taken=time_taken,
                 section_scores=section_scores,
                 answers=answers,
@@ -451,6 +465,10 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
             response_data = AptitudeTestAttemptSerializer(attempt).data
             response_data['is_partial'] = is_partial
             response_data['total_answered'] = total_answered
+            response_data['total_questions'] = all_questions_count
+            response_data['unanswered'] = all_questions_count - total_answered
+            response_data['integrity_score'] = integrity_score
+            response_data['answered_accuracy'] = answered_accuracy
             
             return Response(
                 response_data,

@@ -88,15 +88,13 @@ Return ONLY valid JSON with this exact structure:
 
 def generate_recommendations_safe(analysis: dict, resume_text: str = "") -> dict:
     try:
-        return generate_recommendations(analysis, resume_text)
+        print(f"Attempting to generate recommendations...", file=__import__('sys').stderr)
+        result = generate_recommendations(analysis, resume_text)
+        print(f"Gemini recommendations generated successfully", file=__import__('sys').stderr)
+        return result
     except Exception as exc:
-        return {
-            "summary": "AI recommendations unavailable right now.",
-            "predicted_role_fit": "",
-            "missing_skills": [],
-            "recommended_topics": [],
-            "resume_improvements": analysis.get("suggestions", []),
-            "learning_path": [],
-            "practice_focus": [],
-            "error": str(exc),
-        }
+        print(f"Gemini error: {type(exc).__name__}: {exc}", file=__import__('sys').stderr)
+        import traceback
+        traceback.print_exc()
+        # Return None instead of error dict so it's skipped
+        return None

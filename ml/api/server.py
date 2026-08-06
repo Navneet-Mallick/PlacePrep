@@ -99,7 +99,7 @@ async def analyze_resume(
                 tmp_path.unlink(missing_ok=True)
 
         elif text and text.strip():
-            result = analyze_text(text.strip(), use_gemini=False)
+            result = analyze_text(text.strip(), use_gemini=True)
             return result
         else:
             return {"error": "Please provide either a resume file or text"}
@@ -111,7 +111,7 @@ async def analyze_resume(
             "resume_score": 0,
             "predicted_role": "Unknown",
             "entities": {}
-        }    return {"error": "Provide a resume file or text."}
+        }
 
 
 @app.post("/api/technical/evaluate")

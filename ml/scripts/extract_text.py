@@ -13,9 +13,25 @@ from PyPDF2 import PdfReader
 
 
 def extract_from_pdf(path: Path) -> str:
-    reader = PdfReader(str(path))
-    pages = [page.extract_text() or "" for page in reader.pages]
-    return "\n".join(pages).strip()
+    try:
+        reader = PdfReader(str(path))
+        if not reader.pages:
+            return ""
+        pages = []
+        for page in reader.pages:
+            try:
+                text = page.extract_text() or ""
+                # Remove null bytes
+                text = text.replace('\x00', '')
+                if text.strip():
+                    pages.append(text)
+            except Exception as e:
+                print(f"Warning: Failed to extract from PDF page: {e}", file=sys.stderr)
+                continue
+        return "\n".join(pages).strip()
+    except Exception as e:
+        print(f"Error reading PDF: {e}", file=sys.stderr)
+        return ""
 
 
 def extract_from_docx(path: Path) -> str:
