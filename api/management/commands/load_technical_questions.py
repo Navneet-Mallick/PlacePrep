@@ -28,7 +28,7 @@ class Command(BaseCommand):
         created_count = 0
         skipped_count = 0
         
-        with open(questions_file, 'r', encoding='latin-1', errors='ignore') as f:
+        with open(questions_file, 'r', encoding='utf-8', errors='ignore') as f:
             reader = csv.DictReader(f)
             
             for row in reader:
@@ -36,49 +36,52 @@ class Command(BaseCommand):
                     # Map CSV columns to model fields
                     question_text = row.get('Question', '').strip()
                     reference_answer = row.get('Answer', '').strip()
-                    topic = row.get('Topic', 'general').strip().lower()
+                    category_from_csv = row.get('Category', 'General Programming').strip()
+                    difficulty_from_csv = row.get('Difficulty', 'Medium').strip().lower()
                     
                     if not question_text or not reference_answer:
                         skipped_count += 1
                         continue
                     
-                    # Map topic to category
+                    # Map CSV category to our model categories
                     category_mapping = {
+                        'general programming': 'dsa',
+                        'general program': 'dsa',
                         'data structures': 'dsa',
-                        'algorithms': 'dsa',
-                        'dsa': 'dsa',
+                        'database and sql': 'dbms',
                         'database': 'dbms',
-                        'dbms': 'dbms',
-                        'sql': 'dbms',
-                        'operating system': 'os',
-                        'os': 'os',
-                        'network': 'cn',
-                        'networking': 'cn',
-                        'computer networks': 'cn',
-                        'git': 'git',
-                        'version control': 'git',
-                        'web': 'web',
                         'web development': 'web',
-                        'html': 'web',
-                        'css': 'web',
-                        'javascript': 'web',
+                        'front-end': 'web',
+                        'back-end': 'web',
+                        'full-stack': 'web',
+                        'languages and frameworks': 'web',
+                        'version control': 'git',
+                        'devops': 'git',
+                        'system design': 'os',
+                        'software testing': 'dsa',
+                        'security': 'cn',
                     }
                     
-                    category = category_mapping.get(topic, 'dsa')
+                    # Find matching category
+                    category = 'dsa'  # default
+                    category_lower = category_from_csv.lower()
+                    for key, value in category_mapping.items():
+                        if key in category_lower:
+                            category = value
+                            break
                     
-                    # Determine difficulty based on answer length (simple heuristic)
-                    answer_length = len(reference_answer.split())
-                    if answer_length < 30:
-                        difficulty = 'easy'
-                    elif answer_length < 70:
-                        difficulty = 'medium'
-                    else:
-                        difficulty = 'hard'
+                    # Map difficulty
+                    difficulty_map = {
+                        'easy': 'easy',
+                        'medium': 'medium',
+                        'hard': 'hard'
+                    }
+                    difficulty = difficulty_map.get(difficulty_from_csv, 'medium')
                     
-                    # Extract keywords (simple: take first 5 important words from answer)
+                    # Extract keywords (simple: take first 10 important words from answer)
                     words = reference_answer.lower().split()
-                    stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'is', 'are', 'was', 'were', 'be', 'been', 'being'}
-                    keywords = [w for w in words if len(w) > 3 and w not in stop_words][:10]
+                    stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'that', 'this', 'with', 'from', 'by', 'as', 'it', 'can', 'will', 'would', 'could', 'should'}
+                    keywords = [w.strip('.,;:!?()[]{}') for w in words if len(w) > 3 and w not in stop_words][:10]
                     
                     TechnicalQuestion.objects.create(
                         category=category,
