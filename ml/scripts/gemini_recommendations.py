@@ -11,14 +11,36 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-load_dotenv(PROJECT_ROOT / ".env")
+
+def _load_env():
+    """Load environment variables from .env in likely repository locations."""
+    candidates = [
+        PROJECT_ROOT / ".env",
+        PROJECT_ROOT / "ml" / ".env",
+        Path.cwd() / ".env",
+    ]
+    for env_path in candidates:
+        if env_path.exists():
+            load_dotenv(env_path)
+            return env_path
+    load_dotenv()
+    return None
+
+# Load env on import and allow reloading when the helper is called
+_load_env()
 
 # Try gemini models in order of preference
 GEMINI_MODELS = [
-    "gemini-1.5-flash",
-    "gemini-2.0-flash",
-    "gemini-2.0-flash-lite",
+    "gemini-2.5-flash",
+    "gemini-flash-latest",
+    "gemini-2.5-pro",
+    "gemini-pro-latest",
+    "gemini-2.5-flash-lite",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-preview",
 ]
+# Also try the full resource name format if short name is not accepted
+GEMINI_MODELS = GEMINI_MODELS + [f"models/{model}" for model in GEMINI_MODELS]
 
 
 def _get_client():
@@ -30,8 +52,8 @@ def _get_client():
 
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
-        raise ValueError("GEMINI_API_KEY is not set in .env file")
-    
+        raise ValueError("GEMINI_API_KEY is not set in .env file or environment")
+
     if api_key.startswith("your_"):
         raise ValueError("GEMINI_API_KEY contains placeholder value. Get a real key from https://aistudio.google.com/apikey")
     
@@ -138,21 +160,23 @@ def generate_recommendations_safe(analysis: dict, resume_text: str = "") -> dict
         
     except RuntimeError as e:
         # Critical errors like invalid API key
-        print(f"[Gemini] ERROR: {e}", file=__import__('sys').stderr)
-        return None
+        message = f"Gemini error: {e}"
+        print(f"[Gemini] ERROR: {message}", file=__import__('sys').stderr)
+        return {"error": message}
         
     except json.JSONDecodeError as e:
-        print(f"[Gemini] JSON parsing error: {e}", file=__import__('sys').stderr)
-        return None
+        message = f"Gemini JSON parse error: {e}"
+        print(f"[Gemini] JSON parsing error: {message}", file=__import__('sys').stderr)
+        return {"error": message}
         
     except Exception as e:
         # Catch all other errors (quota exceeded, rate limit, network, etc)
         error_msg = str(e)
         if "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg:
-            print(f"[Gemini] Quota exhausted. Recommendations will be skipped.", 
-                  file=__import__('sys').stderr)
+            message = "Gemini quota exhausted. Please check your plan and billing details."
+            print(f"[Gemini] {message}", file=__import__('sys').stderr)
         else:
-            print(f"[Gemini] {type(e).__name__}: {e}", file=__import__('sys').stderr)
+            message = f"Gemini error: {type(e).__name__}: {e}"
+            print(f"[Gemini] {message}", file=__import__('sys').stderr)
         
-        # Return None to skip recommendations gracefully
-        return None
+        return {"error": message}

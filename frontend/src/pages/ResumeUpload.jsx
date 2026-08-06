@@ -111,7 +111,13 @@ export default function ResumeUpload() {
     }
   }
 
-  const rec = result?.recommendations
+  const rec = result?.recommendations || {}
+  const predictedRoleFit = rec?.predicted_role_fit || rec?.role_fit
+  const recommendedTopics = rec?.recommended_topics || rec?.focus_areas || []
+  const resumeImprovements = rec?.resume_improvements || rec?.next_steps || []
+  const learningPath = rec?.learning_path || []
+  const practiceFocus = rec?.practice_focus || []
+  const hasGeminiRecommendations = rec && Object.keys(rec).length > 0
 
   return (
     <div className="space-y-6">
@@ -206,18 +212,18 @@ export default function ResumeUpload() {
           {rec && Object.keys(rec).length > 0 && (
             <div className="rounded-xl border border-indigo-500/30 bg-indigo-950/20 p-6 space-y-4">
               <h2 className="text-lg font-semibold text-white">AI-Powered Recommendations</h2>
-              {rec.summary && <p className="text-slate-200 leading-relaxed">{rec.summary}</p>}
-              {rec.predicted_role_fit && (
+                  {rec.summary && <p className="text-slate-200 leading-relaxed">{rec.summary}</p>}
+              {predictedRoleFit && (
                 <div className="rounded-lg border border-indigo-400/30 bg-indigo-900/30 p-3">
-                  <p className="text-sm text-indigo-200">{rec.predicted_role_fit}</p>
+                  <p className="text-sm text-indigo-200">{predictedRoleFit}</p>
                 </div>
               )}
               <div className="grid gap-4 md:grid-cols-2">
                 <RecommendationSection title="🎯 Missing Skills" items={rec.missing_skills} />
-                <RecommendationSection title="📚 Recommended Topics" items={rec.recommended_topics} />
-                <RecommendationSection title="✏️ Resume Improvements" items={rec.resume_improvements} />
-                <RecommendationSection title="🛤️ Learning Path" items={rec.learning_path} />
-                <RecommendationSection title="🎓 Practice Focus" items={rec.practice_focus} />
+                <RecommendationSection title="📚 Recommended Topics" items={recommendedTopics} />
+                <RecommendationSection title="✏️ Resume Improvements" items={resumeImprovements} />
+                <RecommendationSection title="🛤️ Learning Path" items={learningPath} />
+                <RecommendationSection title="🎓 Practice Focus" items={practiceFocus} />
               </div>
               {rec.error && (
                 <p className="text-sm text-amber-300">
@@ -226,7 +232,7 @@ export default function ResumeUpload() {
               )}
             </div>
           )}
-          {!rec || Object.keys(rec).length === 0 && (
+          {!hasGeminiRecommendations && (
             <div className="rounded-xl border border-slate-800 bg-slate-900 p-6">
               <p className="text-slate-400">No AI recommendations available. The recommendation service may be disabled or experiencing issues.</p>
             </div>
