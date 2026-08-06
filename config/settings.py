@@ -175,4 +175,4 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # ML service
-ML_API_URL = env_config('ML_API_URL', default='http://localhost:8000/api')
+ML_API_URL = env_config('ML_API_URL', default='http://localhost:8001/api')
