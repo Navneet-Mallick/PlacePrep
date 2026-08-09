@@ -112,6 +112,20 @@ def build_suggestions(entities: dict, resume_score: int) -> list:
 def analyze_text(text: str, use_gemini: bool = True) -> dict:
     """Analyze resume text and extract information"""
     try:
+        # Clean text
+        text = text.replace('\x00', '').strip()
+        
+        if not text or len(text) < 30:
+            return {
+                "error": "Resume text too short for analysis",
+                "parsed_text": text,
+                "resume_score": 0,
+                "predicted_role": "Unknown",
+                "confidence": 0.0,
+                "entities": {},
+                "suggestions": ["Please provide more detailed resume content"]
+            }
+        
         # Extract entities
         entities = extract_entities(text)
         
@@ -129,7 +143,7 @@ def analyze_text(text: str, use_gemini: bool = True) -> dict:
         resume_score = compute_resume_score(entities)
         
         result = {
-            "parsed_text": text,
+            "parsed_text": text[:5000],  # Limit stored text size
             "resume_score": resume_score,
             "predicted_role": role_result.get("predicted_role", "Unknown"),
             "confidence": role_result.get("confidence", 0.0),
@@ -137,7 +151,7 @@ def analyze_text(text: str, use_gemini: bool = True) -> dict:
             "suggestions": build_suggestions(entities, resume_score),
         }
         
-        # Add recommendations if Gemini is available and not disabled
+        # Add recommendations if Gemini is available
         if use_gemini:
             try:
                 recommendations = generate_recommendations_safe(result, text)
@@ -149,14 +163,17 @@ def analyze_text(text: str, use_gemini: bool = True) -> dict:
         return result
     
     except Exception as e:
+        print(f"Analysis error: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
         return {
             "error": f"Analysis failed: {str(e)}",
-            "parsed_text": text,
+            "parsed_text": text[:500] if text else "",
             "resume_score": 0,
             "predicted_role": "Unknown",
             "confidence": 0.0,
             "entities": {},
-            "suggestions": ["Please ensure your resume contains valid text content"]
+            "suggestions": ["An error occurred during analysis. Please try again."]
         }
 
 
@@ -165,11 +182,19 @@ def analyze_file(path: Path) -> dict:
     try:
         text = extract_text(path)
         
-        if not text or len(text.strip()) < 50:
+        if not text or len(text.strip()) < 30:
             return {
-                "error": "Could not extract text from file or file is too short",
+                "error": "Could not extract meaningful text from file. The file may be image-based or corrupted.",
                 "source_file": path.name,
-                "suggestions": ["Ensure your resume file is valid and contains at least 50 characters"]
+                "resume_score": 0,
+                "predicted_role": "Unknown",
+                "confidence": 0.0,
+                "entities": {},
+                "suggestions": [
+                    "Ensure your resume file contains selectable text (not scanned images)",
+                    "Try saving as DOCX format for better text extraction",
+                    "Verify the file is not password-protected or corrupted"
+                ]
             }
         
         result = analyze_text(text)
@@ -178,10 +203,17 @@ def analyze_file(path: Path) -> dict:
         return result
     
     except Exception as e:
+        print(f"File analysis error: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
         return {
-            "error": f"File analysis failed: {str(e)}",
+            "error": f"Failed to read file: {str(e)}",
             "source_file": path.name,
-            "suggestions": [f"Error reading file: {str(e)}"]
+            "resume_score": 0,
+            "predicted_role": "Unknown",
+            "confidence": 0.0,
+            "entities": {},
+            "suggestions": [f"Error processing file: {str(e)}"]
         }
 
 

@@ -118,11 +118,11 @@ def train_model():
     
     # Check for overfitting
     if abs(train_score - test_score) > 0.1:
-        print("⚠️  Warning: Potential overfitting detected (train-test gap > 0.1)")
+        print("[WARNING] Potential overfitting detected (train-test gap > 0.1)")
     elif abs(train_score - oob_score) > 0.1:
-        print("⚠️  Warning: Potential overfitting detected (train-oob gap > 0.1)")
+        print("[WARNING] Potential overfitting detected (train-oob gap > 0.1)")
     else:
-        print("✓ Good generalization - low overfitting risk")
+        print("[OK] Good generalization - low overfitting risk")
     
     print("="*60)
     
@@ -201,7 +201,7 @@ def test_prediction(model):
 def main():
     model = train_model()
     test_prediction(model)
-    print("\n✓ Training complete!")
+    print("\nTraining complete!")
 
 
 if __name__ == "__main__":
