@@ -171,7 +171,7 @@ export default function TechnicalTest() {
               onClick={() => setSelectedCategory(category.id)}
               className="card card-hover text-left"
             >
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{category.label}</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{category.label}</h3>
               <p className="mt-1 text-xs text-gray-500 dark:text-zinc-400">Subjective questions</p>
               <p className="mt-4 text-xs font-medium text-blue-600 dark:text-blue-400">Start →</p>
             </button>
@@ -296,7 +296,7 @@ export default function TechnicalTest() {
       {result && (
         <div className="card">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Evaluation</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation</h3>
             <span className={`text-2xl font-bold ${
               result.score >= 70 ? 'text-emerald-600 dark:text-emerald-400'
                 : result.score >= 50 ? 'text-amber-600 dark:text-amber-400'

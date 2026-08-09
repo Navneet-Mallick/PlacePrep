@@ -237,9 +237,9 @@ export default function Dashboard() {
 function MetricCard({ label, value, sub }) {
   return (
     <div className="p-4 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-      <p className="text-xs text-gray-500 dark:text-zinc-400 mb-1">{label}</p>
-      <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
-      <p className="text-xs text-gray-500 dark:text-zinc-500 mt-1 capitalize">{sub}</p>
+      <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">{label}</p>
+      <p className="text-3xl font-bold text-gray-900 dark:text-white">{value}</p>
+      <p className="text-sm text-gray-500 dark:text-zinc-500 mt-1.5 capitalize">{sub}</p>
     </div>
   )
 }
@@ -247,13 +247,13 @@ function MetricCard({ label, value, sub }) {
 function Section({ title, count, linkTo, children }) {
   return (
     <div className="card">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold text-gray-900 dark:text-white">{title}</h2>
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h2>
         {count !== undefined && (
-          <span className="text-xs text-gray-400 dark:text-zinc-600">{count} total</span>
+          <span className="text-sm text-gray-400 dark:text-zinc-500">{count} total</span>
         )}
         {linkTo && (
-          <Link to={linkTo} className="text-xs text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white">
+          <Link to={linkTo} className="text-sm text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white">
             View all →
           </Link>
         )}

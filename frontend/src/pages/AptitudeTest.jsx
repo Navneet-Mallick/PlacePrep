@@ -225,13 +225,13 @@ export default function AptitudeTest() {
             {/* Section breakdown */}
             {result.section_scores && (
               <div className="card">
-                <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Section Breakdown</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Section Breakdown</h2>
                 <div className="space-y-4">
                   {Object.entries(result.section_scores).map(([section, score]) => (
                     <div key={section}>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm text-gray-700 dark:text-zinc-300 capitalize">{section}</span>
-                        <span className="text-sm font-semibold text-gray-900 dark:text-white">{score}%</span>
+                        <span className="text-lg font-semibold text-gray-900 dark:text-white">{score}%</span>
                       </div>
                       <div className="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
                         <div
@@ -250,7 +250,7 @@ export default function AptitudeTest() {
             {/* Proctoring report */}
             {(proctoringViolations.length > 0 || tabSwitches > 0) && (
               <div className="card">
-                <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Proctoring Report</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Proctoring Report</h2>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
                     <p className="text-xs text-gray-500 dark:text-zinc-400">Violations</p>
@@ -286,7 +286,7 @@ export default function AptitudeTest() {
                 onClick={() => setCurrentSection(section.id)}
                 className="card card-hover text-left group"
               >
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">{section.label}</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{section.label}</h3>
                 <p className="text-xs text-gray-500 dark:text-zinc-400">{section.description}</p>
                 <p className="mt-4 text-xs font-medium text-blue-600 dark:text-blue-400">Start test →</p>
               </button>
@@ -456,7 +456,7 @@ export default function AptitudeTest() {
 function Metric({ label, value, capitalize }) {
   return (
     <div className="card">
-      <p className="text-xs text-gray-500 dark:text-zinc-400 mb-1">{label}</p>
+      <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">{label}</p>
       <p className={`text-2xl font-bold text-gray-900 dark:text-white ${capitalize ? 'capitalize text-lg' : ''}`}>
         {value}
       </p>

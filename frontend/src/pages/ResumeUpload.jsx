@@ -96,17 +96,17 @@ export default function ResumeUpload() {
         <div className="space-y-5">
           <div className="grid grid-cols-3 gap-4">
             <div className="card">
-              <p className="text-xs text-gray-500 dark:text-zinc-400 mb-1">Resume score</p>
+              <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">Resume score</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {result.resume_score}<span className="text-sm text-gray-400 dark:text-zinc-600">/100</span>
               </p>
             </div>
             <div className="card">
-              <p className="text-xs text-gray-500 dark:text-zinc-400 mb-1">Predicted role</p>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1.5">{result.predicted_role}</p>
+              <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">Predicted role</p>
+              <p className="text-lg font-semibold text-gray-900 dark:text-white mt-1.5">{result.predicted_role}</p>
             </div>
             <div className="card">
-              <p className="text-xs text-gray-500 dark:text-zinc-400 mb-1">Confidence</p>
+              <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">Confidence</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {(result.confidence * 100).toFixed(0)}%
               </p>
@@ -116,7 +116,7 @@ export default function ResumeUpload() {
           {/* Entities */}
           {result.entities && (
             <div className="card space-y-5">
-              <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Extracted information</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Extracted information</h2>
 
               {result.entities.skills?.length > 0 && (
                 <div>
@@ -150,7 +150,7 @@ export default function ResumeUpload() {
           {/* AI recommendations */}
           {hasRecommendations ? (
             <div className="card space-y-4">
-              <h2 className="text-sm font-semibold text-gray-900 dark:text-white">AI recommendations</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">AI recommendations</h2>
 
               {rec.summary && (
                 <p className="text-sm text-gray-600 dark:text-zinc-400 leading-relaxed">{rec.summary}</p>

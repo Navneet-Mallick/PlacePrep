@@ -36,13 +36,13 @@ export default function Layout() {
     <div className="min-h-screen bg-white dark:bg-[#0f0f0f]">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-gray-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-[#0f0f0f]/90 backdrop-blur-md">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
             <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xs">P</span>
             </div>
-            <span className="text-sm font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
+            <span className="text-base font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
           </Link>
 
           {/* Desktop nav */}
