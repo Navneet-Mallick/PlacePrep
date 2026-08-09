@@ -198,6 +198,18 @@ export default function ResumeUpload() {
               AI recommendations unavailable — the Gemini API quota may be exhausted.
             </p>
           )}
+
+          {/* Raw JSON Analysis */}
+          <details className="card !p-0 overflow-hidden">
+            <summary className="px-6 py-4 cursor-pointer text-sm font-medium text-gray-700 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800/50">
+              View full JSON analysis
+            </summary>
+            <div className="border-t border-gray-200 dark:border-zinc-800 px-6 py-4 max-h-96 overflow-auto">
+              <pre className="text-xs font-mono text-gray-600 dark:text-zinc-400 whitespace-pre-wrap leading-relaxed">
+                {JSON.stringify(result, null, 2)}
+              </pre>
+            </div>
+          </details>
         </div>
       )}
     </div>
