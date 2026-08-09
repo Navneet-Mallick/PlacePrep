@@ -42,7 +42,8 @@ export default function ResumeUpload() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Resume Analysis</h1>
         <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
-          Entity extraction with spaCy, role prediction with logistic regression, and AI recommendations.
+          Upload your resume (PDF or DOCX) to get NLP-based entity extraction, ML role prediction, 
+          resume scoring, and AI-powered improvement recommendations.
         </p>
       </div>
 

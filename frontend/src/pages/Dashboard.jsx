@@ -103,8 +103,8 @@ export default function Dashboard() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-zinc-500">
-          Overview for {user?.first_name || user?.username || 'you'}
+        <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
+          Your placement readiness — resume, aptitude, technical scores and history
         </p>
       </div>
 

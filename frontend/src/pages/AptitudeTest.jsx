@@ -290,7 +290,8 @@ export default function AptitudeTest() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Aptitude Assessment</h1>
           <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
-            Select a section to begin. Camera proctoring is enabled during the test.
+            Timed MCQ tests across quantitative, logical, and technical domains. 
+            Camera proctoring monitors integrity. ML predicts your aptitude level after submission.
           </p>
         </div>
 

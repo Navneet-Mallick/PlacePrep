@@ -204,7 +204,8 @@ export default function TechnicalTest() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Technical Assessment</h1>
           <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
-            Subjective questions scored using semantic similarity. Camera proctoring is enabled.
+            Answer subjective questions from core CS domains. Your responses are evaluated 
+            using TF-IDF cosine similarity with synonym-aware semantic matching.
           </p>
         </div>
 
