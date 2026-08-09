@@ -111,7 +111,7 @@ export default function AptitudeTest() {
       canvas.getContext('2d').drawImage(video, 0, 0)
 
       const { data } = await axios.post('http://localhost:8001/api/proctoring/check', {
-        image: canvas.toDataURL('image/jpeg', 0.8),
+        image: canvas.toDataURL('image/jpeg', 0.9),
       })
 
       setProctoringStatus(data)
