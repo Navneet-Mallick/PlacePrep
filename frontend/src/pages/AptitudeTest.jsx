@@ -117,52 +117,33 @@ export default function AptitudeTest() {
       const result = response.data
       setCurrentProctoringStatus(result)
       
-      // Handle violations with user notification
+      // Handle violations
       if (result.status === 'violation') {
         const violation = {
           timestamp: Date.now(),
           type: result.violation_type,
           message: result.message,
           face_count: result.face_count,
-          severity: result.severity,
-          foreign_objects: result.foreign_objects || []
+          severity: result.severity
         }
         
         setProctoringViolations(prev => [...prev, violation])
         
-        // Show alert and notification to user
-        if (result.violation_type === 'no_face') {
-          console.warn('⚠️ Proctoring Violation: No face detected - Look at the camera!')
-          // Show browser notification
-          if (Notification.permission === 'granted') {
-            new Notification('⚠️ Proctoring Alert', {
-              body: 'No face detected! Please look at the camera.',
-              icon: '🎥',
-              tag: 'no-face-violation'
+        // Browser notification
+        if (Notification.permission === 'granted') {
+          if (result.violation_type === 'no_face') {
+            new Notification('Proctoring Alert', {
+              body: 'No face detected! Please face the camera.',
+              tag: 'proctoring-violation'
+            })
+          } else if (result.violation_type === 'multiple_faces') {
+            new Notification('Proctoring Alert', {
+              body: `${result.face_count} persons detected! Only one person allowed.`,
+              tag: 'proctoring-violation'
             })
           }
-        } else if (result.violation_type === 'multiple_faces') {
-          console.warn(`⚠️ Proctoring Violation: Multiple faces detected (${result.face_count})`)
-          if (Notification.permission === 'granted') {
-            new Notification('⚠️ Proctoring Alert', {
-              body: `Multiple people detected (${result.face_count})! Only one person should be present.`,
-              icon: '👥',
-              tag: 'multiple-faces-violation'
-            })
-          }
-        } else if (result.violation_type === 'foreign_object_detected') {
-          console.error('🚨 STRICT VIOLATION: Foreign object detected!')
-          if (Notification.permission === 'granted') {
-            new Notification('🚨 VIOLATION: Foreign Object Detected', {
-              body: result.message,
-              icon: '🚨',
-              tag: 'foreign-object-violation',
-              requireInteraction: true
-            })
-          }
-          // This is a critical violation, log it prominently
-          console.error('PROCTORING VIOLATION - Foreign object:', result.foreign_objects)
         }
+      }
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
@@ -497,11 +478,6 @@ export default function AptitudeTest() {
                       }`}>
                         <div className="font-semibold capitalize">{violation.type?.replace(/_/g, ' ')}</div>
                         <div className="text-xs mt-1 opacity-90">{violation.message}</div>
-                        {violation.foreign_objects && violation.foreign_objects.length > 0 && (
-                          <div className="text-xs mt-2 p-2 bg-black/20 rounded italic">
-                            🔍 Detected objects: {violation.foreign_objects.length} item(s)
-                          </div>
-                        )}
                       </div>
                     ))}
                   </div>
