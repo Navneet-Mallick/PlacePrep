@@ -1,88 +1,260 @@
 """
-Score a subjective technical answer using TF-IDF + cosine similarity.
+Score a subjective technical answer using multiple similarity techniques.
+
+Combines:
+1. TF-IDF cosine similarity (word-level matching)
+2. Semantic keyword matching (concept detection)
+3. Length & completeness scoring
+4. Synonym/paraphrase awareness
+
+This approach handles cases where the user gives a correct answer
+using different words than the reference.
 
 Usage:
     python ml/scripts/evaluate_technical_answer.py "user answer" "reference answer"
 """
 
+import re
 import sys
+from collections import Counter
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
+# Common technical synonyms and related terms
+SYNONYM_GROUPS = [
+    {"pointer", "reference", "address", "link"},
+    {"function", "method", "procedure", "subroutine", "routine"},
+    {"array", "list", "collection", "sequence"},
+    {"variable", "identifier", "name", "symbol"},
+    {"loop", "iteration", "repeat", "cycle", "iterate"},
+    {"class", "object", "instance", "entity"},
+    {"database", "db", "storage", "datastore"},
+    {"query", "request", "fetch", "retrieve"},
+    {"node", "element", "item", "entry"},
+    {"tree", "hierarchy", "hierarchical"},
+    {"graph", "network", "vertices", "edges"},
+    {"stack", "lifo", "last in first out"},
+    {"queue", "fifo", "first in first out"},
+    {"hash", "hashing", "hash table", "hashmap", "dictionary", "dict"},
+    {"sort", "sorting", "arrange", "order", "ordering"},
+    {"search", "find", "lookup", "locate"},
+    {"insert", "add", "push", "append", "enqueue"},
+    {"delete", "remove", "pop", "dequeue", "erase"},
+    {"O(n)", "linear", "linear time"},
+    {"O(1)", "constant", "constant time"},
+    {"O(log n)", "logarithmic"},
+    {"O(n^2)", "quadratic"},
+    {"allocate", "malloc", "memory allocation", "dynamic memory"},
+    {"compile", "build", "compilation"},
+    {"runtime", "execution time", "run time"},
+    {"thread", "process", "concurrent", "parallel"},
+    {"mutex", "lock", "semaphore", "synchronization"},
+    {"deadlock", "circular wait", "resource contention"},
+    {"cache", "caching", "memoization", "memorize"},
+    {"recursion", "recursive", "self-referential"},
+    {"inheritance", "extends", "subclass", "derived"},
+    {"polymorphism", "overriding", "overloading", "dynamic dispatch"},
+    {"encapsulation", "data hiding", "abstraction"},
+    {"interface", "abstract class", "contract"},
+    {"tcp", "transmission control protocol", "reliable transport"},
+    {"udp", "user datagram protocol", "unreliable transport"},
+    {"http", "hypertext transfer protocol", "web protocol"},
+    {"sql", "structured query language", "relational query"},
+    {"primary key", "pk", "unique identifier"},
+    {"foreign key", "fk", "reference key"},
+    {"normalization", "normal form", "reduce redundancy"},
+    {"index", "indexing", "b-tree", "b+ tree"},
+    {"transaction", "acid", "atomicity"},
+    {"os", "operating system", "kernel"},
+    {"process", "task", "program in execution"},
+    {"virtual memory", "paging", "page table"},
+    {"scheduling", "scheduler", "cpu scheduling"},
+    {"file system", "filesystem", "fs"},
+]
+
+
+def expand_with_synonyms(text: str) -> str:
+    """Expand text by adding synonyms for known technical terms"""
+    lowered = text.lower()
+    expanded_terms = []
+    
+    for group in SYNONYM_GROUPS:
+        # Check if any term from this group appears in the text
+        found = any(term in lowered for term in group)
+        if found:
+            # Add all related terms to boost matching
+            expanded_terms.extend(group)
+    
+    if expanded_terms:
+        return text + " " + " ".join(expanded_terms)
+    return text
+
+
+def extract_key_concepts(text: str) -> set:
+    """Extract meaningful technical concepts from text"""
+    # Remove common filler words aggressively
+    stop_words = {
+        'the', 'is', 'are', 'was', 'were', 'a', 'an', 'in', 'on', 'at', 'to',
+        'for', 'of', 'with', 'by', 'from', 'as', 'that', 'it', 'this', 'and',
+        'or', 'but', 'not', 'be', 'been', 'being', 'have', 'has', 'had', 'do',
+        'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might',
+        'shall', 'can', 'if', 'then', 'else', 'when', 'where', 'which', 'who',
+        'whom', 'what', 'how', 'all', 'each', 'every', 'both', 'few', 'more',
+        'most', 'other', 'some', 'such', 'no', 'nor', 'only', 'own', 'same',
+        'so', 'than', 'too', 'very', 'just', 'because', 'also', 'used', 'using',
+        'use', 'uses', 'called', 'known', 'example', 'like', 'etc', 'ie',
+        'eg', 'basically', 'simply', 'means', 'way', 'type', 'types',
+    }
+    
+    words = re.findall(r'[a-z][a-z0-9+#]+', text.lower())
+    concepts = {w for w in words if w not in stop_words and len(w) > 2}
+    
+    # Also extract multi-word phrases (bigrams)
+    words_list = text.lower().split()
+    for i in range(len(words_list) - 1):
+        bigram = f"{words_list[i]} {words_list[i+1]}"
+        # Check if it's a known technical term
+        for group in SYNONYM_GROUPS:
+            if bigram in group:
+                concepts.add(bigram)
+    
+    return concepts
+
+
+def concept_overlap_score(user_answer: str, reference_answer: str) -> float:
+    """
+    Calculate concept overlap considering synonyms.
+    More lenient than pure word matching.
+    """
+    user_concepts = extract_key_concepts(user_answer)
+    ref_concepts = extract_key_concepts(reference_answer)
+    
+    if not ref_concepts:
+        return 0.0
+    
+    # Direct matches
+    direct_matches = user_concepts & ref_concepts
+    
+    # Synonym matches - check if user used a synonym of a reference concept
+    synonym_matches = set()
+    for user_concept in user_concepts:
+        for group in SYNONYM_GROUPS:
+            if user_concept in group:
+                # Check if any reference concept is in the same synonym group
+                for ref_concept in ref_concepts:
+                    if ref_concept in group:
+                        synonym_matches.add(ref_concept)
+                        break
+    
+    total_matches = len(direct_matches | synonym_matches)
+    
+    # Score based on what fraction of reference concepts are covered
+    coverage = total_matches / len(ref_concepts)
+    
+    return min(1.0, coverage)
+
+
 def score_answer(user_answer: str, reference_answer: str) -> dict:
     """
-    Score a user's technical answer against a reference answer.
+    Score a technical answer using multiple similarity measures.
     
-    Returns a score from 0-100 based on semantic similarity and content overlap.
+    Handles paraphrasing and different wordings for the same concept.
+    
+    Returns:
+        dict with score (0-100) and detailed metrics
     """
-    # Remove extra whitespace
-    user_answer = " ".join(user_answer.split())
-    reference_answer = " ".join(reference_answer.split())
+    # Clean inputs
+    user_answer = " ".join(user_answer.split()).strip()
+    reference_answer = " ".join(reference_answer.split()).strip()
     
-    # If answer is very short, penalize it
-    if len(user_answer) < 10:
-        return {"score": 10, "similarity": 0.1}
+    # Edge cases
+    if not user_answer or len(user_answer) < 5:
+        return {"score": 5, "similarity": 0.05, "feedback": "Answer is too short."}
     
-    # Use TF-IDF vectorization
+    if not reference_answer:
+        return {"score": 50, "similarity": 0.5, "feedback": "No reference answer available."}
+    
+    # 1. TF-IDF Cosine Similarity (with synonym expansion)
+    expanded_user = expand_with_synonyms(user_answer)
+    expanded_ref = expand_with_synonyms(reference_answer)
+    
     try:
         vectorizer = TfidfVectorizer(
             stop_words="english",
             lowercase=True,
-            ngram_range=(1, 2),  # Use both unigrams and bigrams
-            max_features=100
+            ngram_range=(1, 2),
+            max_features=200,
+            sublinear_tf=True,
         )
-        matrix = vectorizer.fit_transform([user_answer, reference_answer])
-        similarity = cosine_similarity(matrix[0:1], matrix[1:2])[0][0]
+        matrix = vectorizer.fit_transform([expanded_user, expanded_ref])
+        tfidf_similarity = float(cosine_similarity(matrix[0:1], matrix[1:2])[0][0])
     except Exception:
-        # Fallback if vectorizer fails
-        similarity = 0.0
+        tfidf_similarity = 0.0
     
-    # Calculate keyword overlap
-    user_words = set(user_answer.lower().split())
-    ref_words = set(reference_answer.lower().split())
-    common_words = user_words & ref_words
+    # 2. Concept overlap (synonym-aware)
+    concept_score = concept_overlap_score(user_answer, reference_answer)
     
-    # Filter out common stop words
-    stop_words = {'the', 'is', 'are', 'and', 'or', 'a', 'an', 'in', 'on', 'at', 
-                  'to', 'for', 'of', 'with', 'by', 'from', 'as', 'that', 'it', 'this'}
-    meaningful_common = {w for w in common_words if w not in stop_words and len(w) > 2}
+    # 3. Length ratio scoring (penalize very short answers)
+    user_len = len(user_answer.split())
+    ref_len = len(reference_answer.split())
     
-    # Calculate keyword match score
-    if ref_words:
-        keyword_score = len(meaningful_common) / len(ref_words)
+    if ref_len > 0:
+        length_ratio = min(user_len / ref_len, 1.5)  # Cap at 1.5x
+        length_score = min(1.0, length_ratio / 0.4) if length_ratio < 0.4 else 1.0
     else:
-        keyword_score = 0
+        length_score = 1.0
     
-    # Combine similarity and keyword scores
-    combined_score = (similarity * 0.7) + (keyword_score * 0.3)
+    # 4. Combined scoring with weights
+    # Concept overlap gets highest weight (semantic understanding)
+    # TF-IDF gets second (word-level matching)
+    # Length is a minor penalty
+    combined = (
+        concept_score * 0.50 +      # 50% - Concept/meaning match
+        tfidf_similarity * 0.35 +   # 35% - Word-level similarity
+        length_score * 0.15          # 15% - Completeness
+    )
     
-    # Convert to 0-100 scale with adjusted thresholds
-    if combined_score >= 0.8:
-        final_score = 90 + int((combined_score - 0.8) * 500)  # 90-100
-    elif combined_score >= 0.6:
-        final_score = 70 + int((combined_score - 0.6) * 100)  # 70-90
-    elif combined_score >= 0.4:
-        final_score = 50 + int((combined_score - 0.4) * 100)  # 50-70
-    elif combined_score >= 0.2:
-        final_score = 30 + int((combined_score - 0.2) * 100)  # 30-50
+    # Convert to 0-100 with generous scaling
+    # The idea: if you cover 60%+ of concepts, you should get a decent score
+    if combined >= 0.7:
+        final_score = 85 + int((combined - 0.7) * 50)
+    elif combined >= 0.5:
+        final_score = 65 + int((combined - 0.5) * 100)
+    elif combined >= 0.35:
+        final_score = 45 + int((combined - 0.35) * 133)
+    elif combined >= 0.2:
+        final_score = 25 + int((combined - 0.2) * 133)
     else:
-        final_score = int(combined_score * 100)  # 0-30
+        final_score = int(combined * 125)
     
-    final_score = min(100, max(0, final_score))
+    final_score = max(0, min(100, final_score))
+    
+    # Generate feedback
+    if final_score >= 80:
+        feedback = "Excellent! Your answer captures the key concepts well."
+    elif final_score >= 60:
+        feedback = "Good answer. You covered the main ideas with some room for more detail."
+    elif final_score >= 40:
+        feedback = "Fair attempt. Try to include more specific technical terms and concepts."
+    elif final_score >= 20:
+        feedback = "Your answer touches on the topic but misses key concepts. Review the reference."
+    else:
+        feedback = "Your answer doesn't match the expected content. Study the reference answer."
     
     return {
         "score": final_score,
-        "similarity": round(float(combined_score), 4),
-        "raw_tfidf_similarity": round(float(similarity), 4),
-        "keyword_overlap": round(float(keyword_score), 4),
+        "similarity": round(combined, 4),
+        "tfidf_score": round(tfidf_similarity, 4),
+        "concept_score": round(concept_score, 4),
+        "feedback": feedback,
     }
 
 
 def main() -> None:
     if len(sys.argv) < 3:
-        print('Usage: python ml/scripts/evaluate_technical_answer.py "user answer" "reference answer"')
+        print('Usage: python evaluate_technical_answer.py "user answer" "reference answer"')
         sys.exit(1)
 
     user_answer = sys.argv[1]
@@ -90,7 +262,7 @@ def main() -> None:
     result = score_answer(user_answer, reference)
     
     import json
-    print(json.dumps(result))
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":
