@@ -8,11 +8,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [stats, setStats] = useState(null)
-  const [history, setHistory] = useState({
-    resume: [],
-    aptitude: [],
-    technical: [],
-  })
+  const [history, setHistory] = useState({ resume: [], aptitude: [], technical: [] })
+  const [showCount, setShowCount] = useState({ aptitude: 5, technical: 5 })
 
   useEffect(() => {
     loadDashboardData()
@@ -44,8 +41,38 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[300px]">
-        <div className="w-5 h-5 border-2 border-zinc-700 border-t-white rounded-full animate-spin"></div>
+      <div className="space-y-8">
+        <div>
+          <div className="h-7 w-40 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse" />
+          <div className="h-4 w-56 bg-gray-100 dark:bg-zinc-800/50 rounded animate-pulse mt-2" />
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[1,2,3,4].map(i => (
+            <div key={i} className="card animate-pulse">
+              <div className="h-3 w-20 bg-gray-200 dark:bg-zinc-700 rounded mb-3" />
+              <div className="h-8 w-16 bg-gray-200 dark:bg-zinc-700 rounded mb-2" />
+              <div className="h-3 w-24 bg-gray-100 dark:bg-zinc-800 rounded" />
+            </div>
+          ))}
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 space-y-6">
+            {[1,2].map(i => (
+              <div key={i} className="card animate-pulse">
+                <div className="h-5 w-32 bg-gray-200 dark:bg-zinc-700 rounded mb-4" />
+                <div className="space-y-3">
+                  {[1,2,3].map(j => <div key={j} className="h-10 bg-gray-100 dark:bg-zinc-800 rounded" />)}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-6">
+            <div className="card animate-pulse">
+              <div className="h-5 w-20 bg-gray-200 dark:bg-zinc-700 rounded mb-4" />
+              <div className="h-20 bg-gray-100 dark:bg-zinc-800 rounded" />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
@@ -114,25 +141,35 @@ export default function Dashboard() {
             {history.aptitude.length === 0 ? (
               <EmptyRow text="No aptitude tests taken yet" linkTo="/aptitude" linkText="Take a test" />
             ) : (
-              <div className="divide-y divide-gray-100 dark:divide-zinc-800">
-                {history.aptitude.slice(0, 5).map((attempt, i) => (
-                  <div key={i} className="py-3 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-800 dark:text-zinc-200">
-                        {attempt.section || 'Mixed'} — {attempt.aptitude_level || 'N/A'}
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">
-                        {formatDate(attempt.created_at)}
-                      </p>
+              <>
+                <div className="divide-y divide-gray-100 dark:divide-zinc-800">
+                  {history.aptitude.slice(0, showCount.aptitude).map((attempt, i) => (
+                    <div key={i} className="py-3 flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-800 dark:text-zinc-200">
+                          {attempt.section || 'Mixed'} — {attempt.aptitude_level || 'N/A'}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">
+                          {formatDate(attempt.created_at)}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className={`text-lg font-semibold ${scoreColor(attempt.total_score)}`}>
+                          {attempt.total_score}%
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className={`text-lg font-semibold ${scoreColor(attempt.total_score)}`}>
-                        {attempt.total_score}%
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                {history.aptitude.length > showCount.aptitude && (
+                  <button
+                    onClick={() => setShowCount(p => ({ ...p, aptitude: p.aptitude + 5 }))}
+                    className="mt-3 w-full py-2 text-sm text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-zinc-800 rounded-lg font-medium"
+                  >
+                    Load more
+                  </button>
+                )}
+              </>
             )}
           </Section>
 

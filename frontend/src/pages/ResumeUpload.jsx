@@ -85,6 +85,27 @@ export default function ResumeUpload() {
         </button>
       </form>
 
+      {/* Analyzing state */}
+      {loading && (
+        <div className="card text-center py-10">
+          <div className="w-8 h-8 border-3 border-gray-200 dark:border-zinc-700 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-base font-medium text-gray-900 dark:text-white">Analyzing your resume...</p>
+          <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">Extracting entities, predicting role, generating recommendations</p>
+        </div>
+      )}
+
+      {/* Success confirmation */}
+      {result && !loading && (
+        <div className="flex items-center gap-3 p-4 rounded-lg border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-950/20">
+          <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+            Resume analyzed successfully — results below
+          </p>
+        </div>
+      )}
+
       {error && (
         <div className="p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20">
           <p className="text-sm text-red-600 dark:text-red-400">{error}</p>

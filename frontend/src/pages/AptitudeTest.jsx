@@ -22,7 +22,9 @@ export default function AptitudeTest() {
   const [tabSwitches, setTabSwitches] = useState(0)
   const [isTestActive, setIsTestActive] = useState(false)
   const [warnedNearLimit, setWarnedNearLimit] = useState(false)
+  const [timeElapsed, setTimeElapsed] = useState(0)
   const disqualifyingRef = useRef(false)
+  const timerRef = useRef(null)
 
   // Proctoring
   const [proctoringViolations, setProctoringViolations] = useState([])
@@ -38,6 +40,12 @@ export default function AptitudeTest() {
       loadQuestions(currentSection)
       setIsTestActive(true)
       startCamera()
+      // Start timer
+      setTimeElapsed(0)
+      timerRef.current = setInterval(() => setTimeElapsed(t => t + 1), 1000)
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
     }
   }, [currentSection])
 
@@ -438,10 +446,11 @@ export default function AptitudeTest() {
 
   return (
     <div className="space-y-6">
-      <div style={{ display: 'none' }}>
-        <video ref={videoRef} autoPlay playsInline muted />
-        <canvas ref={canvasRef} />
+      {/* Camera preview (small corner) */}
+      <div className="fixed bottom-4 right-4 z-40 rounded-lg overflow-hidden border border-gray-300 dark:border-zinc-700 shadow-lg w-32 h-24 bg-black">
+        <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
       </div>
+      <canvas ref={canvasRef} className="hidden" />
 
       {/* Proctoring bar */}
       {cameraEnabled && (
@@ -478,7 +487,14 @@ export default function AptitudeTest() {
             Question {currentQuestionIndex + 1} of {questions.length}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-3">
+          {/* Timer */}
+          <div className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-center">
+            <p className="text-xs text-gray-600 dark:text-zinc-400">Time</p>
+            <p className="text-base font-mono font-semibold text-gray-900 dark:text-white">
+              {String(Math.floor(timeElapsed / 60)).padStart(2, '0')}:{String(timeElapsed % 60).padStart(2, '0')}
+            </p>
+          </div>
           <button
             onClick={() => handleSubmit(true)}
             disabled={loading || Object.keys(answers).length === 0}

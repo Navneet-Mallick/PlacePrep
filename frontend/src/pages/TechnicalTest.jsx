@@ -294,10 +294,11 @@ export default function TechnicalTest() {
 
   return (
     <div className="space-y-6">
-      <div style={{ display: 'none' }}>
-        <video ref={videoRef} autoPlay playsInline muted />
-        <canvas ref={canvasRef} />
+      {/* Camera preview (small corner) */}
+      <div className="fixed bottom-4 right-4 z-40 rounded-lg overflow-hidden border border-gray-300 dark:border-zinc-700 shadow-lg w-32 h-24 bg-black">
+        <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
       </div>
+      <canvas ref={canvasRef} className="hidden" />
 
       {/* Proctoring bar */}
       {cameraEnabled && (
