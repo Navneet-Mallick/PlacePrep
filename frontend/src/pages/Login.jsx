@@ -35,23 +35,23 @@ export default function Login() {
           <div className="w-10 h-10 mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-sm shadow-blue-600/20 mb-4">
             <span className="text-white font-bold text-sm">P</span>
           </div>
-          <h1 className="text-[22px] font-bold text-gray-900 dark:text-white">Welcome back</h1>
-          <p className="text-[13px] text-gray-500 dark:text-zinc-400 mt-1">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back</h1>
+          <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">Sign in to your account</p>
         </div>
 
         {error && (
           <div className="mb-5 p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
-            <p className="text-[13px] text-red-600 dark:text-red-400">{error}</p>
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[12px] font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Email</label>
+            <label className="block text-xs font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Email</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="you@example.com" />
           </div>
           <div>
-            <label className="block text-[12px] font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Password</label>
+            <label className="block text-xs font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Password</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••" />
           </div>
           <button type="submit" disabled={loading}
@@ -60,7 +60,7 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-[13px] text-gray-500 dark:text-zinc-400">
+        <p className="mt-6 text-center text-sm text-gray-500 dark:text-zinc-400">
           Don't have an account? <Link to="/register" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">Sign up</Link>
         </p>
       </div>
