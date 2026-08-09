@@ -144,7 +144,6 @@ export default function AptitudeTest() {
           }
         }
       }
-      }
     } catch (err) {
       console.error('Proctoring check failed:', err)
     }
