@@ -676,12 +676,6 @@ By studying this codebase, you'll learn:
 
 ---
 
-## 📄 License
-
-This project is built for educational purposes in placement preparation.
-
----
-
 **Last Updated**: August 2026
 **Version**: 1.0 Production Ready
 **Maintainer**: Navneet Mallick
