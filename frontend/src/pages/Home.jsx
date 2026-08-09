@@ -31,10 +31,10 @@ export default function Home() {
     <div className="space-y-20 py-8">
       {/* Hero */}
       <section className="max-w-2xl">
-        <h1 className="text-4xl font-bold text-white tracking-tight">
+        <h1 className="text-4xl font-bold text-[var(--text-primary)] tracking-tight">
           Placement preparation,<br />done right.
         </h1>
-        <p className="mt-4 text-lg text-neutral-400 leading-relaxed">
+        <p className="mt-4 text-lg text-[var(--text-muted)] leading-relaxed">
           Resume analysis, aptitude tests, technical assessments, and code practice — 
           all backed by machine learning. One platform, no fluff.
         </p>
@@ -43,13 +43,13 @@ export default function Home() {
             <>
               <Link
                 to="/dashboard"
-                className="px-5 py-2.5 bg-white text-neutral-900 font-medium rounded-md text-sm hover:bg-neutral-200"
+                className="px-5 py-2.5 bg-[var(--accent)] text-white font-medium rounded-md text-sm hover:bg-[var(--accent-hover)]"
               >
                 Go to Dashboard
               </Link>
               <Link
                 to="/resume"
-                className="px-5 py-2.5 border border-neutral-700 text-neutral-300 font-medium rounded-md text-sm hover:border-neutral-500 hover:text-white"
+                className="px-5 py-2.5 border border-[var(--border)] text-[var(--text-secondary)] font-medium rounded-md text-sm hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]"
               >
                 Analyze Resume
               </Link>
@@ -58,13 +58,13 @@ export default function Home() {
             <>
               <Link
                 to="/register"
-                className="px-5 py-2.5 bg-white text-neutral-900 font-medium rounded-md text-sm hover:bg-neutral-200"
+                className="px-5 py-2.5 bg-[var(--accent)] text-white font-medium rounded-md text-sm hover:bg-[var(--accent-hover)]"
               >
                 Get Started
               </Link>
               <Link
                 to="/login"
-                className="px-5 py-2.5 border border-neutral-700 text-neutral-300 font-medium rounded-md text-sm hover:border-neutral-500 hover:text-white"
+                className="px-5 py-2.5 border border-[var(--border)] text-[var(--text-secondary)] font-medium rounded-md text-sm hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]"
               >
                 Sign in
               </Link>
@@ -75,16 +75,16 @@ export default function Home() {
 
       {/* Features */}
       <section>
-        <h2 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-6">Modules</h2>
+        <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-6">Modules</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {features.map((feature) => (
             <Link
               key={feature.title}
               to={isAuthenticated ? feature.to : '/register'}
-              className="group p-5 rounded-lg border border-neutral-800 hover:border-neutral-700 bg-neutral-900/50 hover:bg-neutral-900 transition-colors"
+              className="group p-5 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors"
             >
-              <h3 className="text-sm font-semibold text-white mb-1.5">{feature.title}</h3>
-              <p className="text-sm text-neutral-500 leading-relaxed">{feature.description}</p>
+              <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-1.5">{feature.title}</h3>
+              <p className="text-sm text-[var(--text-muted)] leading-relaxed">{feature.description}</p>
             </Link>
           ))}
         </div>
@@ -92,7 +92,7 @@ export default function Home() {
 
       {/* How it works */}
       <section>
-        <h2 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-6">How it works</h2>
+        <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-6">How it works</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[
             { step: '01', text: 'Upload your resume for AI analysis' },
@@ -101,16 +101,16 @@ export default function Home() {
             { step: '04', text: 'Track progress and improve weak areas' },
           ].map((item) => (
             <div key={item.step} className="space-y-2">
-              <span className="text-xs font-mono text-neutral-600">{item.step}</span>
-              <p className="text-sm text-neutral-300">{item.text}</p>
+              <span className="text-xs font-mono text-[var(--text-faint)]">{item.step}</span>
+              <p className="text-sm text-[var(--text-secondary)]">{item.text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Tech stack note */}
-      <section className="border-t border-neutral-800 pt-8">
-        <p className="text-xs text-neutral-600 max-w-xl">
+      {/* Tech note */}
+      <section className="border-t border-[var(--border)] pt-8">
+        <p className="text-xs text-[var(--text-faint)] max-w-xl">
           Built with Django, FastAPI, React, scikit-learn, spaCy, OpenCV, and Google Gemini. 
           All ML models run locally — no data leaves your instance.
         </p>
