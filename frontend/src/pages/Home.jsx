@@ -4,183 +4,105 @@ import { useAuth } from '../context/AuthContext'
 const features = [
   {
     title: 'Resume Analysis',
-    desc: 'Upload PDF or DOCX. Get NLP entity extraction, role prediction with confidence scores, and Gemini AI recommendations.',
+    desc: 'Upload your resume and get instant feedback — role prediction, skill extraction, and improvement suggestions.',
     to: '/resume',
   },
   {
     title: 'Aptitude Tests',
-    desc: 'Quantitative, logical, and technical MCQs. Camera proctoring with face detection. ML-based level prediction.',
+    desc: 'Timed MCQs across quantitative, logical, and technical domains with ML-based scoring.',
     to: '/aptitude',
   },
   {
     title: 'Technical Assessment',
-    desc: 'Subjective answers scored using TF-IDF + semantic similarity. Covers DSA, DBMS, OS, Networks and more.',
+    desc: 'Answer subjective questions and get scored on how well you explain core CS concepts.',
     to: '/technical',
   },
   {
     title: 'Code Practice',
-    desc: 'LeetCode-style Python problems with sandboxed execution. Write, run, and debug code in the browser.',
+    desc: 'Solve coding problems, run your code instantly, and compare output against expected results.',
     to: '/practice',
   },
-]
-
-const stats = [
-  { value: '500+', label: 'Aptitude Questions' },
-  { value: '60+', label: 'Technical Questions' },
-  { value: '8', label: 'Coding Problems' },
-  { value: 'AI', label: 'Powered Scoring' },
 ]
 
 export default function Home() {
   const { isAuthenticated } = useAuth()
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-[80vh]">
       {/* Hero */}
-      <section className="px-4 sm:px-6 py-16 sm:py-24 max-w-5xl mx-auto">
-        <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/40 mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-            <span className="text-xs font-medium text-blue-600 dark:text-blue-400 tracking-wide">
-              ML-Powered Placement Training
-            </span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight leading-tight">
+      <section className="py-16 sm:py-24">
+        <div className="max-w-xl">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white leading-tight">
             Prepare smarter.<br />
             <span className="text-blue-600 dark:text-blue-400">Get placed faster.</span>
           </h1>
 
-          <p className="mt-5 text-base sm:text-lg text-gray-500 dark:text-zinc-400 leading-relaxed">
-            Resume analysis, aptitude tests, technical assessments, and code practice — 
-            all in one platform. Every evaluation is powered by machine learning.
+          <p className="mt-5 text-base sm:text-lg text-gray-600 dark:text-zinc-400 leading-relaxed">
+            One platform for resume analysis, aptitude tests, technical assessments,
+            and coding practice — with real-time proctoring and AI-powered evaluation.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             {isAuthenticated ? (
               <>
-                <Link to="/dashboard" className="btn-primary text-center">
-                  Go to Dashboard
-                </Link>
-                <Link to="/resume" className="btn-secondary text-center">
-                  Analyze Resume
-                </Link>
+                <Link to="/dashboard" className="btn-primary text-center">Dashboard</Link>
+                <Link to="/resume" className="btn-secondary text-center">Analyze Resume</Link>
               </>
             ) : (
               <>
-                <Link to="/register" className="btn-primary text-center">
-                  Get Started — It's Free
-                </Link>
-                <Link to="/login" className="btn-secondary text-center">
-                  Sign in
-                </Link>
+                <Link to="/register" className="btn-primary text-center">Get Started Free</Link>
+                <Link to="/login" className="btn-secondary text-center">Sign in</Link>
               </>
             )}
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="px-4 sm:px-6 max-w-5xl mx-auto">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 py-8 border-y border-gray-100 dark:border-zinc-800">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center sm:text-left">
-              <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">{s.value}</p>
-              <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Features */}
-      <section className="px-4 sm:px-6 py-16 max-w-5xl mx-auto">
-        <div className="mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-            Everything you need to prepare
-          </h2>
-          <p className="mt-2 text-gray-500 dark:text-zinc-400">
-            Four modules, one platform. Each backed by real ML models.
-          </p>
-        </div>
+      <section className="py-12 border-t border-gray-200 dark:border-zinc-800">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-8">
+          What you can do
+        </h2>
 
         <div className="grid sm:grid-cols-2 gap-4">
           {features.map((f, i) => (
             <Link
               key={f.title}
               to={isAuthenticated ? f.to : '/register'}
-              className="group p-6 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-blue-200 dark:hover:border-blue-900/50 hover:shadow-sm transition-all"
+              className="card card-hover group"
             >
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <span className="text-xs font-mono font-semibold text-blue-500 dark:text-blue-400">
-                  0{i + 1}
-                </span>
-                <svg
-                  className="w-4 h-4 text-gray-300 dark:text-zinc-600 group-hover:text-blue-400 transition-colors"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-              <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">{f.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed">{f.desc}</p>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
+                {f.title}
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-zinc-400 leading-relaxed">
+                {f.desc}
+              </p>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="px-4 sm:px-6 py-12 max-w-5xl mx-auto border-t border-gray-100 dark:border-zinc-800">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-10">How it works</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-          {[
-            { step: '01', title: 'Upload', desc: 'Submit your resume for AI analysis' },
-            { step: '02', title: 'Assess', desc: 'Take aptitude and technical tests' },
-            { step: '03', title: 'Evaluate', desc: 'Get ML-scored results instantly' },
-            { step: '04', title: 'Improve', desc: 'Track gaps and work on weak areas' },
-          ].map((s) => (
-            <div key={s.step}>
-              <p className="text-xs font-mono font-semibold text-blue-500 dark:text-blue-400 mb-3">{s.step}</p>
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">{s.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-zinc-400">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
+      {/* CTA for guests */}
       {!isAuthenticated && (
-        <section className="px-4 sm:px-6 py-16 max-w-5xl mx-auto">
-          <div className="rounded-2xl bg-blue-600 dark:bg-blue-700 px-8 py-12 text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              Ready to get started?
+        <section className="py-12 border-t border-gray-200 dark:border-zinc-800">
+          <div className="rounded-2xl bg-blue-600 dark:bg-blue-700 px-6 sm:px-10 py-10 sm:py-14 text-center">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+              Ready to start preparing?
             </h2>
             <p className="text-blue-100 mb-8 max-w-md mx-auto">
-              Create a free account and start preparing for your placement interviews today.
+              Create a free account and begin your placement journey today.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                to="/register"
-                className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 text-center"
-              >
+              <Link to="/register" className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 text-center">
                 Create free account
               </Link>
-              <Link
-                to="/login"
-                className="px-6 py-3 border border-blue-400 text-white font-semibold rounded-lg hover:bg-blue-500/30 text-center"
-              >
+              <Link to="/login" className="px-6 py-3 border border-blue-300 text-white font-semibold rounded-lg hover:bg-blue-600 text-center">
                 Sign in
               </Link>
             </div>
           </div>
         </section>
       )}
-
-      {/* Tech footer */}
-      <section className="px-4 sm:px-6 pb-12 max-w-5xl mx-auto">
-        <p className="text-xs text-gray-400 dark:text-zinc-600">
-          Built with Django · FastAPI · React · scikit-learn · spaCy · OpenCV · PostgreSQL · Gemini AI
-        </p>
-      </section>
     </div>
   )
 }

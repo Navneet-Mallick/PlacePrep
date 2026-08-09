@@ -42,7 +42,7 @@ export default function Register() {
             <span className="text-base font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create your account</h1>
-          <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1.5">
+          <p className="text-sm text-gray-600 dark:text-zinc-400 mt-1.5">
             Free forever. No credit card required.
           </p>
         </div>
@@ -120,7 +120,7 @@ export default function Register() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500 dark:text-zinc-400">
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-zinc-400">
           Already have an account?{' '}
           <Link to="/login" className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
             Sign in

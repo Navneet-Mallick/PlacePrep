@@ -175,7 +175,7 @@ export default function CodePractice() {
       <div className="space-y-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Code Practice</h1>
-          <p className="mt-2 text-sm text-gray-500 dark:text-zinc-400">
+          <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
             Solve Python problems with instant sandboxed execution.
           </p>
         </div>
@@ -197,7 +197,7 @@ export default function CodePractice() {
                   <span className="text-sm font-medium text-gray-900 dark:text-white">{problem.title}</span>
                   <span className={`badge ${difficultyBadge(problem.difficulty)}`}>{problem.difficulty}</span>
                 </div>
-                <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400 truncate">{problem.description}</p>
+                <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400 truncate">{problem.description}</p>
               </div>
               <svg className="w-4 h-4 flex-shrink-0 text-gray-300 dark:text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -215,7 +215,7 @@ export default function CodePractice() {
       <div className="flex items-center justify-between">
         <button
           onClick={() => setSelectedProblem(null)}
-          className="text-sm text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white"
+          className="text-sm text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white"
         >
           ← All problems
         </button>
@@ -252,7 +252,7 @@ export default function CodePractice() {
             <h2 className="text-xs font-semibold text-gray-400 dark:text-zinc-500 uppercase tracking-wider mb-2">
               Hint
             </h2>
-            <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed">{selectedProblem.hint}</p>
+            <p className="text-sm text-gray-600 dark:text-zinc-400 leading-relaxed">{selectedProblem.hint}</p>
           </div>
         </div>
 
@@ -260,7 +260,7 @@ export default function CodePractice() {
         <div className="space-y-3">
           <div className="card !p-0 overflow-hidden">
             <div className="px-4 py-2.5 border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-500 dark:text-zinc-400">solution.py</span>
+              <span className="text-xs font-medium text-gray-600 dark:text-zinc-400">solution.py</span>
               <span className="text-xs text-gray-400 dark:text-zinc-600">Python 3</span>
             </div>
             <textarea

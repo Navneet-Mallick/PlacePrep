@@ -37,12 +37,12 @@ html {
 
 body {
   font-family: var(--font-sans);
-  @apply text-base bg-white text-gray-800 antialiased;
+  @apply text-base bg-gray-50 text-gray-900 antialiased;
   letter-spacing: -0.008em;
 }
 
 html.dark body {
-  @apply bg-[#0f0f0f] text-gray-200;
+  @apply bg-[#0a0a0a] text-gray-100;
 }
 
 /* Headings a touch tighter than body */
@@ -70,17 +70,18 @@ button, a, input, textarea {
   @apply transition-all duration-150;
 }
 
-/* Cards */
+/* Cards — visible border in both themes */
 .card {
-  @apply rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6;
+  @apply rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 p-6 shadow-sm dark:shadow-none;
 }
 .card-hover {
-  @apply hover:border-gray-300 dark:hover:border-zinc-700 hover:shadow-sm;
+  @apply hover:border-gray-300 dark:hover:border-zinc-700 hover:shadow-md dark:hover:shadow-none;
 }
 
-/* Inputs */
+/* Inputs — strong contrast in both themes */
 input, textarea {
-  @apply w-full rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900
+  @apply w-full rounded-lg border border-gray-300 dark:border-zinc-700
+         bg-white dark:bg-zinc-800
          px-4 py-3 text-base text-gray-900 dark:text-white
          placeholder-gray-400 dark:placeholder-zinc-500;
 }

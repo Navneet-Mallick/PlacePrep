@@ -203,7 +203,7 @@ export default function TechnicalTest() {
       <div className="space-y-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Technical Assessment</h1>
-          <p className="mt-2 text-sm text-gray-500 dark:text-zinc-400">
+          <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
             Subjective questions scored using semantic similarity. Camera proctoring is enabled.
           </p>
         </div>
@@ -216,7 +216,7 @@ export default function TechnicalTest() {
               className="card card-hover text-left"
             >
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{category.label}</h3>
-              <p className="mt-1 text-xs text-gray-500 dark:text-zinc-400">Subjective questions</p>
+              <p className="mt-1 text-xs text-gray-600 dark:text-zinc-400">Subjective questions</p>
               <p className="mt-4 text-xs font-medium text-blue-600 dark:text-blue-400">Start →</p>
             </button>
           ))}
@@ -252,7 +252,7 @@ export default function TechnicalTest() {
         </div>
 
         <div className="mt-5 p-4 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-          <p className="text-sm text-gray-500 dark:text-zinc-400">
+          <p className="text-sm text-gray-600 dark:text-zinc-400">
             Tab switches: <span className="font-semibold text-gray-900 dark:text-white">{tabSwitches}</span>
             {' · '}
             Violations: <span className="font-semibold text-gray-900 dark:text-white">{proctoringViolations.length}</span>
@@ -279,7 +279,7 @@ export default function TechnicalTest() {
   if (questions.length === 0) {
     return (
       <div className="card text-center py-10">
-        <p className="text-sm text-gray-500 dark:text-zinc-400 mb-4">No questions in this category.</p>
+        <p className="text-sm text-gray-600 dark:text-zinc-400 mb-4">No questions in this category.</p>
         <button onClick={handleExit} className="btn-secondary">Back</button>
       </div>
     )
@@ -312,7 +312,7 @@ export default function TechnicalTest() {
               {proctoringStatus?.message || 'Camera monitoring active'}
             </span>
           </div>
-          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-zinc-400'}`}>
+          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-zinc-400'}`}>
             Tab switches {tabSwitches}/{LIMITS.tabSwitches} · Violations {proctoringViolations.length}/{LIMITS.totalViolations}
           </span>
         </div>
@@ -330,7 +330,7 @@ export default function TechnicalTest() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{categoryName}</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
             Question {currentQuestionIndex + 1} of {questions.length}
           </p>
         </div>
@@ -400,7 +400,7 @@ export default function TechnicalTest() {
 
           {result.similarity_score != null && (
             <div className="mb-4">
-              <div className="flex justify-between text-xs text-gray-500 dark:text-zinc-400 mb-1.5">
+              <div className="flex justify-between text-xs text-gray-600 dark:text-zinc-400 mb-1.5">
                 <span>Similarity</span>
                 <span>{(result.similarity_score * 100).toFixed(0)}%</span>
               </div>
@@ -438,7 +438,7 @@ export default function TechnicalTest() {
           Previous
         </button>
 
-        <p className="text-sm text-gray-500 dark:text-zinc-400">
+        <p className="text-sm text-gray-600 dark:text-zinc-400">
           <span className="font-medium text-gray-900 dark:text-white">{Object.keys(results).length}</span> of {questions.length} evaluated
         </p>
 

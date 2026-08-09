@@ -41,7 +41,7 @@ export default function ResumeUpload() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Resume Analysis</h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-zinc-400">
+        <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
           Entity extraction with spaCy, role prediction with logistic regression, and AI recommendations.
         </p>
       </div>
@@ -96,17 +96,17 @@ export default function ResumeUpload() {
         <div className="space-y-5">
           <div className="grid grid-cols-3 gap-4">
             <div className="card">
-              <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">Resume score</p>
+              <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1.5">Resume score</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {result.resume_score}<span className="text-sm text-gray-400 dark:text-zinc-600">/100</span>
               </p>
             </div>
             <div className="card">
-              <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">Predicted role</p>
+              <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1.5">Predicted role</p>
               <p className="text-lg font-semibold text-gray-900 dark:text-white mt-1.5">{result.predicted_role}</p>
             </div>
             <div className="card">
-              <p className="text-sm text-gray-500 dark:text-zinc-400 mb-1.5">Confidence</p>
+              <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1.5">Confidence</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {(result.confidence * 100).toFixed(0)}%
               </p>
@@ -120,7 +120,7 @@ export default function ResumeUpload() {
 
               {result.entities.skills?.length > 0 && (
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-zinc-400 mb-2">
+                  <p className="text-xs text-gray-600 dark:text-zinc-400 mb-2">
                     Skills ({result.entities.skills.length})
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -158,7 +158,7 @@ export default function ResumeUpload() {
 
               {rec.missing_skills?.length > 0 && (
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-zinc-400 mb-2">Missing skills</p>
+                  <p className="text-xs text-gray-600 dark:text-zinc-400 mb-2">Missing skills</p>
                   <div className="flex flex-wrap gap-1.5">
                     {rec.missing_skills.map((s, i) => (
                       <span key={i} className="badge badge-amber">{s}</span>
@@ -187,7 +187,7 @@ function EntityList({ label, items }) {
   if (!items?.length) return null
   return (
     <div>
-      <p className="text-xs text-gray-500 dark:text-zinc-400 mb-2">{label}</p>
+      <p className="text-xs text-gray-600 dark:text-zinc-400 mb-2">{label}</p>
       <ul className="space-y-1">
         {items.slice(0, 4).map((item, i) => (
           <li key={i} className="text-sm text-gray-700 dark:text-zinc-300 truncate">{item}</li>
