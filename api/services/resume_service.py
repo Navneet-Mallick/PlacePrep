@@ -34,5 +34,4 @@ def normalize_ml_result(ml_result: dict) -> dict:
         "resume_score": resume_score,
         "extracted_entities": entities,
         "recommendations": recommendations if isinstance(recommendations, dict) else {},
-        "suggestions": suggestions if isinstance(suggestions, list) else [],
     }

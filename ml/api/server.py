@@ -209,36 +209,54 @@ async def check_proctoring_frame(request: ProctoringRequest):
         }
 
 
-@app.post("/api/aptitude/predict-level")
-async def predict_aptitude_level_endpoint(
-    total_score: int,
-    accuracy_percent: float,
-    time_taken: int,
-    quant_score: int,
-    logical_score: int,
+class AptitudeLevelRequest(BaseModel):
+    total_score: int
+    accuracy_percent: float
+    time_taken: int
+    quant_score: int
+    logical_score: int
     technical_score: int
-):
+
+
+@app.post("/api/aptitude/predict-level")
+async def predict_aptitude_level_endpoint(request: AptitudeLevelRequest):
     """Predict aptitude level using Random Forest"""
-    import sys
-    sys.path.insert(0, str(SCRIPTS_DIR))
-    
     try:
-        from predict_aptitude_level import predict_aptitude_level
+        import joblib
+        model_path = SCRIPTS_DIR.parent / "models" / "aptitude_level_classifier.joblib"
         
-        result = predict_aptitude_level(
-            total_score=total_score,
-            accuracy_percent=accuracy_percent,
-            time_taken=time_taken,
-            quant_score=quant_score,
-            logical_score=logical_score,
-            technical_score=technical_score
-        )
-        return result
+        if model_path.exists():
+            model = joblib.load(model_path)
+            import numpy as np
+            features = np.array([[
+                request.total_score,
+                request.accuracy_percent,
+                request.time_taken,
+                request.quant_score,
+                request.logical_score,
+                request.technical_score
+            ]])
+            
+            prediction = model.predict(features)[0]
+            probabilities = model.predict_proba(features)[0]
+            
+            labels = ['beginner', 'intermediate', 'advanced']
+            level = labels[int(prediction)]
+            confidence = float(probabilities.max())
+            
+            return {
+                'level': level,
+                'confidence': confidence,
+                'method': 'random_forest'
+            }
+        else:
+            raise FileNotFoundError("Model not found")
+            
     except Exception as e:
         # Fallback to threshold
-        if total_score >= 80:
+        if request.total_score >= 80:
             level = 'advanced'
-        elif total_score >= 60:
+        elif request.total_score >= 60:
             level = 'intermediate'
         else:
             level = 'beginner'
