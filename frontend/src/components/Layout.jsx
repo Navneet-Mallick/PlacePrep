@@ -3,10 +3,10 @@ import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 
 const navLinkClass = ({ isActive }) =>
-  `px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+  `px-3 py-1.5 rounded-md text-sm font-medium ${
     isActive
-      ? 'bg-[var(--bg-tertiary)] text-[var(--text-primary)]'
-      : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
+      ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white'
+      : 'text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-zinc-800/50'
   }`
 
 export default function Layout() {
@@ -20,19 +20,17 @@ export default function Layout() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Header */}
-      <header className="border-b border-[var(--border)] bg-[var(--bg-primary)] sticky top-0 z-50">
+      <header className="border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 sticky top-0 z-50">
         <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-[var(--accent)] rounded flex items-center justify-center">
+            <div className="w-7 h-7 bg-blue-600 rounded flex items-center justify-center">
               <span className="text-white font-bold text-xs">P</span>
             </div>
-            <span className="text-sm font-semibold text-[var(--text-primary)]">PlacementPrep</span>
+            <span className="text-sm font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
           </Link>
 
-          {/* Navigation */}
           <nav className="hidden md:flex items-center gap-1">
             {isAuthenticated && (
               <>
@@ -45,12 +43,11 @@ export default function Layout() {
             )}
           </nav>
 
-          {/* Right side */}
           <div className="flex items-center gap-3">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="w-8 h-8 flex items-center justify-center rounded-md border border-[var(--border)] hover:border-[var(--border-hover)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+              className="w-8 h-8 flex items-center justify-center rounded-md border border-gray-200 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-500 dark:text-zinc-400"
               title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >
               {theme === 'dark' ? (
@@ -64,25 +61,22 @@ export default function Layout() {
               )}
             </button>
 
-            {/* Auth */}
             {isAuthenticated ? (
               <>
-                <span className="text-xs text-[var(--text-muted)]">
-                  {user?.first_name || user?.username}
-                </span>
+                <span className="text-xs text-gray-500 dark:text-zinc-400">{user?.first_name || user?.username}</span>
                 <button
                   onClick={handleLogout}
-                  className="px-3 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border)] hover:border-[var(--border-hover)] rounded-md"
+                  className="px-3 py-1.5 text-xs font-medium text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-zinc-700 hover:border-gray-300 dark:hover:border-zinc-600 rounded-md"
                 >
                   Log out
                 </button>
               </>
             ) : (
               <div className="flex gap-2">
-                <NavLink to="/login" className="px-3 py-1.5 text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-md">
+                <NavLink to="/login" className="px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white rounded-md">
                   Log in
                 </NavLink>
-                <NavLink to="/register" className="px-3 py-1.5 text-sm font-medium text-white bg-[var(--accent)] hover:bg-[var(--accent-hover)] rounded-md">
+                <NavLink to="/register" className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md">
                   Sign up
                 </NavLink>
               </div>
@@ -91,16 +85,14 @@ export default function Layout() {
         </div>
       </header>
 
-      {/* Main */}
       <main className="mx-auto max-w-6xl px-6 py-8">
         <Outlet />
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-[var(--border)] mt-20">
+      <footer className="border-t border-gray-200 dark:border-zinc-800 mt-20">
         <div className="mx-auto max-w-6xl px-6 py-6 flex items-center justify-between">
-          <p className="text-xs text-[var(--text-faint)]">PlacementPrep</p>
-          <p className="text-xs text-[var(--text-faint)]">Built for placement preparation</p>
+          <p className="text-xs text-gray-400 dark:text-zinc-600">PlacementPrep</p>
+          <p className="text-xs text-gray-400 dark:text-zinc-600">Built for placement preparation</p>
         </div>
       </footer>
     </div>

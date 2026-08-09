@@ -202,7 +202,7 @@ export default function CodePractice() {
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-white">Code Practice</h1>
-          <p className="mt-2 text-slate-400">
+          <p className="mt-2 text-gray-400">
             Practice coding problems and improve your skills
           </p>
         </div>
@@ -212,7 +212,7 @@ export default function CodePractice() {
             <button
               key={problem.id}
               onClick={() => handleSelectProblem(problem)}
-              className="text-left p-4 rounded-lg border border-slate-700 bg-slate-900/50 hover:bg-slate-800 hover:border-slate-600 transition-all"
+              className="text-left p-4 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900/50 hover:bg-gray-100 dark:bg-zinc-800 hover:border-gray-200 dark:border-zinc-600 transition-all"
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -228,9 +228,9 @@ export default function CodePractice() {
                       {problem.difficulty}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-400 mt-1">{problem.description}</p>
+                  <p className="text-sm text-gray-400 mt-1">{problem.description}</p>
                 </div>
-                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
@@ -250,7 +250,7 @@ export default function CodePractice() {
             setSelectedProblem(null)
             handleClear()
           }}
-          className="flex items-center gap-2 text-slate-400 hover:text-slate-300 transition-colors"
+          className="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -272,49 +272,49 @@ export default function CodePractice() {
       {/* Main Content */}
       <div className="grid grid-cols-2 gap-4 h-[calc(100vh-200px)]">
         {/* Left: Problem Description */}
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-6 overflow-y-auto space-y-4">
+        <div className="rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900/50 p-6 overflow-y-auto space-y-4">
           <div>
             <h2 className="text-lg font-semibold text-white mb-2">Description</h2>
-            <p className="text-slate-300 leading-relaxed">{selectedProblem.description}</p>
+            <p className="text-gray-300 leading-relaxed">{selectedProblem.description}</p>
           </div>
 
           <div>
             <h3 className="font-semibold text-white mb-2">Expected Output</h3>
-            <pre className="bg-slate-950 p-3 rounded text-green-300 font-mono text-sm border border-slate-700">
+            <pre className="bg-gray-100 dark:bg-zinc-950 p-3 rounded text-green-300 font-mono text-sm border border-gray-200 dark:border-zinc-700">
               {selectedProblem.expected}
             </pre>
           </div>
 
           <div>
             <h3 className="font-semibold text-white mb-2">Hint</h3>
-            <p className="text-slate-300 text-sm leading-relaxed italic">
+            <p className="text-gray-300 text-sm leading-relaxed italic">
               💡 {selectedProblem.explanation}
             </p>
           </div>
         </div>
 
         {/* Right: Code Editor */}
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-4 flex flex-col space-y-3">
+        <div className="rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900/50 p-4 flex flex-col space-y-3">
           {/* Code Editor */}
           <div className="flex-1 flex flex-col space-y-2">
-            <label className="text-sm font-medium text-slate-300">Code</label>
+            <label className="text-sm font-medium text-gray-300">Code</label>
             <textarea
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="flex-1 px-4 py-3 rounded-lg border border-slate-700 bg-slate-800 text-white font-mono text-sm placeholder-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
+              className="flex-1 px-4 py-3 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-white font-mono text-sm placeholder-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
               spellCheck="false"
             />
           </div>
 
           {/* Input (optional) */}
           <div className="flex-col space-y-2 hidden">
-            <label className="text-sm font-medium text-slate-300">Input</label>
+            <label className="text-sm font-medium text-gray-300">Input</label>
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter input..."
               rows="2"
-              className="px-4 py-2 rounded-lg border border-slate-700 bg-slate-800 text-white font-mono text-sm placeholder-slate-600 focus:border-indigo-500 resize-none"
+              className="px-4 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-white font-mono text-sm placeholder-slate-600 focus:border-indigo-500 resize-none"
             />
           </div>
 

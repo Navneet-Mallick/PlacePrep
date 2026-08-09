@@ -302,7 +302,7 @@ export default function AptitudeTest() {
           <h1 className="text-4xl md:text-5xl font-bold">
             <span className="gradient-text">Aptitude Assessment</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Test your skills across multiple domains. Track your progress and get personalized insights.
           </p>
         </div>
@@ -401,8 +401,8 @@ export default function AptitudeTest() {
 
             {/* Section Scores */}
             {result.section_scores && (
-              <div className="rounded-2xl border border-slate-700/50 bg-gradient-to-br from-slate-900/60 to-slate-800/30 p-8 backdrop-blur-sm">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <div className="rounded-2xl border border-gray-200 dark:border-zinc-700/50 bg-gradient-to-br from-slate-900/60 to-slate-800/30 p-8 backdrop-blur-sm">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                   <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30">
                     📈
                   </span>
@@ -417,12 +417,12 @@ export default function AptitudeTest() {
                           <div className="flex items-center gap-3">
                             <span className="text-2xl">{sectionData?.icon}</span>
                             <div>
-                              <p className="text-base font-semibold text-slate-200 capitalize">{section}</p>
-                              <p className="text-xs text-slate-400">{sectionData?.description}</p>
+                              <p className="text-base font-semibold text-gray-200 capitalize">{section}</p>
+                              <p className="text-xs text-gray-400">{sectionData?.description}</p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="text-2xl font-bold text-white">{score}%</p>
+                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{score}%</p>
                             <p className={`text-xs font-medium ${
                               score >= 80 ? 'text-green-400' :
                               score >= 60 ? 'text-blue-400' :
@@ -433,7 +433,7 @@ export default function AptitudeTest() {
                             </p>
                           </div>
                         </div>
-                        <div className="h-3 bg-slate-800/80 rounded-full overflow-hidden border border-slate-700/50">
+                        <div className="h-3 bg-gray-100 dark:bg-zinc-800/80 rounded-full overflow-hidden border border-gray-200 dark:border-zinc-700/50">
                           <div
                             className={`h-full bg-gradient-to-r ${sectionData?.gradient || 'from-blue-500 to-blue-600'} progress-animate shadow-lg`}
                             style={{ width: `${score}%` }}
@@ -493,8 +493,8 @@ export default function AptitudeTest() {
                   {result.aptitude_level === 'beginner' && '🎯'}
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-white mb-3">Your Aptitude Level</h2>
-                  <p className="text-slate-300 leading-relaxed mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Your Aptitude Level</h2>
+                  <p className="text-gray-300 leading-relaxed mb-6">
                     {result.aptitude_level === 'advanced' && 
                       'Outstanding performance! You demonstrate advanced aptitude. You\'re well-prepared for challenging roles and complex problem-solving tasks.'}
                     {result.aptitude_level === 'intermediate' && 
@@ -511,7 +511,7 @@ export default function AptitudeTest() {
                       setProctoringViolations([])
                       setCurrentProctoringStatus(null)
                     }}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/50 transition-all transform hover:scale-105"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-gray-900 dark:text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/50 transition-all transform hover:scale-105"
                   >
                     <span>Take Another Test</span>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -529,7 +529,7 @@ export default function AptitudeTest() {
                 key={section.id}
                 onClick={() => setCurrentSection(section.id)}
                 style={{ animationDelay: `${index * 100}ms` }}
-                className="group relative overflow-hidden rounded-2xl border border-slate-700/50 bg-gradient-to-br from-slate-900/60 to-slate-800/30 p-8 hover:border-slate-600 transition-all duration-300 card-hover backdrop-blur-sm reveal"
+                className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-zinc-700/50 bg-gradient-to-br from-slate-900/60 to-slate-800/30 p-8 hover:border-slate-600 transition-all duration-300 card-hover backdrop-blur-sm reveal"
               >
                 {/* Gradient overlay on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${section.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
@@ -542,8 +542,8 @@ export default function AptitudeTest() {
                     {section.icon}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">{section.label}</h3>
-                    <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{section.label}</h3>
+                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
                       {section.description}
                     </p>
                   </div>
@@ -577,13 +577,13 @@ export default function AptitudeTest() {
       <div className="flex items-center justify-center min-h-[500px]">
         <div className="text-center space-y-6">
           <div className="relative w-20 h-20 mx-auto">
-            <div className="absolute inset-0 rounded-full border-4 border-slate-700"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-zinc-700"></div>
             <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
             <div className="absolute inset-2 rounded-full border-4 border-purple-500 border-t-transparent animate-spin-slow"></div>
           </div>
           <div>
-            <p className="text-xl font-semibold text-white mb-2">Loading questions...</p>
-            <p className="text-sm text-slate-400">Preparing your assessment</p>
+            <p className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Loading questions...</p>
+            <p className="text-sm text-gray-400">Preparing your assessment</p>
           </div>
         </div>
       </div>
@@ -600,7 +600,7 @@ export default function AptitudeTest() {
         <p className="text-amber-200/80 mb-6">There are no questions available for this section. Please try another section.</p>
         <button
           onClick={() => setCurrentSection(null)}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl transition-all transform hover:scale-105"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-500 text-gray-900 dark:text-white font-semibold rounded-xl transition-all transform hover:scale-105"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -681,14 +681,14 @@ export default function AptitudeTest() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-white">{sectionName}</h1>
-          <p className="text-slate-400">Question {currentQuestionIndex + 1} of {questions.length}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{sectionName}</h1>
+          <p className="text-gray-400">Question {currentQuestionIndex + 1} of {questions.length}</p>
         </div>
         <div className="flex gap-3">
           <button
             onClick={() => handleSubmit(true)}
             disabled={loading || Object.keys(answers).length === 0}
-            className="px-4 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+            className="px-4 py-2 rounded-lg bg-amber-600 text-gray-900 dark:text-white hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
             title="Exit test early and get score for answered questions"
           >
             🚪 Exit & Get Score
@@ -705,7 +705,7 @@ export default function AptitudeTest() {
                 stopCamera()
               }
             }}
-            className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+            className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-300 hover:bg-gray-200 dark:bg-zinc-700 transition-colors"
           >
             ← Back
           </button>
@@ -713,7 +713,7 @@ export default function AptitudeTest() {
       </div>
 
       {/* Progress Bar */}
-      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+      <div className="h-2 bg-gray-200 dark:bg-zinc-700 rounded-full overflow-hidden">
         <div
           className="h-full bg-gradient-to-r from-indigo-500 to-blue-500 transition-all duration-300"
           style={{ width: `${progress}%` }}
@@ -721,10 +721,10 @@ export default function AptitudeTest() {
       </div>
 
       {/* Question */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900 p-6 space-y-6">
+      <div className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-6 space-y-6">
         <div>
-          <p className="text-slate-400 text-sm mb-2">Question {currentQuestionIndex + 1}</p>
-          <h2 className="text-xl font-semibold text-white">{question.question_text}</h2>
+          <p className="text-gray-400 text-sm mb-2">Question {currentQuestionIndex + 1}</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{question.question_text}</h2>
         </div>
 
         {/* Options */}
@@ -739,8 +739,8 @@ export default function AptitudeTest() {
                 onClick={() => handleAnswerSelect(question.id, optionKey)}
                 className={`w-full p-4 rounded-lg border-2 text-left font-medium transition-all ${
                   isSelected
-                    ? 'border-indigo-500 bg-indigo-950/30 text-white'
-                    : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'
+                    ? 'border-indigo-500 bg-indigo-950/30 text-gray-900 dark:text-white'
+                    : 'border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800/50 text-gray-300 hover:border-slate-600'
                 }`}
               >
                 <span className="mr-3 font-bold">{optionKey}.</span>
@@ -756,16 +756,16 @@ export default function AptitudeTest() {
         <button
           onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
           disabled={currentQuestionIndex === 0}
-          className="px-6 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-2 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-300 hover:bg-gray-200 dark:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           ← Previous
         </button>
 
         <div className="text-center">
-          <p className="text-slate-400 text-sm">
-            Answered: <strong className="text-white">{Object.keys(answers).length}</strong> / {questions.length}
+          <p className="text-gray-400 text-sm">
+            Answered: <strong className="text-gray-900 dark:text-white">{Object.keys(answers).length}</strong> / {questions.length}
           </p>
-          <p className="text-slate-500 text-xs mt-1">
+          <p className="text-gray-500 text-xs mt-1">
             You can exit anytime to get your score
           </p>
         </div>
@@ -773,7 +773,7 @@ export default function AptitudeTest() {
         {currentQuestionIndex < questions.length - 1 ? (
           <button
             onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-            className="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors"
+            className="px-6 py-2 rounded-lg bg-indigo-600 text-gray-900 dark:text-white hover:bg-indigo-500 transition-colors"
           >
             Next →
           </button>
@@ -781,7 +781,7 @@ export default function AptitudeTest() {
           <button
             onClick={() => handleSubmit(false)}
             disabled={loading}
-            className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-500 disabled:opacity-50 transition-colors font-semibold"
+            className="px-6 py-2 rounded-lg bg-green-600 text-gray-900 dark:text-white hover:bg-green-500 disabled:opacity-50 transition-colors font-semibold"
           >
             {loading ? 'Submitting...' : 'Submit Test'}
           </button>
@@ -790,7 +790,7 @@ export default function AptitudeTest() {
         <button
           onClick={() => handleSubmit(true)}
           disabled={loading}
-          className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-500 disabled:opacity-50 transition-colors font-semibold"
+          className="px-6 py-2 rounded-lg bg-amber-600 text-gray-900 dark:text-white hover:bg-amber-500 disabled:opacity-50 transition-colors font-semibold"
           title="Exit test anytime and see your score based on answered questions"
         >
           {loading ? 'Exiting...' : '🚪 Exit & See Score'}

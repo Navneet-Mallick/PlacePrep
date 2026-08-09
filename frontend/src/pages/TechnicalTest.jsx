@@ -219,8 +219,8 @@ export default function TechnicalTest() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Technical Assessment</h1>
-          <p className="mt-2 text-slate-400">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Technical Assessment</h1>
+          <p className="mt-2 text-gray-400">
             Evaluate your technical knowledge. Answers scored using NLP similarity. Camera proctoring enabled.
           </p>
         </div>
@@ -230,13 +230,13 @@ export default function TechnicalTest() {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className="group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900 p-6 hover:border-indigo-500/50 transition-all hover:shadow-lg hover:shadow-indigo-500/20"
+              className="group relative overflow-hidden rounded-xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-6 hover:border-indigo-500/50 transition-all hover:shadow-lg hover:shadow-indigo-500/20"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/0 to-indigo-600/0 group-hover:from-indigo-600/10 group-hover:to-indigo-600/5 transition-all"></div>
               <div className="relative">
                 <p className="text-4xl mb-2">{category.icon}</p>
-                <p className="text-lg font-semibold text-white">{category.label}</p>
-                <p className="text-sm text-slate-400 mt-1">Subjective questions</p>
+                <p className="text-lg font-semibold text-gray-900 dark:text-white">{category.label}</p>
+                <p className="text-sm text-gray-400 mt-1">Subjective questions</p>
               </div>
             </button>
           ))}
@@ -258,7 +258,7 @@ export default function TechnicalTest() {
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          <p className="text-slate-300">Loading questions...</p>
+          <p className="text-gray-300">Loading questions...</p>
         </div>
       </div>
     )
@@ -269,7 +269,7 @@ export default function TechnicalTest() {
     return (
       <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-6 text-amber-100 text-center">
         <p>No questions available for this category.</p>
-        <button onClick={handleExit} className="mt-4 rounded-lg bg-amber-600 px-4 py-2 text-white hover:bg-amber-500">
+        <button onClick={handleExit} className="mt-4 rounded-lg bg-amber-600 px-4 py-2 text-gray-900 dark:text-white hover:bg-amber-500">
           Back
         </button>
       </div>
@@ -333,12 +333,12 @@ export default function TechnicalTest() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-white">{categoryName}</h1>
-          <p className="text-slate-400">Question {currentQuestionIndex + 1} of {questions.length}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{categoryName}</h1>
+          <p className="text-gray-400">Question {currentQuestionIndex + 1} of {questions.length}</p>
         </div>
         <button
           onClick={handleExit}
-          className="px-4 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-500 transition-colors font-medium"
+          className="px-4 py-2 rounded-lg bg-amber-600 text-gray-900 dark:text-white hover:bg-amber-500 transition-colors font-medium"
         >
           🚪 Exit
         </button>
@@ -353,10 +353,10 @@ export default function TechnicalTest() {
       </div>
 
       {/* Question */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900 p-6 space-y-4">
+      <div className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-6 space-y-4">
         <div>
-          <p className="text-slate-400 text-sm mb-2">Question {currentQuestionIndex + 1}</p>
-          <h2 className="text-xl font-semibold text-white">{question.question_text}</h2>
+          <p className="text-gray-400 text-sm mb-2">Question {currentQuestionIndex + 1}</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{question.question_text}</h2>
         </div>
 
         {question.difficulty && (
@@ -373,23 +373,23 @@ export default function TechnicalTest() {
       </div>
 
       {/* Answer Input */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900 p-6 space-y-4">
+      <div className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-6 space-y-4">
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">Your Answer</label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Your Answer</label>
           <textarea
             value={answer}
             onChange={(e) => handleAnswerChange(question.id, e.target.value)}
             placeholder="Write your answer here..."
             rows="6"
-            className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-800 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
+            className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
           ></textarea>
-          <p className="text-xs text-slate-500 mt-2">{answer.length} characters</p>
+          <p className="text-xs text-gray-500 mt-2">{answer.length} characters</p>
         </div>
 
         <button
           onClick={() => submitAnswer(question.id)}
           disabled={loading || !answer.trim()}
-          className="w-full rounded-lg bg-indigo-600 px-4 py-3 font-medium text-white hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-lg bg-indigo-600 px-4 py-3 font-medium text-gray-900 dark:text-white hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {loading ? 'Evaluating...' : 'Submit Answer'}
         </button>
@@ -405,7 +405,7 @@ export default function TechnicalTest() {
             : 'border-red-500/30 bg-red-950/20'
         }`}>
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold text-white">Evaluation Result</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation Result</h3>
             <div className={`text-3xl font-bold ${
               result.score >= 70 ? 'text-green-200' :
               result.score >= 50 ? 'text-yellow-200' :
@@ -417,7 +417,7 @@ export default function TechnicalTest() {
 
           {result.similarity_score && (
             <div>
-              <p className="text-sm text-slate-300 mb-2">Similarity: {(result.similarity_score * 100).toFixed(1)}%</p>
+              <p className="text-sm text-gray-300 mb-2">Similarity: {(result.similarity_score * 100).toFixed(1)}%</p>
               <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-indigo-500 to-blue-500"
@@ -428,8 +428,8 @@ export default function TechnicalTest() {
           )}
 
           {result.feedback && (
-            <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-3">
-              <p className="text-sm text-slate-300">{result.feedback}</p>
+            <div className="rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800/50 p-3">
+              <p className="text-sm text-gray-300">{result.feedback}</p>
             </div>
           )}
         </div>
@@ -437,12 +437,12 @@ export default function TechnicalTest() {
 
       {/* Reference Answer */}
       {question.reference_answer && (
-        <details className="rounded-xl border border-slate-800 bg-slate-900 p-6">
-          <summary className="cursor-pointer font-semibold text-white hover:text-slate-300">
+        <details className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-6">
+          <summary className="cursor-pointer font-semibold text-gray-900 dark:text-white hover:text-gray-300">
             Reference Answer
           </summary>
-          <div className="mt-4 rounded-lg border border-slate-700 bg-slate-800/50 p-4">
-            <p className="text-slate-300 whitespace-pre-wrap">{question.reference_answer}</p>
+          <div className="mt-4 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800/50 p-4">
+            <p className="text-gray-300 whitespace-pre-wrap">{question.reference_answer}</p>
           </div>
         </details>
       )}
@@ -452,26 +452,26 @@ export default function TechnicalTest() {
         <button
           onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
           disabled={currentQuestionIndex === 0}
-          className="px-6 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-2 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-300 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           ← Previous
         </button>
 
-        <p className="text-slate-400 text-sm">
-          Evaluated: <strong className="text-white">{Object.keys(results).length}</strong> / {questions.length}
+        <p className="text-gray-400 text-sm">
+          Evaluated: <strong className="text-gray-900 dark:text-white">{Object.keys(results).length}</strong> / {questions.length}
         </p>
 
         {currentQuestionIndex < questions.length - 1 ? (
           <button
             onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-            className="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors"
+            className="px-6 py-2 rounded-lg bg-indigo-600 text-gray-900 dark:text-white hover:bg-indigo-500 transition-colors"
           >
             Next →
           </button>
         ) : (
           <button
             onClick={handleExit}
-            className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-500 transition-colors font-semibold"
+            className="px-6 py-2 rounded-lg bg-green-600 text-gray-900 dark:text-white hover:bg-green-500 transition-colors font-semibold"
           >
             Finish & Return
           </button>
