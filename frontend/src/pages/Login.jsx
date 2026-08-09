@@ -16,7 +16,6 @@ export default function Login() {
     e.preventDefault()
     setError('')
     setLoading(true)
-
     try {
       const response = await api.post('/auth/login/', { email, password })
       const { access, refresh, user } = response.data
@@ -31,39 +30,38 @@ export default function Login() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center">
-      <div className="w-full max-w-sm">
-        <div className="mb-8">
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">Sign in</h1>
-          <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">Enter your credentials to continue</p>
+      <div className="w-full max-w-[360px]">
+        <div className="text-center mb-8">
+          <div className="w-10 h-10 mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-sm shadow-blue-600/20 mb-4">
+            <span className="text-white font-bold text-sm">P</span>
+          </div>
+          <h1 className="text-[22px] font-bold text-gray-900 dark:text-white">Welcome back</h1>
+          <p className="text-[13px] text-gray-500 dark:text-zinc-400 mt-1">Sign in to your account</p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-md border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/50">
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          <div className="mb-5 p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <p className="text-[13px] text-red-600 dark:text-red-400">{error}</p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
-              className="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-gray-300 dark:border-zinc-700 rounded-md text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-zinc-500 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500"
-              placeholder="you@example.com" />
+            <label className="block text-[12px] font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="you@example.com" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
-              className="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-gray-300 dark:border-zinc-700 rounded-md text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-zinc-500 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500"
-              placeholder="••••••••" />
+            <label className="block text-[12px] font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Password</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••" />
           </div>
           <button type="submit" disabled={loading}
-            className="w-full mt-2 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            className="btn-primary w-full !mt-6 disabled:opacity-50 disabled:cursor-not-allowed">
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500 dark:text-zinc-400">
-          No account? <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:underline">Sign up</Link>
+        <p className="mt-6 text-center text-[13px] text-gray-500 dark:text-zinc-400">
+          Don't have an account? <Link to="/register" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">Sign up</Link>
         </p>
       </div>
     </div>

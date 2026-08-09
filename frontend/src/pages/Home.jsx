@@ -2,77 +2,100 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 const features = [
-  { title: 'Resume Analysis', description: 'Upload your resume. Get NLP-powered entity extraction, role prediction, and scoring.', to: '/resume' },
-  { title: 'Aptitude Tests', description: 'Quantitative, logical, and technical MCQs with proctoring and professional scoring.', to: '/aptitude' },
-  { title: 'Technical Assessment', description: 'Subjective questions evaluated using semantic similarity. Real placement-style questions.', to: '/technical' },
-  { title: 'Code Practice', description: 'Write and run Python code against real problems. LeetCode-style with instant execution.', to: '/practice' },
+  { title: 'Resume Analysis', desc: 'NLP-powered entity extraction, role prediction, and AI recommendations using spaCy + Gemini.', to: '/resume', icon: '📄' },
+  { title: 'Aptitude Assessment', desc: 'Timed MCQs across quantitative, logical, and technical domains with ML-based level prediction.', to: '/aptitude', icon: '🧠' },
+  { title: 'Technical Evaluation', desc: 'Subjective answer scoring using TF-IDF cosine similarity with synonym-aware semantic matching.', to: '/technical', icon: '⚙️' },
+  { title: 'Code Practice', desc: 'LeetCode-style Python problems with sandboxed execution and instant output feedback.', to: '/practice', icon: '💻' },
 ]
+
+const techStack = ['Django REST', 'FastAPI', 'React', 'scikit-learn', 'spaCy', 'OpenCV', 'Gemini AI', 'PostgreSQL']
 
 export default function Home() {
   const { isAuthenticated } = useAuth()
 
   return (
-    <div className="space-y-20 py-8">
-      <section className="max-w-2xl">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
-          Placement preparation,<br />done right.
+    <div className="space-y-24 py-4">
+      {/* Hero */}
+      <section className="max-w-2xl pt-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 mb-6">
+          <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+          <span className="text-[12px] font-medium text-blue-600 dark:text-blue-400">ML-Powered Platform</span>
+        </div>
+        <h1 className="text-[42px] font-bold text-gray-900 dark:text-white tracking-tight leading-[1.1]">
+          Your complete placement<br />preparation system.
         </h1>
-        <p className="mt-4 text-lg text-gray-500 dark:text-zinc-400 leading-relaxed">
-          Resume analysis, aptitude tests, technical assessments, and code practice — 
-          all backed by machine learning. One platform, no fluff.
+        <p className="mt-5 text-[17px] text-gray-500 dark:text-zinc-400 leading-relaxed max-w-lg">
+          Analyze resumes, practice aptitude, solve technical questions, and write code — all evaluated by machine learning models trained on real data.
         </p>
         <div className="mt-8 flex gap-3">
           {isAuthenticated ? (
             <>
-              <Link to="/dashboard" className="px-5 py-2.5 bg-blue-600 text-white font-medium rounded-md text-sm hover:bg-blue-700">
-                Go to Dashboard
-              </Link>
-              <Link to="/resume" className="px-5 py-2.5 border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 font-medium rounded-md text-sm hover:border-gray-400 dark:hover:border-zinc-500">
-                Analyze Resume
-              </Link>
+              <Link to="/dashboard" className="btn-primary">Go to Dashboard</Link>
+              <Link to="/resume" className="btn-secondary">Analyze Resume</Link>
             </>
           ) : (
             <>
-              <Link to="/register" className="px-5 py-2.5 bg-blue-600 text-white font-medium rounded-md text-sm hover:bg-blue-700">
-                Get Started
-              </Link>
-              <Link to="/login" className="px-5 py-2.5 border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 font-medium rounded-md text-sm hover:border-gray-400 dark:hover:border-zinc-500">
-                Sign in
-              </Link>
+              <Link to="/register" className="btn-primary">Get Started Free</Link>
+              <Link to="/login" className="btn-secondary">Sign in</Link>
             </>
           )}
         </div>
       </section>
 
+      {/* Features */}
       <section>
-        <h2 className="text-sm font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wider mb-6">Modules</h2>
+        <div className="flex items-center gap-3 mb-8">
+          <div className="h-px flex-1 bg-gray-200 dark:bg-zinc-800"></div>
+          <span className="text-[11px] font-semibold text-gray-400 dark:text-zinc-500 uppercase tracking-widest">Core Modules</span>
+          <div className="h-px flex-1 bg-gray-200 dark:bg-zinc-800"></div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {features.map((f) => (
             <Link key={f.title} to={isAuthenticated ? f.to : '/register'}
-              className="p-5 rounded-lg border border-gray-200 dark:border-zinc-800 hover:border-gray-300 dark:hover:border-zinc-700 bg-gray-50 dark:bg-zinc-900/50 hover:bg-gray-100 dark:hover:bg-zinc-900">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1.5">{f.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed">{f.description}</p>
+              className="card card-hover group cursor-pointer">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">
+                  {f.icon}
+                </div>
+                <div>
+                  <h3 className="text-[14px] font-semibold text-gray-900 dark:text-white mb-1">{f.title}</h3>
+                  <p className="text-[13px] text-gray-500 dark:text-zinc-400 leading-relaxed">{f.desc}</p>
+                </div>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
+      {/* How it works */}
       <section>
-        <h2 className="text-sm font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wider mb-6">How it works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {['Upload your resume for AI analysis', 'Take aptitude and technical tests', 'Get scored with ML-based evaluation', 'Track progress and improve weak areas'].map((text, i) => (
-            <div key={i} className="space-y-2">
-              <span className="text-xs font-mono text-gray-400 dark:text-zinc-600">0{i + 1}</span>
-              <p className="text-sm text-gray-700 dark:text-zinc-300">{text}</p>
+        <h2 className="text-[11px] font-semibold text-gray-400 dark:text-zinc-500 uppercase tracking-widest mb-8">How it works</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { num: '01', title: 'Upload', desc: 'Submit your resume for AI analysis' },
+            { num: '02', title: 'Assess', desc: 'Take aptitude & technical tests' },
+            { num: '03', title: 'Evaluate', desc: 'ML models score your performance' },
+            { num: '04', title: 'Improve', desc: 'Track progress & fix weak areas' },
+          ].map((s) => (
+            <div key={s.num}>
+              <span className="text-[11px] font-mono text-blue-500 dark:text-blue-400 font-semibold">{s.num}</span>
+              <h3 className="text-[14px] font-semibold text-gray-900 dark:text-white mt-2 mb-1">{s.title}</h3>
+              <p className="text-[13px] text-gray-500 dark:text-zinc-400">{s.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="border-t border-gray-200 dark:border-zinc-800 pt-8">
-        <p className="text-xs text-gray-400 dark:text-zinc-600 max-w-xl">
-          Built with Django, FastAPI, React, scikit-learn, spaCy, OpenCV, and Google Gemini.
-        </p>
+      {/* Tech stack */}
+      <section className="border-t border-gray-200 dark:border-zinc-800 pt-10">
+        <h2 className="text-[11px] font-semibold text-gray-400 dark:text-zinc-500 uppercase tracking-widest mb-5">Built with</h2>
+        <div className="flex flex-wrap gap-2">
+          {techStack.map((t) => (
+            <span key={t} className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-zinc-800/80 text-[12px] font-medium text-gray-600 dark:text-zinc-400 border border-gray-200/50 dark:border-zinc-700/50">
+              {t}
+            </span>
+          ))}
+        </div>
       </section>
     </div>
   )
