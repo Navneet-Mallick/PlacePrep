@@ -179,46 +179,51 @@ export default function Layout() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 dark:border-zinc-800 mt-12 bg-gray-50 dark:bg-[#0a0a0a]">
+      <footer className="border-t border-gray-200 dark:border-zinc-800 mt-16 bg-gray-50 dark:bg-zinc-900/30">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10">
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mb-8">
-            <div className="sm:col-span-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
+            <div className="col-span-2 sm:col-span-1">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-xs">P</span>
                 </div>
                 <span className="font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
               </div>
-              <p className="text-sm text-gray-500 dark:text-zinc-400 max-w-xs leading-relaxed">
-                AI-powered placement training platform. Resume analysis, aptitude tests, technical assessments, and code practice.
+              <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed">
+                AI-powered placement training platform for engineering students.
               </p>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Platform</h4>
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Modules</h4>
               <ul className="space-y-2 text-sm text-gray-500 dark:text-zinc-400">
                 <li><Link to="/resume" className="hover:text-gray-900 dark:hover:text-white">Resume Analysis</Link></li>
                 <li><Link to="/aptitude" className="hover:text-gray-900 dark:hover:text-white">Aptitude Tests</Link></li>
-                <li><Link to="/technical" className="hover:text-gray-900 dark:hover:text-white">Technical</Link></li>
+                <li><Link to="/technical" className="hover:text-gray-900 dark:hover:text-white">Technical Assessment</Link></li>
                 <li><Link to="/practice" className="hover:text-gray-900 dark:hover:text-white">Code Practice</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Technology</h4>
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Tech Stack</h4>
               <ul className="space-y-2 text-sm text-gray-500 dark:text-zinc-400">
                 <li>Django + FastAPI</li>
-                <li>React + Tailwind</li>
+                <li>React + Tailwind CSS</li>
                 <li>scikit-learn + spaCy</li>
                 <li>OpenCV + Gemini AI</li>
               </ul>
             </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Features</h4>
+              <ul className="space-y-2 text-sm text-gray-500 dark:text-zinc-400">
+                <li>ML Role Prediction</li>
+                <li>Semantic Answer Scoring</li>
+                <li>Camera Proctoring</li>
+                <li>Performance Dashboard</li>
+              </ul>
+            </div>
           </div>
-          <div className="pt-6 border-t border-gray-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-gray-400 dark:text-zinc-500">
-              &copy; 2026 PlacementPrep. All rights reserved.
-            </p>
-            <p className="text-sm text-gray-400 dark:text-zinc-500">
-              Built by Navneet Mallick
-            </p>
+          <div className="border-t border-gray-200 dark:border-zinc-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-sm text-gray-400 dark:text-zinc-500">&copy; 2026 PlacementPrep. All rights reserved.</p>
+            <p className="text-sm text-gray-400 dark:text-zinc-500">Navneet Mallick — College Project</p>
           </div>
         </div>
       </footer>
