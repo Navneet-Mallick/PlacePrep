@@ -128,3 +128,44 @@ label {
 ::selection {
   @apply bg-blue-600/20 text-blue-900 dark:text-blue-100;
 }
+
+/* ---------------------------------------------------------------
+   Responsive — mobile-first refinements
+---------------------------------------------------------------- */
+
+/* Small screens (<640px): tighter padding, full-width buttons */
+@media (max-width: 639px) {
+  .card { padding: 1rem; }
+  .btn-primary, .btn-secondary, .btn-danger {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  input, textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Safe area for notched phones */
+@supports (padding: env(safe-area-inset-bottom)) {
+  footer {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print */
+@media print {
+  header, footer { display: none !important; }
+  body { background: white !important; color: black !important; }
+  .card { border: 1px solid #ddd; box-shadow: none; }
+}
