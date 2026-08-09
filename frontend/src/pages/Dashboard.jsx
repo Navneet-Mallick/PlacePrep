@@ -76,7 +76,7 @@ export default function Dashboard() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-gray-500 dark:text-zinc-500">
           Overview for {user?.first_name || user?.username || 'you'}
         </p>
       </div>
@@ -114,14 +114,14 @@ export default function Dashboard() {
             {history.aptitude.length === 0 ? (
               <EmptyRow text="No aptitude tests taken yet" linkTo="/aptitude" linkText="Take a test" />
             ) : (
-              <div className="divide-y divide-zinc-800">
+              <div className="divide-y divide-gray-100 dark:divide-zinc-800">
                 {history.aptitude.slice(0, 5).map((attempt, i) => (
                   <div key={i} className="py-3 flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-zinc-200">
+                      <p className="text-sm text-gray-800 dark:text-zinc-200">
                         {attempt.section || 'Mixed'} — {attempt.aptitude_level || 'N/A'}
                       </p>
-                      <p className="text-xs text-zinc-500 mt-0.5">
+                      <p className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">
                         {formatDate(attempt.created_at)}
                       </p>
                     </div>
@@ -141,14 +141,14 @@ export default function Dashboard() {
             {history.technical.length === 0 ? (
               <EmptyRow text="No technical answers submitted" linkTo="/technical" linkText="Start assessment" />
             ) : (
-              <div className="divide-y divide-zinc-800">
+              <div className="divide-y divide-gray-100 dark:divide-zinc-800">
                 {history.technical.slice(0, 5).map((answer, i) => (
                   <div key={i} className="py-3 flex items-center justify-between">
                     <div className="max-w-[70%]">
                       <p className="text-sm text-zinc-200 truncate">
                         {answer.question?.question_text || `Question ${i + 1}`}
                       </p>
-                      <p className="text-xs text-zinc-500 mt-0.5">
+                      <p className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">
                         {answer.question?.category || 'General'} · {formatDate(answer.created_at)}
                       </p>
                     </div>
@@ -171,11 +171,11 @@ export default function Dashboard() {
             ) : (
               <div className="space-y-3">
                 {history.resume.slice(0, 3).map((resume, i) => (
-                  <div key={i} className="p-3 rounded-md border border-zinc-800 bg-zinc-900/50">
+                  <div key={i} className="p-3 rounded-md border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="text-sm font-medium text-zinc-200">{resume.predicted_role || 'Unknown'}</p>
-                        <p className="text-xs text-zinc-500 mt-0.5">{formatDate(resume.created_at)}</p>
+                        <p className="text-sm font-medium text-gray-800 dark:text-zinc-200">{resume.predicted_role || 'Unknown'}</p>
+                        <p className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">{formatDate(resume.created_at)}</p>
                       </div>
                       <span className={`text-sm font-semibold ${scoreColor(resume.resume_score)}`}>
                         {resume.resume_score}%
@@ -195,7 +195,7 @@ export default function Dashboard() {
             <Section title="Areas to improve">
               <ul className="space-y-2">
                 {stats.weak_areas.map((area, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-zinc-400">
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-zinc-400">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
                     {area}
                   </li>
@@ -209,7 +209,7 @@ export default function Dashboard() {
             <Section title="Recommendations">
               <ul className="space-y-2">
                 {stats.recommendations.slice(0, 4).map((rec, i) => (
-                  <li key={i} className="text-sm text-zinc-400">
+                  <li key={i} className="text-sm text-gray-600 dark:text-zinc-400">
                     {rec.recommendation_text || rec.message || rec}
                   </li>
                 ))}
@@ -236,24 +236,24 @@ export default function Dashboard() {
 
 function MetricCard({ label, value, sub }) {
   return (
-    <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/50">
-      <p className="text-xs text-zinc-500 mb-1">{label}</p>
+    <div className="p-4 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+      <p className="text-xs text-gray-500 dark:text-zinc-400 mb-1">{label}</p>
       <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
-      <p className="text-xs text-zinc-500 mt-1 capitalize">{sub}</p>
+      <p className="text-xs text-gray-500 dark:text-zinc-500 mt-1 capitalize">{sub}</p>
     </div>
   )
 }
 
 function Section({ title, count, linkTo, children }) {
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-5">
+    <div className="card">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-medium text-zinc-300">{title}</h2>
+        <h2 className="text-sm font-semibold text-gray-900 dark:text-white">{title}</h2>
         {count !== undefined && (
-          <span className="text-xs text-zinc-600">{count} total</span>
+          <span className="text-xs text-gray-400 dark:text-zinc-600">{count} total</span>
         )}
         {linkTo && (
-          <Link to={linkTo} className="text-xs text-zinc-500 hover:text-zinc-300">
+          <Link to={linkTo} className="text-xs text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white">
             View all →
           </Link>
         )}
@@ -265,10 +265,10 @@ function Section({ title, count, linkTo, children }) {
 
 function EmptyRow({ text, linkTo, linkText }) {
   return (
-    <div className="py-4 text-center">
-      <p className="text-sm text-zinc-600">{text}</p>
+    <div className="py-6 text-center">
+      <p className="text-sm text-gray-400 dark:text-gray-500 dark:text-zinc-500">{text}</p>
       {linkTo && (
-        <Link to={linkTo} className="text-xs text-blue-500 hover:text-blue-400 mt-2 inline-block">
+        <Link to={linkTo} className="text-xs text-blue-600 dark:text-blue-400 hover:underline mt-2 inline-block">
           {linkText} →
         </Link>
       )}
@@ -280,7 +280,7 @@ function QuickLink({ to, text }) {
   return (
     <Link
       to={to}
-      className="block px-3 py-2 text-sm text-zinc-400 hover:text-gray-900 dark:text-white hover:bg-zinc-800 rounded-md transition-colors"
+      className="block px-3 py-2 text-sm text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-zinc-800 rounded-lg"
     >
       {text}
     </Link>
@@ -288,9 +288,9 @@ function QuickLink({ to, text }) {
 }
 
 function scoreColor(score) {
-  if (score >= 70) return 'text-green-400'
-  if (score >= 50) return 'text-amber-400'
-  return 'text-red-400'
+  if (score >= 70) return 'text-emerald-600 dark:text-emerald-400'
+  if (score >= 50) return 'text-amber-600 dark:text-amber-400'
+  return 'text-red-600 dark:text-red-400'
 }
 
 function formatDate(dateStr) {

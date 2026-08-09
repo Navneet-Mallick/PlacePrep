@@ -1,55 +1,64 @@
+import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 
-const navLinkClass = ({ isActive }) =>
-  `px-3 py-1.5 rounded-lg text-sm font-medium ${
+const linkClass = ({ isActive }) =>
+  `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
     isActive
       ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white'
-      : 'text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800/60'
+      : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800/60'
   }`
 
 export default function Layout() {
   const { isAuthenticated, user, logout } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleLogout = () => {
     logout()
     navigate('/')
+    setMobileOpen(false)
   }
 
+  const navLinks = isAuthenticated
+    ? [
+        { to: '/dashboard', label: 'Dashboard' },
+        { to: '/resume', label: 'Resume' },
+        { to: '/aptitude', label: 'Aptitude' },
+        { to: '/technical', label: 'Technical' },
+        { to: '/practice', label: 'Practice' },
+      ]
+    : []
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0f0f0f]">
+    <div className="min-h-screen bg-white dark:bg-[#0f0f0f]">
       {/* Header */}
-      <header className="border-b border-gray-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-[#0f0f0f]/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-50 border-b border-gray-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-[#0f0f0f]/90 backdrop-blur-md">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm shadow-blue-600/20">
-              <span className="text-white font-bold text-sm">P</span>
+          <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
+            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xs">P</span>
             </div>
-            <span className="text-base font-semibold text-gray-900 dark:text-white tracking-tight">PlacementPrep</span>
+            <span className="text-sm font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
           </Link>
 
-          {/* Nav */}
-          <nav className="hidden md:flex items-center gap-0.5">
-            {isAuthenticated && (
-              <>
-                <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
-                <NavLink to="/resume" className={navLinkClass}>Resume</NavLink>
-                <NavLink to="/aptitude" className={navLinkClass}>Aptitude</NavLink>
-                <NavLink to="/technical" className={navLinkClass}>Technical</NavLink>
-                <NavLink to="/practice" className={navLinkClass}>Practice</NavLink>
-              </>
-            )}
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-0.5 flex-1 mx-4">
+            {navLinks.map(l => (
+              <NavLink key={l.to} to={l.to} className={linkClass}>{l.label}</NavLink>
+            ))}
           </nav>
 
-          {/* Right */}
+          {/* Right side */}
           <div className="flex items-center gap-2">
+            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300"
+              className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-400 dark:text-zinc-500"
+              aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,39 +71,125 @@ export default function Layout() {
               )}
             </button>
 
-            {isAuthenticated ? (
-              <>
-                <div className="hidden sm:block h-4 w-px bg-gray-200 dark:bg-zinc-700 mx-1"></div>
-                <span className="hidden sm:block text-xs text-gray-500 dark:text-zinc-500">{user?.first_name || user?.username}</span>
-                <button onClick={handleLogout}
-                  className="px-3 py-1.5 text-xs font-medium text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-white border border-gray-200 dark:border-zinc-700 hover:border-gray-300 dark:hover:border-zinc-600 rounded-lg">
-                  Log out
-                </button>
-              </>
-            ) : (
-              <>
-                <NavLink to="/login" className="px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white rounded-lg">
-                  Log in
-                </NavLink>
-                <NavLink to="/register" className="btn-primary text-sm ">
-                  Sign up
-                </NavLink>
-              </>
-            )}
+            {/* Desktop auth */}
+            <div className="hidden md:flex items-center gap-2">
+              {isAuthenticated ? (
+                <>
+                  <div className="h-4 w-px bg-gray-200 dark:bg-zinc-700" />
+                  <span className="text-sm text-gray-500 dark:text-zinc-400">
+                    {user?.first_name || user?.username}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-zinc-700 hover:border-gray-300 dark:hover:border-zinc-600 rounded-lg"
+                  >
+                    Log out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/login" className="px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white rounded-lg">
+                    Log in
+                  </NavLink>
+                  <NavLink to="/register" className="btn-primary !text-sm !py-1.5 !px-3.5">
+                    Sign up
+                  </NavLink>
+                </>
+              )}
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-500 dark:text-zinc-400"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Menu"
+            >
+              {mobileOpen ? (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu */}
+        {mobileOpen && (
+          <div className="md:hidden border-t border-gray-200 dark:border-zinc-800 bg-white dark:bg-[#0f0f0f] px-4 py-4 space-y-1">
+            {navLinks.map(l => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                onClick={() => setMobileOpen(false)}
+                className={({ isActive }) =>
+                  `block px-3 py-2 rounded-lg text-sm font-medium ${
+                    isActive
+                      ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white'
+                      : 'text-gray-600 dark:text-zinc-400'
+                  }`
+                }
+              >
+                {l.label}
+              </NavLink>
+            ))}
+
+            <div className="pt-3 border-t border-gray-100 dark:border-zinc-800 space-y-2">
+              {isAuthenticated ? (
+                <>
+                  <p className="px-3 text-xs text-gray-400 dark:text-zinc-500">
+                    {user?.first_name || user?.username}
+                  </p>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20"
+                  >
+                    Log out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-zinc-400"
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setMobileOpen(false)}
+                    className="block px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white text-center"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </header>
 
-      {/* Main */}
-      <main className="mx-auto max-w-6xl px-6 py-10">
+      {/* Main content */}
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-8">
         <Outlet />
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 dark:border-zinc-800/50 mt-16">
-        <div className="mx-auto max-w-6xl px-6 py-8 flex items-center justify-between">
-          <p className="text-xs text-gray-400 dark:text-zinc-600">PlacementPrep &copy; 2026</p>
-          <p className="text-xs text-gray-400 dark:text-zinc-600">AI-Powered Placement Training Platform</p>
+      <footer className="border-t border-gray-100 dark:border-zinc-800/50 mt-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <div className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
+              <span className="text-white font-bold text-[10px]">P</span>
+            </div>
+            <span className="text-sm font-medium text-gray-500 dark:text-zinc-500">PlacementPrep</span>
+          </div>
+          <p className="text-xs text-gray-400 dark:text-zinc-600">
+            AI-Powered Placement Training Platform &copy; 2026
+          </p>
         </div>
       </footer>
     </div>

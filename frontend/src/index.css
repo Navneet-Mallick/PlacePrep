@@ -82,3 +82,4 @@ input:focus, textarea:focus {
 ::selection {
   @apply bg-blue-600/20 text-blue-900 dark:text-blue-100;
 }
+

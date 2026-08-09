@@ -19,7 +19,10 @@ export default function Login() {
     try {
       const response = await api.post('/auth/login/', { email, password })
       const { access, refresh, user } = response.data
-      login({ access, refresh }, user || { username: email.split('@')[0], first_name: email.split('@')[0], email })
+      login(
+        { access, refresh },
+        user || { username: email.split('@')[0], first_name: email.split('@')[0], email }
+      )
       navigate(location.state?.from || '/dashboard')
     } catch (err) {
       setError(err.response?.data?.error || err.response?.data?.detail || 'Invalid email or password')
@@ -29,39 +32,87 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center">
-      <div className="w-full max-w-[360px]">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 sm:px-6">
+      <div className="w-full max-w-sm">
+
+        {/* Logo + heading */}
         <div className="text-center mb-8">
-          <div className="w-10 h-10 mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-sm shadow-blue-600/20 mb-4">
-            <span className="text-white font-bold text-sm">P</span>
-          </div>
+          <Link to="/" className="inline-flex items-center gap-2 mb-6">
+            <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">P</span>
+            </div>
+            <span className="text-base font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
+          </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back</h1>
-          <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">Sign in to your account</p>
+          <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1.5">
+            Sign in to continue to your account
+          </p>
         </div>
 
         {error && (
-          <div className="mb-5 p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+          <div className="mb-5 flex items-start gap-3 p-3.5 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <svg className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
             <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="you@example.com" />
+            <label className="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-1.5">
+              Email address
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+              placeholder="you@example.com"
+              className="w-full"
+            />
           </div>
+
           <div>
-            <label className="block text-xs font-medium text-gray-600 dark:text-zinc-400 mb-1.5">Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••" />
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-sm font-medium text-gray-700 dark:text-zinc-300">
+                Password
+              </label>
+            </div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+              placeholder="••••••••"
+              className="w-full"
+            />
           </div>
-          <button type="submit" disabled={loading}
-            className="btn-primary w-full !mt-6 disabled:opacity-50 disabled:cursor-not-allowed">
-            {loading ? 'Signing in...' : 'Sign in'}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-primary w-full !mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Signing in...
+              </span>
+            ) : 'Sign in'}
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-500 dark:text-zinc-400">
-          Don't have an account? <Link to="/register" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">Sign up</Link>
+          Don't have an account?{' '}
+          <Link to="/register" className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+            Sign up for free
+          </Link>
         </p>
       </div>
     </div>

@@ -3,30 +3,9 @@ import { aptitudeAPI } from '../services/api'
 import axios from 'axios'
 
 const SECTIONS = [
-  { 
-    id: 'quantitative', 
-    label: 'Quantitative', 
-    icon: '🔢', 
-    color: 'blue',
-    gradient: 'from-blue-500 to-cyan-500',
-    description: 'Math & numerical reasoning'
-  },
-  { 
-    id: 'logical', 
-    label: 'Logical Reasoning', 
-    icon: '🧩', 
-    color: 'purple',
-    gradient: 'from-purple-500 to-pink-500',
-    description: 'Patterns & problem solving'
-  },
-  { 
-    id: 'technical', 
-    label: 'Technical', 
-    icon: '⚙️', 
-    color: 'green',
-    gradient: 'from-green-500 to-emerald-500',
-    description: 'CS fundamentals'
-  },
+  { id: 'quantitative', label: 'Quantitative', description: 'Math and numerical reasoning' },
+  { id: 'logical', label: 'Logical Reasoning', description: 'Patterns and problem solving' },
+  { id: 'technical', label: 'Technical', description: 'CS fundamentals' },
 ]
 
 export default function AptitudeTest() {
@@ -41,15 +20,15 @@ export default function AptitudeTest() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [tabSwitches, setTabSwitches] = useState(0)
   const [isTestActive, setIsTestActive] = useState(false)
-  
-  // Proctoring states
+
+  // Proctoring
   const [proctoringViolations, setProctoringViolations] = useState([])
   const [cameraEnabled, setCameraEnabled] = useState(false)
-  const [currentProctoringStatus, setCurrentProctoringStatus] = useState(null)
+  const [proctoringStatus, setProctoringStatus] = useState(null)
   const videoRef = useRef(null)
   const canvasRef = useRef(null)
   const streamRef = useRef(null)
-  const proctoringIntervalRef = useRef(null)
+  const intervalRef = useRef(null)
 
   useEffect(() => {
     if (currentSection) {
@@ -59,151 +38,93 @@ export default function AptitudeTest() {
     }
   }, [currentSection])
 
-  // Camera and Proctoring Functions
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission()
+    }
+    return () => stopCamera()
+  }, [])
+
+  // Tab switch detection
+  useEffect(() => {
+    if (!isTestActive) return
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        setTabSwitches(prev => prev + 1)
+      }
+    }
+    const onBeforeUnload = (e) => {
+      if (isTestActive && !submitted) {
+        e.preventDefault()
+        e.returnValue = ''
+      }
+    }
+
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    window.addEventListener('beforeunload', onBeforeUnload)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      window.removeEventListener('beforeunload', onBeforeUnload)
+    }
+  }, [isTestActive, submitted])
+
   async function startCamera() {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { width: 640, height: 480 } 
-      })
-      
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
       if (videoRef.current) {
         videoRef.current.srcObject = stream
         streamRef.current = stream
         setCameraEnabled(true)
-        
-        // Start proctoring checks every 5 seconds
-        proctoringIntervalRef.current = setInterval(checkProctoring, 5000)
+        intervalRef.current = setInterval(checkProctoring, 5000)
       }
     } catch (err) {
       console.error('Camera access denied:', err)
-      alert('⚠️ Camera access is required for proctoring. Please allow camera access and refresh.')
     }
   }
 
   function stopCamera() {
     if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current.getTracks().forEach(t => t.stop())
       streamRef.current = null
     }
-    if (proctoringIntervalRef.current) {
-      clearInterval(proctoringIntervalRef.current)
-      proctoringIntervalRef.current = null
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
     }
     setCameraEnabled(false)
   }
 
   async function checkProctoring() {
     if (!videoRef.current || !canvasRef.current) return
-
     try {
-      // Capture frame from video
       const canvas = canvasRef.current
       const video = videoRef.current
-      
       canvas.width = video.videoWidth
       canvas.height = video.videoHeight
-      
-      const ctx = canvas.getContext('2d')
-      ctx.drawImage(video, 0, 0)
-      
-      // Convert to base64
-      const imageData = canvas.toDataURL('image/jpeg', 0.8)
-      
-      // Send to backend
-      const response = await axios.post('http://localhost:8001/api/proctoring/check', {
-        image: imageData
+      canvas.getContext('2d').drawImage(video, 0, 0)
+
+      const { data } = await axios.post('http://localhost:8001/api/proctoring/check', {
+        image: canvas.toDataURL('image/jpeg', 0.8),
       })
-      
-      const result = response.data
-      setCurrentProctoringStatus(result)
-      
-      // Handle violations
-      if (result.status === 'violation') {
-        const violation = {
+
+      setProctoringStatus(data)
+
+      if (data.status === 'violation') {
+        setProctoringViolations(prev => [...prev, {
           timestamp: Date.now(),
-          type: result.violation_type,
-          message: result.message,
-          face_count: result.face_count,
-          severity: result.severity
-        }
-        
-        setProctoringViolations(prev => [...prev, violation])
-        
-        // Browser notification
+          type: data.violation_type,
+          message: data.message,
+          severity: data.severity,
+        }])
         if (Notification.permission === 'granted') {
-          if (result.violation_type === 'no_face') {
-            new Notification('Proctoring Alert', {
-              body: 'No face detected! Please face the camera.',
-              tag: 'proctoring-violation'
-            })
-          } else if (result.violation_type === 'multiple_faces') {
-            new Notification('Proctoring Alert', {
-              body: `${result.face_count} persons detected! Only one person allowed.`,
-              tag: 'proctoring-violation'
-            })
-          }
+          new Notification('Proctoring Alert', { body: data.message, tag: 'proctoring' })
         }
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
     }
   }
-
-  // Request notification permission on mount
-  useEffect(() => {
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission()
-    }
-  }, [])
-
-  // Cleanup camera on unmount
-  useEffect(() => {
-    return () => {
-      stopCamera()
-    }
-  }, [])
-
-  // Proctoring System
-  useEffect(() => {
-    if (!isTestActive) return
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setTabSwitches(prev => prev + 1)
-        const newCount = tabSwitches + 1
-        
-        // Alert on tab switch
-        alert(`⚠️ WARNING: You switched tabs!\n\nTab switches: ${newCount}\n\nPlease stay on the test tab. Multiple switches may result in test cancellation.`)
-        
-        // Log to console
-        console.warn(`Tab switch detected. Total switches: ${newCount}`)
-      }
-    }
-
-    const handleBeforeUnload = (e) => {
-      if (isTestActive && !submitted) {
-        e.preventDefault()
-        e.returnValue = ''
-        return ''
-      }
-    }
-
-    const handleBlur = () => {
-      if (isTestActive) {
-        console.log('Window lost focus - Test monitoring active')
-      }
-    }
-
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    window.addEventListener('blur', handleBlur)
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-      window.removeEventListener('blur', handleBlur)
-    }
-  }, [isTestActive, submitted, tabSwitches])
 
   async function loadQuestions(section) {
     setLoading(true)
@@ -214,69 +135,43 @@ export default function AptitudeTest() {
       setCurrentQuestionIndex(0)
     } catch (err) {
       setError('Failed to load questions. Try again.')
-      console.error(err)
     } finally {
       setLoading(false)
     }
   }
 
   function handleAnswerSelect(questionId, option) {
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: option
-    }))
+    setAnswers(prev => ({ ...prev, [questionId]: option }))
   }
 
   async function handleSubmit(isPartialExit = false) {
     const timeTaken = Math.round((Date.now() - startTime) / 1000)
-    
-    // Check if there are any answers to submit
     const answeredCount = Object.keys(answers).length
+
     if (answeredCount === 0) {
-      setError('Please answer at least one question before submitting.')
+      setError('Answer at least one question before submitting.')
       return
     }
 
-    // Confirmation for early exit
     if (isPartialExit) {
-      const totalQuestions = questions.length
-      const unansweredCount = totalQuestions - answeredCount
-      
-      const confirmExit = window.confirm(
-        `⚠️ EXIT TEST EARLY?\n\n` +
-        `You have answered ${answeredCount} out of ${totalQuestions} questions.\n` +
-        `${unansweredCount} question${unansweredCount !== 1 ? 's' : ''} will be marked as unanswered.\n\n` +
-        `Your score will be calculated based on the ${answeredCount} question${answeredCount !== 1 ? 's' : ''} you answered.\n\n` +
-        `Do you want to exit and get your score now?`
+      const unanswered = questions.length - answeredCount
+      const ok = window.confirm(
+        `Exit test early?\n\nAnswered: ${answeredCount} of ${questions.length}\n` +
+        `${unanswered} question${unanswered !== 1 ? 's' : ''} will be marked unanswered.\n\n` +
+        `Continue and see your score?`
       )
-      
-      if (!confirmExit) {
-        return
-      }
+      if (!ok) return
     }
-    
+
     try {
       setLoading(true)
-      
-      // Check if too many tab switches
-      if (tabSwitches > 3) {
-        const confirmSubmit = window.confirm(
-          `⚠️ ALERT: ${tabSwitches} tab switches detected!\n\nThis test appears to be unproctored due to multiple tab switches.\n\nDo you still want to submit?`
-        )
-        if (!confirmSubmit) {
-          setLoading(false)
-          return
-        }
-      }
-
       const { data } = await aptitudeAPI.submitTest({
         answers,
         time_taken: timeTaken,
         is_partial: isPartialExit,
         tab_switches: tabSwitches,
-        proctoring_violations: proctoringViolations
+        proctoring_violations: proctoringViolations,
       })
-      
       setResult(data)
       setSubmitted(true)
       setCurrentSection(null)
@@ -289,462 +184,239 @@ export default function AptitudeTest() {
     }
   }
 
-  // Section Selection View
+  function resetTest() {
+    setSubmitted(false)
+    setResult(null)
+    setAnswers({})
+    setTabSwitches(0)
+    setProctoringViolations([])
+    setProctoringStatus(null)
+  }
+
+  // ---------- Results / Section Selection ----------
   if (!currentSection) {
     return (
-      <div className="space-y-8 animate-in fade-in duration-500">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-blue-500/30 mb-4">
-            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-            <span className="text-sm font-medium text-blue-300">AI-Powered Assessment</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold">
-            <span className="gradient-text">Aptitude Assessment</span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Test your skills across multiple domains. Track your progress and get personalized insights.
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Aptitude Assessment</h1>
+          <p className="mt-2 text-sm text-gray-500 dark:text-zinc-400">
+            Select a section to begin. Camera proctoring is enabled during the test.
           </p>
         </div>
 
         {submitted && result ? (
           <div className="space-y-6">
-            {/* Partial Submission Notice */}
             {result.is_partial && (
-              <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5 p-6 backdrop-blur-sm">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
-                    <span className="text-2xl">⚠️</span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-amber-100 mb-2">
-                      Early Exit - Partial Submission
-                    </h3>
-                    <p className="text-amber-200/80 leading-relaxed">
-                      You exited the test early. Your score is calculated based on{' '}
-                      <strong className="text-amber-100">{result.total_answered} answered question{result.total_answered !== 1 ? 's' : ''}</strong>.
-                      Complete all questions next time for a comprehensive assessment.
-                    </p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/20">
+                <p className="text-sm text-amber-700 dark:text-amber-300">
+                  Early exit — scored on {result.total_answered} of {result.total_questions} questions.
+                </p>
               </div>
             )}
 
-            {/* Results Summary - Enhanced Cards */}
-            <div className="grid gap-4 md:grid-cols-4">
-              <div className="group relative overflow-hidden rounded-2xl border border-green-500/30 bg-gradient-to-br from-green-950/40 to-emerald-950/20 p-6 backdrop-blur-sm card-hover">
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-green-200/80">Final Score</p>
-                    <span className="text-2xl">🎯</span>
-                  </div>
-                  <p className="text-5xl font-bold text-green-100 mb-1">{result.total_score}</p>
-                  <p className="text-xs text-green-300/60 mt-2">
-                    {result.total_answered}/{result.total_questions || questions.length} answered
-                  </p>
-                  <div className="h-1 bg-green-500/20 rounded-full overflow-hidden mt-3">
-                    <div 
-                      className="h-full bg-gradient-to-r from-green-400 to-emerald-400 progress-animate"
-                      style={{ width: `${result.total_score}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="group relative overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 to-cyan-950/20 p-6 backdrop-blur-sm card-hover">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-blue-200/80">Answered Accuracy</p>
-                    <span className="text-2xl">📊</span>
-                  </div>
-                  <p className="text-4xl font-bold text-blue-100 mb-1">
-                    {(result.answered_accuracy || result.accuracy_percent).toFixed(1)}%
-                  </p>
-                  <p className="text-xs text-blue-300/60 mt-2">Of questions attempted</p>
-                </div>
-              </div>
-
-              <div className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-950/40 to-pink-950/20 p-6 backdrop-blur-sm card-hover">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-purple-200/80">Skill Level</p>
-                    <span className="text-2xl">⭐</span>
-                  </div>
-                  <p className="text-3xl font-bold text-purple-100 capitalize mb-1">{result.aptitude_level}</p>
-                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium mt-2 ${
-                    result.aptitude_level === 'advanced' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' :
-                    result.aptitude_level === 'intermediate' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
-                    'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                  }`}>
-                    {result.aptitude_level === 'advanced' && '🚀 Expert'}
-                    {result.aptitude_level === 'intermediate' && '📈 Growing'}
-                    {result.aptitude_level === 'beginner' && '🌱 Learning'}
-                  </div>
-                </div>
-              </div>
-
-              <div className="group relative overflow-hidden rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-950/40 to-blue-950/20 p-6 backdrop-blur-sm card-hover">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-cyan-200/80">Proctoring</p>
-                    <span className="text-2xl">🎥</span>
-                  </div>
-                  <p className="text-4xl font-bold text-cyan-100 mb-1">{result.proctoring_score || 100}</p>
-                  <p className="text-xs text-cyan-300/60 mt-2">Integrity score</p>
-                </div>
-              </div>
+            {/* Metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Metric label="Score" value={`${result.total_score}%`} />
+              <Metric label="Accuracy" value={`${Math.round(result.answered_accuracy ?? result.accuracy_percent ?? 0)}%`} />
+              <Metric label="Level" value={result.aptitude_level} capitalize />
+              <Metric label="Proctoring" value={result.proctoring_score ?? 100} />
             </div>
 
-            {/* Section Scores */}
+            {/* Section breakdown */}
             {result.section_scores && (
-              <div className="rounded-2xl border border-gray-200 dark:border-zinc-700/50 bg-gradient-to-br from-slate-900/60 to-slate-800/30 p-8 backdrop-blur-sm">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30">
-                    📈
-                  </span>
-                  Section Breakdown
-                </h2>
-                <div className="space-y-6">
-                  {Object.entries(result.section_scores).map(([section, score]) => {
-                    const sectionData = SECTIONS.find(s => s.id === section)
-                    return (
-                      <div key={section} className="group">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <span className="text-2xl">{sectionData?.icon}</span>
-                            <div>
-                              <p className="text-base font-semibold text-gray-200 capitalize">{section}</p>
-                              <p className="text-xs text-gray-400">{sectionData?.description}</p>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{score}%</p>
-                            <p className={`text-xs font-medium ${
-                              score >= 80 ? 'text-green-400' :
-                              score >= 60 ? 'text-blue-400' :
-                              score >= 40 ? 'text-amber-400' :
-                              'text-red-400'
-                            }`}>
-                              {score >= 80 ? 'Excellent' : score >= 60 ? 'Good' : score >= 40 ? 'Fair' : 'Needs Work'}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="h-3 bg-gray-100 dark:bg-zinc-800/80 rounded-full overflow-hidden border border-gray-200 dark:border-zinc-700/50">
-                          <div
-                            className={`h-full bg-gradient-to-r ${sectionData?.gradient || 'from-blue-500 to-blue-600'} progress-animate shadow-lg`}
-                            style={{ width: `${score}%` }}
-                          ></div>
-                        </div>
+              <div className="card">
+                <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Section Breakdown</h2>
+                <div className="space-y-4">
+                  {Object.entries(result.section_scores).map(([section, score]) => (
+                    <div key={section}>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm text-gray-700 dark:text-zinc-300 capitalize">{section}</span>
+                        <span className="text-sm font-semibold text-gray-900 dark:text-white">{score}%</span>
                       </div>
-                    )
-                  })}
+                      <div className="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full progress-animate ${
+                            score >= 70 ? 'bg-emerald-500' : score >= 50 ? 'bg-amber-500' : 'bg-red-500'
+                          }`}
+                          style={{ width: `${score}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
 
-            {/* Proctoring Violations Detail */}
-            {proctoringViolations.length > 0 && (
-              <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-950/40 to-red-950/20 p-8 backdrop-blur-sm">
-                <h2 className="text-2xl font-bold text-orange-100 mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30">
-                    🚨
-                  </span>
-                  Proctoring Report
-                </h2>
-                <div className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="rounded-lg border border-orange-500/20 bg-orange-500/5 p-4">
-                      <p className="text-sm text-orange-200/80 mb-1">Total Violations</p>
-                      <p className="text-3xl font-bold text-orange-100">{proctoringViolations.length}</p>
-                    </div>
-                    <div className="rounded-lg border border-blue-500/20 bg-blue-500/5 p-4">
-                      <p className="text-sm text-blue-200/80 mb-1">Tab Switches</p>
-                      <p className="text-3xl font-bold text-blue-100">{tabSwitches}</p>
-                    </div>
+            {/* Proctoring report */}
+            {(proctoringViolations.length > 0 || tabSwitches > 0) && (
+              <div className="card">
+                <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Proctoring Report</h2>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-xs text-gray-500 dark:text-zinc-400">Violations</p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{proctoringViolations.length}</p>
                   </div>
-                  <div className="max-h-64 overflow-y-auto space-y-2">
-                    {proctoringViolations.map((violation, idx) => (
-                      <div key={idx} className={`rounded-lg border p-3 text-sm ${
-                        violation.severity === 'high'
-                          ? 'border-red-500/30 bg-red-500/10 text-red-200'
-                          : violation.severity === 'medium'
-                          ? 'border-orange-500/30 bg-orange-500/10 text-orange-200'
-                          : 'border-yellow-500/30 bg-yellow-500/10 text-yellow-200'
-                      }`}>
-                        <div className="font-semibold capitalize">{violation.type?.replace(/_/g, ' ')}</div>
-                        <div className="text-xs mt-1 opacity-90">{violation.message}</div>
+                  <div>
+                    <p className="text-xs text-gray-500 dark:text-zinc-400">Tab switches</p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{tabSwitches}</p>
+                  </div>
+                </div>
+                {proctoringViolations.length > 0 && (
+                  <div className="max-h-48 overflow-y-auto divide-y divide-gray-100 dark:divide-zinc-800">
+                    {proctoringViolations.map((v, i) => (
+                      <div key={i} className="py-2">
+                        <p className="text-sm text-gray-700 dark:text-zinc-300 capitalize">
+                          {v.type?.replace(/_/g, ' ')}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-zinc-500">{v.message}</p>
                       </div>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
             )}
 
-            {/* Aptitude Level Info */}
-            <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-br from-indigo-950/40 to-purple-950/20 p-8 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 flex items-center justify-center text-3xl">
-                  {result.aptitude_level === 'advanced' && '🏆'}
-                  {result.aptitude_level === 'intermediate' && '💪'}
-                  {result.aptitude_level === 'beginner' && '🎯'}
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Your Aptitude Level</h2>
-                  <p className="text-gray-300 leading-relaxed mb-6">
-                    {result.aptitude_level === 'advanced' && 
-                      'Outstanding performance! You demonstrate advanced aptitude. You\'re well-prepared for challenging roles and complex problem-solving tasks.'}
-                    {result.aptitude_level === 'intermediate' && 
-                      'Solid foundation! You have intermediate aptitude. Focus on weak areas and consistent practice to reach advanced level.'}
-                    {result.aptitude_level === 'beginner' && 
-                      'Great start! You\'re building your foundation. Regular practice and focused learning will help you improve significantly.'}
-                  </p>
-                  <button
-                    onClick={() => {
-                      setSubmitted(false)
-                      setResult(null)
-                      setAnswers({})
-                      setTabSwitches(0)
-                      setProctoringViolations([])
-                      setCurrentProctoringStatus(null)
-                    }}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-gray-900 dark:text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/50 transition-all transform hover:scale-105"
-                  >
-                    <span>Take Another Test</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <button onClick={resetTest} className="btn-primary">Take another test</button>
           </div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-3">
-            {SECTIONS.map((section, index) => (
+          <div className="grid gap-4 md:grid-cols-3">
+            {SECTIONS.map((section) => (
               <button
                 key={section.id}
                 onClick={() => setCurrentSection(section.id)}
-                style={{ animationDelay: `${index * 100}ms` }}
-                className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-zinc-700/50 bg-gradient-to-br from-slate-900/60 to-slate-800/30 p-8 hover:border-slate-600 transition-all duration-300 card-hover backdrop-blur-sm reveal"
+                className="card card-hover text-left group"
               >
-                {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${section.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                
-                {/* Corner accent */}
-                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${section.gradient} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity`}></div>
-                
-                <div className="relative space-y-4">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${section.gradient} bg-opacity-10 border border-${section.color}-500/20 text-4xl group-hover:scale-110 transition-transform duration-300`}>
-                    {section.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{section.label}</h3>
-                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                      {section.description}
-                    </p>
-                  </div>
-                  <div className={`inline-flex items-center gap-2 text-sm font-medium text-${section.color}-400 group-hover:gap-3 transition-all`}>
-                    <span>Start Assessment</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </div>
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">{section.label}</h3>
+                <p className="text-xs text-gray-500 dark:text-zinc-400">{section.description}</p>
+                <p className="mt-4 text-xs font-medium text-blue-600 dark:text-blue-400">Start test →</p>
               </button>
             ))}
           </div>
         )}
 
-        {error && (
-          <div className="rounded-xl border border-red-500/40 bg-gradient-to-br from-red-500/10 to-red-600/5 p-4 backdrop-blur-sm animate-in slide-in-from-top">
-            <div className="flex items-center gap-3">
-              <span className="text-xl">⚠️</span>
-              <p className="text-red-100 font-medium">{error}</p>
-            </div>
-          </div>
-        )}
+        {error && <ErrorBox message={error} />}
       </div>
     )
   }
 
-  // Loading state
-  if (loading) {
+  // ---------- Loading ----------
+  if (loading && questions.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-[500px]">
-        <div className="text-center space-y-6">
-          <div className="relative w-20 h-20 mx-auto">
-            <div className="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-zinc-700"></div>
-            <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
-            <div className="absolute inset-2 rounded-full border-4 border-purple-500 border-t-transparent animate-spin-slow"></div>
-          </div>
-          <div>
-            <p className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Loading questions...</p>
-            <p className="text-sm text-gray-400">Preparing your assessment</p>
-          </div>
-        </div>
+      <div className="flex items-center justify-center min-h-[300px]">
+        <div className="w-5 h-5 border-2 border-gray-200 dark:border-zinc-700 border-t-blue-600 rounded-full animate-spin" />
       </div>
     )
   }
 
+  // ---------- No questions ----------
   if (questions.length === 0) {
     return (
-      <div className="rounded-2xl border border-amber-500/40 bg-gradient-to-br from-amber-500/10 to-orange-500/5 p-8 text-center backdrop-blur-sm">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-3xl mb-4">
-          📭
-        </div>
-        <h3 className="text-xl font-bold text-amber-100 mb-2">No Questions Available</h3>
-        <p className="text-amber-200/80 mb-6">There are no questions available for this section. Please try another section.</p>
-        <button
-          onClick={() => setCurrentSection(null)}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-500 text-gray-900 dark:text-white font-semibold rounded-xl transition-all transform hover:scale-105"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          <span>Back to Sections</span>
+      <div className="card text-center py-10">
+        <p className="text-sm text-gray-500 dark:text-zinc-400 mb-4">
+          No questions available for this section.
+        </p>
+        <button onClick={() => setCurrentSection(null)} className="btn-secondary">
+          Back to sections
         </button>
       </div>
     )
   }
 
+  // ---------- Question view ----------
   const question = questions[currentQuestionIndex]
   const sectionName = SECTIONS.find(s => s.id === currentSection)?.label
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100
+  const isViolation = proctoringStatus?.status === 'violation'
 
   return (
     <div className="space-y-6">
-      {/* Camera Preview (hidden) */}
       <div style={{ display: 'none' }}>
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} />
       </div>
 
-      {/* Proctoring Status Bar */}
-      {(tabSwitches > 0 || proctoringViolations.length > 0 || currentProctoringStatus) && (
-        <div className={`rounded-lg border p-4 ${
-          tabSwitches > 3 || proctoringViolations.length > 5
-            ? 'border-red-500/40 bg-red-500/10 text-red-100 animate-pulse' 
-            : proctoringViolations.length > 0
-            ? 'border-amber-500/40 bg-amber-500/10 text-amber-100'
-            : 'border-green-500/40 bg-green-500/10 text-green-100'
-        }`}>
-          <div className="flex items-center justify-between">
-            <div className="space-y-2 flex-1">
-              <p className="font-medium flex items-center gap-2">
-                {cameraEnabled ? '🎥' : '📷'} Proctoring Monitor 
-                {currentProctoringStatus?.status === 'ok' && <span className="text-green-400 font-bold">✓ Active</span>}
-                {currentProctoringStatus?.status === 'violation' && <span className="text-red-400 font-bold animate-pulse">⚠ VIOLATION</span>}
-              </p>
-              <div className="text-sm space-y-1 ml-6">
-                <p>📋 Tab switches: <span className="font-bold">{tabSwitches}</span></p>
-                <p>🚨 Camera violations: <span className="font-bold">{proctoringViolations.length}</span></p>
-                {currentProctoringStatus && (
-                  <p className="text-xs opacity-90 font-semibold">
-                    {currentProctoringStatus.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            {(tabSwitches > 3 || proctoringViolations.length > 5) && (
-              <div className="text-right">
-                <p className="text-sm font-bold animate-pulse">⚠️ Multiple</p>
-                <p className="text-xs">Violations</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Camera Status Indicator */}
+      {/* Proctoring bar */}
       {cameraEnabled && (
-        <div className={`flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-lg ${
-          currentProctoringStatus?.status === 'violation'
-            ? 'bg-red-500/20 text-red-300 border border-red-500/30'
-            : 'bg-green-500/20 text-green-300 border border-green-500/30'
+        <div className={`flex items-center justify-between px-4 py-2.5 rounded-lg border text-sm ${
+          isViolation
+            ? 'border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20'
+            : 'border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900'
         }`}>
-          <div className={`w-3 h-3 rounded-full ${
-            currentProctoringStatus?.status === 'violation'
-              ? 'bg-red-500 animate-pulse'
-              : 'bg-green-500 animate-pulse'
-          }`}></div>
-          <span>
-            {currentProctoringStatus?.status === 'violation'
-              ? `⚠️ ${currentProctoringStatus.message}`
-              : '✓ Camera monitoring active'}
+          <div className="flex items-center gap-2.5">
+            <span className={`w-2 h-2 rounded-full ${isViolation ? 'bg-red-500' : 'bg-emerald-500'} animate-pulse`} />
+            <span className={isViolation ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-zinc-400'}>
+              {proctoringStatus?.message || 'Camera monitoring active'}
+            </span>
+          </div>
+          <span className="text-xs text-gray-500 dark:text-zinc-500">
+            {tabSwitches} tab switches · {proctoringViolations.length} violations
           </span>
         </div>
       )}
+
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{sectionName}</h1>
-          <p className="text-gray-400">Question {currentQuestionIndex + 1} of {questions.length}</p>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{sectionName}</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400">
+            Question {currentQuestionIndex + 1} of {questions.length}
+          </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <button
             onClick={() => handleSubmit(true)}
             disabled={loading || Object.keys(answers).length === 0}
-            className="px-4 py-2 rounded-lg bg-amber-600 text-gray-900 dark:text-white hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
-            title="Exit test early and get score for answered questions"
+            className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            🚪 Exit & Get Score
+            Exit &amp; see score
           </button>
           <button
             onClick={() => {
-              const confirmBack = window.confirm(
-                '⚠️ Are you sure you want to go back?\n\nYour progress will be lost and the test will not be submitted.'
-              )
-              if (confirmBack) {
+              if (window.confirm('Go back? Your progress will be lost and nothing will be submitted.')) {
                 setCurrentSection(null)
                 setIsTestActive(false)
                 setAnswers({})
                 stopCamera()
               }
             }}
-            className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-300 hover:bg-gray-200 dark:bg-zinc-700 transition-colors"
+            className="btn-secondary"
           >
-            ← Back
+            Back
           </button>
         </div>
       </div>
 
-      {/* Progress Bar */}
-      <div className="h-2 bg-gray-200 dark:bg-zinc-700 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-indigo-500 to-blue-500 transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        ></div>
+      {/* Progress */}
+      <div className="h-1 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+        <div className="h-full bg-blue-600 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
       </div>
 
       {/* Question */}
-      <div className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-6 space-y-6">
-        <div>
-          <p className="text-gray-400 text-sm mb-2">Question {currentQuestionIndex + 1}</p>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{question.question_text}</h2>
-        </div>
+      <div className="card">
+        <h2 className="text-base font-medium text-gray-900 dark:text-white leading-relaxed">
+          {question.question_text}
+        </h2>
 
-        {/* Options */}
-        <div className="space-y-3">
-          {question.options && question.options.map((option, idx) => {
-            const optionKey = String.fromCharCode(65 + idx) // A, B, C, D
-            const isSelected = answers[question.id] === optionKey
-            
+        <div className="mt-5 space-y-2">
+          {question.options?.map((option, idx) => {
+            const key = String.fromCharCode(65 + idx)
+            const selected = answers[question.id] === key
             return (
               <button
                 key={idx}
-                onClick={() => handleAnswerSelect(question.id, optionKey)}
-                className={`w-full p-4 rounded-lg border-2 text-left font-medium transition-all ${
-                  isSelected
-                    ? 'border-indigo-500 bg-indigo-950/30 text-gray-900 dark:text-white'
-                    : 'border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800/50 text-gray-300 hover:border-slate-600'
+                onClick={() => handleAnswerSelect(question.id, key)}
+                className={`w-full flex items-start gap-3 p-3.5 rounded-lg border text-left text-sm transition-colors ${
+                  selected
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-gray-900 dark:text-white'
+                    : 'border-gray-200 dark:border-zinc-800 hover:border-gray-300 dark:hover:border-zinc-700 text-gray-700 dark:text-zinc-300'
                 }`}
               >
-                <span className="mr-3 font-bold">{optionKey}.</span>
-                {option}
+                <span className={`flex-shrink-0 w-5 h-5 rounded flex items-center justify-center text-xs font-medium ${
+                  selected ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-zinc-400'
+                }`}>
+                  {key}
+                </span>
+                <span>{option}</span>
               </button>
             )
           })}
@@ -752,56 +424,50 @@ export default function AptitudeTest() {
       </div>
 
       {/* Navigation */}
-      <div className="flex gap-3 justify-between items-center">
+      <div className="flex items-center justify-between">
         <button
           onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
           disabled={currentQuestionIndex === 0}
-          className="px-6 py-2 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-300 hover:bg-gray-200 dark:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          ← Previous
+          Previous
         </button>
 
-        <div className="text-center">
-          <p className="text-gray-400 text-sm">
-            Answered: <strong className="text-gray-900 dark:text-white">{Object.keys(answers).length}</strong> / {questions.length}
-          </p>
-          <p className="text-gray-500 text-xs mt-1">
-            You can exit anytime to get your score
-          </p>
-        </div>
+        <p className="text-sm text-gray-500 dark:text-zinc-400">
+          <span className="font-medium text-gray-900 dark:text-white">{Object.keys(answers).length}</span> of {questions.length} answered
+        </p>
 
         {currentQuestionIndex < questions.length - 1 ? (
-          <button
-            onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-            className="px-6 py-2 rounded-lg bg-indigo-600 text-gray-900 dark:text-white hover:bg-indigo-500 transition-colors"
-          >
-            Next →
+          <button onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)} className="btn-primary">
+            Next
           </button>
         ) : (
-          <button
-            onClick={() => handleSubmit(false)}
-            disabled={loading}
-            className="px-6 py-2 rounded-lg bg-green-600 text-gray-900 dark:text-white hover:bg-green-500 disabled:opacity-50 transition-colors font-semibold"
-          >
-            {loading ? 'Submitting...' : 'Submit Test'}
+          <button onClick={() => handleSubmit(false)} disabled={loading} className="btn-primary disabled:opacity-50">
+            {loading ? 'Submitting...' : 'Submit test'}
           </button>
         )}
-        
-        <button
-          onClick={() => handleSubmit(true)}
-          disabled={loading}
-          className="px-6 py-2 rounded-lg bg-amber-600 text-gray-900 dark:text-white hover:bg-amber-500 disabled:opacity-50 transition-colors font-semibold"
-          title="Exit test anytime and see your score based on answered questions"
-        >
-          {loading ? 'Exiting...' : '🚪 Exit & See Score'}
-        </button>
       </div>
 
-      {error && (
-        <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-red-100">
-          {error}
-        </div>
-      )}
+      {error && <ErrorBox message={error} />}
+    </div>
+  )
+}
+
+function Metric({ label, value, capitalize }) {
+  return (
+    <div className="card">
+      <p className="text-xs text-gray-500 dark:text-zinc-400 mb-1">{label}</p>
+      <p className={`text-2xl font-bold text-gray-900 dark:text-white ${capitalize ? 'capitalize text-lg' : ''}`}>
+        {value}
+      </p>
+    </div>
+  )
+}
+
+function ErrorBox({ message }) {
+  return (
+    <div className="p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20">
+      <p className="text-sm text-red-600 dark:text-red-400">{message}</p>
     </div>
   )
 }
