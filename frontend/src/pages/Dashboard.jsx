@@ -232,7 +232,7 @@ export default function Dashboard() {
             <Section title="Areas to improve">
               <ul className="space-y-2">
                 {stats.weak_areas.map((area, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-zinc-400">
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-zinc-300">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
                     {area}
                   </li>
@@ -246,7 +246,7 @@ export default function Dashboard() {
             <Section title="Recommendations">
               <ul className="space-y-2">
                 {stats.recommendations.slice(0, 4).map((rec, i) => (
-                  <li key={i} className="text-sm text-gray-600 dark:text-zinc-400">
+                  <li key={i} className="text-sm text-gray-700 dark:text-zinc-300">
                     {rec.recommendation_text || rec.message || rec}
                   </li>
                 ))}
@@ -274,7 +274,7 @@ export default function Dashboard() {
 function MetricCard({ label, value, sub }) {
   return (
     <div className="p-4 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-      <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1.5">{label}</p>
+      <p className="text-sm text-gray-700 dark:text-zinc-300 mb-1.5">{label}</p>
       <p className="text-3xl font-bold text-gray-900 dark:text-white">{value}</p>
       <p className="text-sm text-gray-500 dark:text-zinc-500 mt-1.5 capitalize">{sub}</p>
     </div>
@@ -290,7 +290,7 @@ function Section({ title, count, linkTo, children }) {
           <span className="text-sm text-gray-400 dark:text-zinc-500">{count} total</span>
         )}
         {linkTo && (
-          <Link to={linkTo} className="text-sm text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white">
+          <Link to={linkTo} className="text-sm text-gray-700 dark:text-zinc-300 hover:text-gray-900 dark:hover:text-white">
             View all →
           </Link>
         )}
@@ -317,7 +317,7 @@ function QuickLink({ to, text }) {
   return (
     <Link
       to={to}
-      className="block px-3 py-2 text-sm text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-zinc-800 rounded-lg"
+      className="block px-3 py-2 text-sm text-gray-700 dark:text-zinc-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-zinc-800 rounded-lg"
     >
       {text}
     </Link>

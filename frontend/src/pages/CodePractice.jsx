@@ -63,7 +63,7 @@ export default function CodePractice() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Code Practice</h1>
-          <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-gray-700 dark:text-zinc-300">
             Solve problems or use the free terminal to run any Python code.
           </p>
         </div>
@@ -76,7 +76,7 @@ export default function CodePractice() {
           className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px ${
             tab === 'problems'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-              : 'border-transparent text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200'
+              : 'border-transparent text-gray-600 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200'
           }`}
         >
           Problems
@@ -86,7 +86,7 @@ export default function CodePractice() {
           className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px ${
             tab === 'terminal'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-              : 'border-transparent text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200'
+              : 'border-transparent text-gray-600 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200'
           }`}
         >
           Python Terminal
@@ -115,7 +115,7 @@ export default function CodePractice() {
                     <span className="text-sm font-medium text-gray-900 dark:text-white">{p.title}</span>
                     <span className={`badge ${diffBadge(p.difficulty)}`}>{p.difficulty}</span>
                   </div>
-                  <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400 truncate">{p.description}</p>
+                  <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400 truncate">{p.description}</p>
                 </div>
                 <svg className="w-4 h-4 flex-shrink-0 text-gray-300 dark:text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -130,7 +130,7 @@ export default function CodePractice() {
       {tab === 'problems' && selected && (
         <div className="space-y-5">
           <div className="flex items-center justify-between">
-            <button onClick={() => setSelected(null)} className="text-sm text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white">
+            <button onClick={() => setSelected(null)} className="text-sm text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white">
               ← All problems
             </button>
             <div className="flex items-center gap-3">
@@ -154,7 +154,7 @@ export default function CodePractice() {
               </div>
               <div>
                 <p className="section-label mb-2">Hint</p>
-                <p className="text-sm text-gray-500 dark:text-zinc-400">{selected.hint}</p>
+                <p className="text-sm text-gray-600 dark:text-zinc-400">{selected.hint}</p>
               </div>
             </div>
 
@@ -171,7 +171,7 @@ export default function CodePractice() {
       {/* === TERMINAL TAB === */}
       {tab === 'terminal' && (
         <div className="space-y-4">
-          <p className="text-sm text-gray-600 dark:text-zinc-400">
+          <p className="text-sm text-gray-700 dark:text-zinc-300">
             Free-form Python execution. Write any code, provide stdin input, and run.
           </p>
 
@@ -186,7 +186,7 @@ export default function CodePractice() {
             <div className="space-y-3">
               <div className="card !p-0 overflow-hidden">
                 <div className="px-4 py-2.5 border-b border-gray-200 dark:border-zinc-800">
-                  <span className="text-xs font-medium text-gray-500 dark:text-zinc-400">stdin (input)</span>
+                  <span className="text-xs font-medium text-gray-600 dark:text-zinc-400">stdin (input)</span>
                 </div>
                 <textarea
                   value={input}
@@ -211,7 +211,7 @@ function Editor({ code, setCode, rows = 14 }) {
   return (
     <div className="card !p-0 overflow-hidden">
       <div className="px-4 py-2 border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between">
-        <span className="text-xs font-medium text-gray-500 dark:text-zinc-400">solution.py</span>
+        <span className="text-xs font-medium text-gray-600 dark:text-zinc-400">solution.py</span>
         <span className="text-xs text-gray-400 dark:text-zinc-600">Python 3</span>
       </div>
       <textarea

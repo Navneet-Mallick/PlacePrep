@@ -44,7 +44,7 @@ export default function Login() {
             <span className="text-base font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back</h1>
-          <p className="text-sm text-gray-600 dark:text-zinc-400 mt-1.5">
+          <p className="text-sm text-gray-700 dark:text-zinc-300 mt-1.5">
             Sign in to continue to your account
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600 dark:text-zinc-400">
+        <p className="mt-6 text-center text-sm text-gray-700 dark:text-zinc-300">
           Don't have an account?{' '}
           <Link to="/register" className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
             Sign up for free

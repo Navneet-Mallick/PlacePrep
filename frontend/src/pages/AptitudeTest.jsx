@@ -289,7 +289,7 @@ export default function AptitudeTest() {
       <div className="space-y-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Aptitude Assessment</h1>
-          <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
+          <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
             Select a section to begin. Camera proctoring is enabled during the test.
           </p>
         </div>
@@ -368,11 +368,11 @@ export default function AptitudeTest() {
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Proctoring Report</h2>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <p className="text-xs text-gray-600 dark:text-zinc-400">Violations</p>
+                    <p className="text-xs text-gray-700 dark:text-zinc-300">Violations</p>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">{proctoringViolations.length}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600 dark:text-zinc-400">Tab switches</p>
+                    <p className="text-xs text-gray-700 dark:text-zinc-300">Tab switches</p>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">{tabSwitches}</p>
                   </div>
                 </div>
@@ -402,7 +402,7 @@ export default function AptitudeTest() {
                 className="card card-hover text-left group"
               >
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{section.label}</h3>
-                <p className="text-xs text-gray-600 dark:text-zinc-400">{section.description}</p>
+                <p className="text-xs text-gray-700 dark:text-zinc-300">{section.description}</p>
                 <p className="mt-4 text-xs font-medium text-blue-600 dark:text-blue-400">Start test →</p>
               </button>
             ))}
@@ -427,7 +427,7 @@ export default function AptitudeTest() {
   if (questions.length === 0) {
     return (
       <div className="card text-center py-10">
-        <p className="text-sm text-gray-600 dark:text-zinc-400 mb-4">
+        <p className="text-sm text-gray-700 dark:text-zinc-300 mb-4">
           No questions available for this section.
         </p>
         <button onClick={() => setCurrentSection(null)} className="btn-secondary">
@@ -461,11 +461,11 @@ export default function AptitudeTest() {
         }`}>
           <div className="flex items-center gap-2.5">
             <span className={`w-2 h-2 rounded-full ${isViolation ? 'bg-red-500' : 'bg-emerald-500'} animate-pulse`} />
-            <span className={isViolation ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-zinc-400'}>
+            <span className={isViolation ? 'text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-zinc-300'}>
               {proctoringStatus?.message || 'Camera monitoring active'}
             </span>
           </div>
-          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-zinc-400'}`}>
+          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-zinc-300'}`}>
             Tab switches {tabSwitches}/{LIMITS.tabSwitches} · Violations {proctoringViolations.length}/{LIMITS.totalViolations}
           </span>
         </div>
@@ -483,14 +483,14 @@ export default function AptitudeTest() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{sectionName}</h1>
-          <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-gray-700 dark:text-zinc-300">
             Question {currentQuestionIndex + 1} of {questions.length}
           </p>
         </div>
         <div className="flex items-center gap-3">
           {/* Timer */}
           <div className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-center">
-            <p className="text-xs text-gray-600 dark:text-zinc-400">Time</p>
+            <p className="text-xs text-gray-700 dark:text-zinc-300">Time</p>
             <p className="text-base font-mono font-semibold text-gray-900 dark:text-white">
               {String(Math.floor(timeElapsed / 60)).padStart(2, '0')}:{String(timeElapsed % 60).padStart(2, '0')}
             </p>
@@ -544,7 +544,7 @@ export default function AptitudeTest() {
                 }`}
               >
                 <span className={`flex-shrink-0 w-5 h-5 rounded flex items-center justify-center text-xs font-medium ${
-                  selected ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400'
+                  selected ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-zinc-300'
                 }`}>
                   {key}
                 </span>
@@ -565,7 +565,7 @@ export default function AptitudeTest() {
           Previous
         </button>
 
-        <p className="text-sm text-gray-600 dark:text-zinc-400">
+        <p className="text-sm text-gray-700 dark:text-zinc-300">
           <span className="font-medium text-gray-900 dark:text-white">{Object.keys(answers).length}</span> of {questions.length} answered
         </p>
 
@@ -588,7 +588,7 @@ export default function AptitudeTest() {
 function Metric({ label, value, capitalize }) {
   return (
     <div className="card">
-      <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1.5">{label}</p>
+      <p className="text-sm text-gray-700 dark:text-zinc-300 mb-1.5">{label}</p>
       <p className={`text-2xl font-bold text-gray-900 dark:text-white ${capitalize ? 'capitalize text-lg' : ''}`}>
         {value}
       </p>

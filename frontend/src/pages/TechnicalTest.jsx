@@ -203,7 +203,7 @@ export default function TechnicalTest() {
       <div className="space-y-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Technical Assessment</h1>
-          <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
+          <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
             Subjective questions scored using semantic similarity. Camera proctoring is enabled.
           </p>
         </div>
@@ -216,7 +216,7 @@ export default function TechnicalTest() {
               className="card card-hover text-left"
             >
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{category.label}</h3>
-              <p className="mt-1 text-xs text-gray-600 dark:text-zinc-400">Subjective questions</p>
+              <p className="mt-1 text-xs text-gray-700 dark:text-zinc-300">Subjective questions</p>
               <p className="mt-4 text-xs font-medium text-blue-600 dark:text-blue-400">Start →</p>
             </button>
           ))}
@@ -252,7 +252,7 @@ export default function TechnicalTest() {
         </div>
 
         <div className="mt-5 p-4 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-          <p className="text-sm text-gray-600 dark:text-zinc-400">
+          <p className="text-sm text-gray-700 dark:text-zinc-300">
             Tab switches: <span className="font-semibold text-gray-900 dark:text-white">{tabSwitches}</span>
             {' · '}
             Violations: <span className="font-semibold text-gray-900 dark:text-white">{proctoringViolations.length}</span>
@@ -279,7 +279,7 @@ export default function TechnicalTest() {
   if (questions.length === 0) {
     return (
       <div className="card text-center py-10">
-        <p className="text-sm text-gray-600 dark:text-zinc-400 mb-4">No questions in this category.</p>
+        <p className="text-sm text-gray-700 dark:text-zinc-300 mb-4">No questions in this category.</p>
         <button onClick={handleExit} className="btn-secondary">Back</button>
       </div>
     )
@@ -309,11 +309,11 @@ export default function TechnicalTest() {
         }`}>
           <div className="flex items-center gap-2.5">
             <span className={`w-2 h-2 rounded-full ${isViolation ? 'bg-red-500' : 'bg-emerald-500'} animate-pulse`} />
-            <span className={isViolation ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-zinc-400'}>
+            <span className={isViolation ? 'text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-zinc-300'}>
               {proctoringStatus?.message || 'Camera monitoring active'}
             </span>
           </div>
-          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-zinc-400'}`}>
+          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-zinc-300'}`}>
             Tab switches {tabSwitches}/{LIMITS.tabSwitches} · Violations {proctoringViolations.length}/{LIMITS.totalViolations}
           </span>
         </div>
@@ -331,7 +331,7 @@ export default function TechnicalTest() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{categoryName}</h1>
-          <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-gray-700 dark:text-zinc-300">
             Question {currentQuestionIndex + 1} of {questions.length}
           </p>
         </div>
@@ -365,7 +365,7 @@ export default function TechnicalTest() {
 
       {/* Answer */}
       <div className="card">
-        <label className="block text-xs font-medium text-gray-600 dark:text-zinc-400 mb-2">Your answer</label>
+        <label className="block text-xs font-medium text-gray-700 dark:text-zinc-300 mb-2">Your answer</label>
         <textarea
           value={answer}
           onChange={(e) => setAnswers(prev => ({ ...prev, [question.id]: e.target.value }))}
@@ -401,7 +401,7 @@ export default function TechnicalTest() {
 
           {result.similarity_score != null && (
             <div className="mb-4">
-              <div className="flex justify-between text-xs text-gray-600 dark:text-zinc-400 mb-1.5">
+              <div className="flex justify-between text-xs text-gray-700 dark:text-zinc-300 mb-1.5">
                 <span>Similarity</span>
                 <span>{(result.similarity_score * 100).toFixed(0)}%</span>
               </div>
@@ -412,7 +412,7 @@ export default function TechnicalTest() {
           )}
 
           {result.feedback && (
-            <p className="text-sm text-gray-600 dark:text-zinc-400">{result.feedback}</p>
+            <p className="text-sm text-gray-700 dark:text-zinc-300">{result.feedback}</p>
           )}
         </div>
       )}
@@ -423,7 +423,7 @@ export default function TechnicalTest() {
           <summary className="cursor-pointer text-sm font-medium text-gray-900 dark:text-white">
             Reference answer
           </summary>
-          <p className="mt-3 text-sm text-gray-600 dark:text-zinc-400 whitespace-pre-wrap leading-relaxed">
+          <p className="mt-3 text-sm text-gray-700 dark:text-zinc-300 whitespace-pre-wrap leading-relaxed">
             {question.reference_answer}
           </p>
         </details>
@@ -439,7 +439,7 @@ export default function TechnicalTest() {
           Previous
         </button>
 
-        <p className="text-sm text-gray-600 dark:text-zinc-400">
+        <p className="text-sm text-gray-700 dark:text-zinc-300">
           <span className="font-medium text-gray-900 dark:text-white">{Object.keys(results).length}</span> of {questions.length} evaluated
         </p>
 

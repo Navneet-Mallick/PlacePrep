@@ -37,7 +37,7 @@ export default function Home() {
             <span className="text-blue-600 dark:text-blue-400">Get placed faster.</span>
           </h1>
 
-          <p className="mt-5 text-base sm:text-lg text-gray-600 dark:text-zinc-400 leading-relaxed">
+          <p className="mt-5 text-base sm:text-lg text-gray-700 dark:text-zinc-300 leading-relaxed">
             One platform for resume analysis, aptitude tests, technical assessments,
             and coding practice — with real-time proctoring and AI-powered evaluation.
           </p>
@@ -74,7 +74,7 @@ export default function Home() {
               <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
                 {f.title}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-zinc-400 leading-relaxed">
+              <p className="text-sm text-gray-700 dark:text-zinc-300 leading-relaxed">
                 {f.desc}
               </p>
             </Link>

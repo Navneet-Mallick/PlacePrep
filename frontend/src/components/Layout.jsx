@@ -7,7 +7,7 @@ const linkClass = ({ isActive }) =>
   `px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
     isActive
       ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white'
-      : 'text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800/60'
+      : 'text-gray-700 dark:text-zinc-300 hover:text-gray-900 dark:hover:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800/60'
   }`
 
 export default function Layout() {
@@ -129,7 +129,7 @@ export default function Layout() {
                   `block px-3 py-2 rounded-lg text-sm font-medium ${
                     isActive
                       ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white'
-                      : 'text-gray-600 dark:text-zinc-400'
+                      : 'text-gray-700 dark:text-zinc-300'
                   }`
                 }
               >
@@ -155,7 +155,7 @@ export default function Layout() {
                   <Link
                     to="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-zinc-400"
+                    className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-zinc-300"
                   >
                     Log in
                   </Link>
