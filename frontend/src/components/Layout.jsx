@@ -4,10 +4,10 @@ import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 
 const linkClass = ({ isActive }) =>
-  `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+  `px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
     isActive
       ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white'
-      : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800/60'
+      : 'text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800/60'
   }`
 
 export default function Layout() {
@@ -179,17 +179,47 @@ export default function Layout() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 dark:border-zinc-800/50 mt-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-[10px]">P</span>
+      <footer className="border-t border-gray-200 dark:border-zinc-800 mt-12 bg-gray-50 dark:bg-[#0a0a0a]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mb-8">
+            <div className="sm:col-span-2">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">P</span>
+                </div>
+                <span className="font-semibold text-gray-900 dark:text-white">PlacementPrep</span>
+              </div>
+              <p className="text-sm text-gray-500 dark:text-zinc-400 max-w-xs leading-relaxed">
+                AI-powered placement training platform. Resume analysis, aptitude tests, technical assessments, and code practice.
+              </p>
             </div>
-            <span className="text-sm font-medium text-gray-500 dark:text-zinc-500">PlacementPrep</span>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Platform</h4>
+              <ul className="space-y-2 text-sm text-gray-500 dark:text-zinc-400">
+                <li><Link to="/resume" className="hover:text-gray-900 dark:hover:text-white">Resume Analysis</Link></li>
+                <li><Link to="/aptitude" className="hover:text-gray-900 dark:hover:text-white">Aptitude Tests</Link></li>
+                <li><Link to="/technical" className="hover:text-gray-900 dark:hover:text-white">Technical</Link></li>
+                <li><Link to="/practice" className="hover:text-gray-900 dark:hover:text-white">Code Practice</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Technology</h4>
+              <ul className="space-y-2 text-sm text-gray-500 dark:text-zinc-400">
+                <li>Django + FastAPI</li>
+                <li>React + Tailwind</li>
+                <li>scikit-learn + spaCy</li>
+                <li>OpenCV + Gemini AI</li>
+              </ul>
+            </div>
           </div>
-          <p className="text-xs text-gray-400 dark:text-zinc-600">
-            AI-Powered Placement Training Platform &copy; 2026
-          </p>
+          <div className="pt-6 border-t border-gray-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-400 dark:text-zinc-500">
+              &copy; 2026 PlacementPrep. All rights reserved.
+            </p>
+            <p className="text-sm text-gray-400 dark:text-zinc-500">
+              Built by Navneet Mallick
+            </p>
+          </div>
         </div>
       </footer>
     </div>
