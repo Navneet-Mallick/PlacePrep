@@ -24,18 +24,22 @@ from evaluate_technical_answer import score_answer
 
 # Try to import proctoring (optional, requires YOLO/torch)
 try:
-    from proctoring import check_proctoring
+    from proctoring import check_proctoring, reset_proctoring_state
     PROCTORING_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  Proctoring module not available: {e}")
+    print(f"Proctoring module not available: {e}")
     PROCTORING_AVAILABLE = False
+
     def check_proctoring(image):
         return {
             "status": "error",
             "message": "Proctoring system not available (missing dependencies)",
             "face_count": 0,
-            "confidence": 0
+            "severity": "unknown",
         }
+
+    def reset_proctoring_state():
+        return {"status": "error", "message": "Proctoring not available"}
 
 # Pydantic models
 class TechnicalEvaluationRequest(BaseModel):
@@ -190,23 +194,30 @@ async def execute_python(request: PythonCodeRequest):
 @app.post("/api/proctoring/check")
 async def check_proctoring_frame(request: ProctoringRequest):
     """
-    Check proctoring violations in a video frame
-    
-    Detects:
-    - No person in frame
-    - Multiple persons in frame
-    - Returns person count and confidence
+    Analyse one webcam frame for proctoring violations.
+
+    Detects no face, multiple faces, and off-centre gaze. Conditions must
+    persist across several frames before escalating to a violation, so
+    blinks and brief head turns do not create false positives.
     """
     try:
-        result = check_proctoring(request.image)
-        return result
+        return check_proctoring(request.image)
     except Exception as e:
         return {
             "status": "error",
             "message": f"Proctoring check failed: {str(e)}",
             "face_count": 0,
-            "confidence": 0
+            "severity": "unknown",
         }
+
+
+@app.post("/api/proctoring/reset")
+async def reset_proctoring():
+    """Clear proctoring streak counters. Call when a new test begins."""
+    try:
+        return reset_proctoring_state()
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 
 class AptitudeLevelRequest(BaseModel):

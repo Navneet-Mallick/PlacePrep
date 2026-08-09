@@ -31,6 +31,53 @@ from .serializers import (
 logger = logging.getLogger(__name__)
 
 
+# Proctoring enforcement thresholds (kept in sync with
+# frontend/src/utils/proctoringRules.js)
+PROCTORING_LIMITS = {
+    'tab_switches': 6,
+    'total_violations': 8,
+    'high_severity': 3,
+}
+
+
+def evaluate_disqualification(tab_switches, violations):
+    """
+    Decide whether an attempt must be voided for proctoring reasons.
+
+    Returns:
+        (is_disqualified: bool, reason: str)
+    """
+    try:
+        tab_switches = int(tab_switches or 0)
+    except (TypeError, ValueError):
+        tab_switches = 0
+
+    if not isinstance(violations, list):
+        violations = []
+
+    high = sum(
+        1 for v in violations
+        if isinstance(v, dict) and v.get('severity') == 'high'
+    )
+
+    if high >= PROCTORING_LIMITS['high_severity']:
+        return True, f'Multiple persons detected {high} times during the assessment'
+
+    if tab_switches >= PROCTORING_LIMITS['tab_switches']:
+        return True, (
+            f'Left the test tab {tab_switches} times '
+            f"(limit {PROCTORING_LIMITS['tab_switches']})"
+        )
+
+    if len(violations) >= PROCTORING_LIMITS['total_violations']:
+        return True, (
+            f'{len(violations)} proctoring violations recorded '
+            f"(limit {PROCTORING_LIMITS['total_violations']})"
+        )
+
+    return False, ''
+
+
 # Recommendation generation helper
 def generate_recommendations(user):
     """Generate personalized recommendations based on user performance"""
@@ -357,7 +404,18 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
         tab_switches = request.data.get('tab_switches', 0)
         proctoring_violations = request.data.get('proctoring_violations', [])
 
-        if not answers:
+        # A disqualified attempt may have zero answers, so validate after that check
+        client_disqualified = bool(request.data.get('is_disqualified', False))
+
+        # Re-evaluate disqualification server-side; never rely on the client alone
+        server_disqualified, dq_reason = evaluate_disqualification(
+            tab_switches, proctoring_violations
+        )
+        is_disqualified = server_disqualified or client_disqualified
+        if is_disqualified and not dq_reason:
+            dq_reason = str(request.data.get('disqualification_reason', 'Proctoring violations'))[:255]
+
+        if not answers and not is_disqualified:
             return Response(
                 {"error": "Answers are required"},
                 status=status.HTTP_400_BAD_REQUEST
@@ -444,9 +502,19 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
             proctoring_score -= min(tab_switches * 3, 30)  # Max 30% deduction for tab switches
             proctoring_score -= min(len(proctoring_violations) * 5, 40)  # Max 40% for violations
             proctoring_score = max(proctoring_score, 0)  # Floor at 0
-            
+
+            # A disqualified attempt is voided: score and proctoring go to zero
+            raw_score = total_score
+            if is_disqualified:
+                total_score = 0
+                proctoring_score = 0
+                aptitude_level = 'beginner'
+                answered_accuracy = 0.0
+
             # Overall integrity score (weighted)
-            integrity_score = int((proctoring_score * 0.7) + (total_score * 0.3))
+            integrity_score = 0 if is_disqualified else int(
+                (proctoring_score * 0.7) + (total_score * 0.3)
+            )
 
             # Create test attempt
             attempt = AptitudeTestAttempt.objects.create(
@@ -459,7 +527,9 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
                 aptitude_level=aptitude_level,
                 tab_switches=tab_switches,
                 proctoring_violations=proctoring_violations,
-                proctoring_score=proctoring_score
+                proctoring_score=proctoring_score,
+                is_disqualified=is_disqualified,
+                disqualification_reason=dq_reason,
             )
 
             response_data = AptitudeTestAttemptSerializer(attempt).data
@@ -469,6 +539,9 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
             response_data['unanswered'] = all_questions_count - total_answered
             response_data['integrity_score'] = integrity_score
             response_data['answered_accuracy'] = answered_accuracy
+            response_data['is_disqualified'] = is_disqualified
+            response_data['disqualification_reason'] = dq_reason
+            response_data['raw_score'] = raw_score
             
             return Response(
                 response_data,

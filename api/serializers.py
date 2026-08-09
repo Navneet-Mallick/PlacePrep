@@ -83,9 +83,13 @@ class AptitudeTestAttemptSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = AptitudeTestAttempt
-        fields = ['id', 'user', 'total_score', 'accuracy_percent', 'time_taken', 
-                  'section_scores', 'aptitude_level', 'created_at']
-        read_only_fields = ['user', 'total_score', 'accuracy_percent', 'aptitude_level', 'created_at']
+        fields = ['id', 'user', 'total_score', 'accuracy_percent', 'time_taken',
+                  'section_scores', 'aptitude_level', 'tab_switches',
+                  'proctoring_score', 'is_disqualified', 'disqualification_reason',
+                  'created_at']
+        read_only_fields = ['user', 'total_score', 'accuracy_percent', 'aptitude_level',
+                            'proctoring_score', 'is_disqualified',
+                            'disqualification_reason', 'created_at']
 
 
 class TechnicalQuestionSerializer(serializers.ModelSerializer):

@@ -78,6 +78,10 @@ class AptitudeTestAttempt(models.Model):
     tab_switches = models.IntegerField(default=0, help_text="Number of tab switches detected")
     proctoring_violations = models.JSONField(default=list, blank=True, help_text="List of proctoring violations")
     proctoring_score = models.IntegerField(default=100, validators=[MinValueValidator(0), MaxValueValidator(100)], help_text="Proctoring integrity score")
+
+    # Disqualification
+    is_disqualified = models.BooleanField(default=False, help_text="Attempt voided due to proctoring violations")
+    disqualification_reason = models.CharField(max_length=255, blank=True, help_text="Why the attempt was disqualified")
     
     created_at = models.DateTimeField(auto_now_add=True)
 

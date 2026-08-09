@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { technicalAPI } from '../services/api'
 import axios from 'axios'
+import { LIMITS, evaluateIntegrity, shouldWarn } from '../utils/proctoringRules'
 
 const CATEGORIES = [
   { id: 'dsa', label: 'Data Structures & Algorithms' },
@@ -20,6 +21,8 @@ export default function TechnicalTest() {
   const [answers, setAnswers] = useState({})
   const [results, setResults] = useState({})
   const [isTestActive, setIsTestActive] = useState(false)
+  const [disqualified, setDisqualified] = useState(null)
+  const [warnedNearLimit, setWarnedNearLimit] = useState(false)
 
   // Proctoring
   const [tabSwitches, setTabSwitches] = useState(0)
@@ -55,8 +58,37 @@ export default function TechnicalTest() {
     return () => document.removeEventListener('visibilitychange', onVisibilityChange)
   }, [isTestActive])
 
+  // Disqualification enforcement
+  useEffect(() => {
+    if (!isTestActive || disqualified) return
+
+    const state = { tabSwitches, violations: proctoringViolations }
+    const check = evaluateIntegrity(state)
+
+    if (check.disqualified) {
+      window.alert(
+        `ASSESSMENT TERMINATED\n\n${check.reason}\n\n` +
+        `Your attempt has been disqualified.`
+      )
+      setDisqualified(check.reason)
+      setIsTestActive(false)
+      stopCamera()
+      return
+    }
+
+    if (!warnedNearLimit && shouldWarn(state)) {
+      setWarnedNearLimit(true)
+      window.alert(
+        'FINAL WARNING\n\nYou are close to being disqualified. ' +
+        'Further violations will terminate this assessment.'
+      )
+    }
+  }, [tabSwitches, proctoringViolations, isTestActive, disqualified, warnedNearLimit])
+
   async function startCamera() {
     try {
+      await axios.post('http://localhost:8001/api/proctoring/reset').catch(() => {})
+
       const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
       if (videoRef.current) {
         videoRef.current.srcObject = stream
@@ -96,12 +128,18 @@ export default function TechnicalTest() {
       setProctoringStatus(data)
 
       if (data.status === 'violation') {
-        setProctoringViolations(prev => [...prev, {
-          timestamp: Date.now(),
-          type: data.violation_type,
-          message: data.message,
-          severity: data.severity,
-        }])
+        setProctoringViolations(prev => {
+          const last = prev[prev.length - 1]
+          if (last && last.type === data.violation_type && Date.now() - last.timestamp < 30000) {
+            return prev
+          }
+          return [...prev, {
+            timestamp: Date.now(),
+            type: data.violation_type,
+            message: data.message,
+            severity: data.severity,
+          }]
+        })
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
@@ -142,14 +180,20 @@ export default function TechnicalTest() {
     }
   }
 
+  function resetSession() {
+    setSelectedCategory(null)
+    setIsTestActive(false)
+    setTabSwitches(0)
+    setProctoringViolations([])
+    setProctoringStatus(null)
+    setDisqualified(null)
+    setWarnedNearLimit(false)
+    stopCamera()
+  }
+
   function handleExit() {
     if (window.confirm('Exit assessment? Your evaluated answers are already saved.')) {
-      setSelectedCategory(null)
-      setIsTestActive(false)
-      setTabSwitches(0)
-      setProctoringViolations([])
-      setProctoringStatus(null)
-      stopCamera()
+      resetSession()
     }
   }
 
@@ -183,6 +227,45 @@ export default function TechnicalTest() {
     )
   }
 
+  // ---------- Disqualified ----------
+  if (disqualified) {
+    return (
+      <div className="max-w-xl mx-auto py-8">
+        <div className="p-6 rounded-xl border-2 border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950/30">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/50 flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-lg font-semibold text-red-800 dark:text-red-300">
+                Assessment Disqualified
+              </h1>
+              <p className="mt-1.5 text-sm text-red-700 dark:text-red-400">{disqualified}</p>
+              <p className="mt-3 text-sm text-red-600/80 dark:text-red-400/70">
+                Retake the assessment while following the proctoring rules: stay
+                visible to the camera, remain alone, and do not leave the test tab.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 p-4 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+          <p className="text-sm text-gray-500 dark:text-zinc-400">
+            Tab switches: <span className="font-semibold text-gray-900 dark:text-white">{tabSwitches}</span>
+            {' · '}
+            Violations: <span className="font-semibold text-gray-900 dark:text-white">{proctoringViolations.length}</span>
+          </p>
+        </div>
+
+        <button onClick={resetSession} className="btn-primary mt-5">
+          Back to categories
+        </button>
+      </div>
+    )
+  }
+
   // ---------- Loading ----------
   if (loading && questions.length === 0) {
     return (
@@ -207,6 +290,7 @@ export default function TechnicalTest() {
   const result = results[question.id]
   const answer = answers[question.id] || ''
   const isViolation = proctoringStatus?.status === 'violation'
+  const nearLimit = shouldWarn({ tabSwitches, violations: proctoringViolations })
 
   return (
     <div className="space-y-6">
@@ -228,9 +312,17 @@ export default function TechnicalTest() {
               {proctoringStatus?.message || 'Camera monitoring active'}
             </span>
           </div>
-          <span className="text-xs text-gray-500 dark:text-zinc-500">
-            {tabSwitches} tab switches · {proctoringViolations.length} violations
+          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-zinc-400'}`}>
+            Tab switches {tabSwitches}/{LIMITS.tabSwitches} · Violations {proctoringViolations.length}/{LIMITS.totalViolations}
           </span>
+        </div>
+      )}
+
+      {nearLimit && (
+        <div className="p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20">
+          <p className="text-sm font-medium text-red-700 dark:text-red-400">
+            Final warning — further violations will disqualify your attempt.
+          </p>
         </div>
       )}
 

@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { aptitudeAPI } from '../services/api'
 import axios from 'axios'
+import { LIMITS, evaluateIntegrity, shouldWarn, remainingAllowance } from '../utils/proctoringRules'
 
 const SECTIONS = [
   { id: 'quantitative', label: 'Quantitative', description: 'Math and numerical reasoning' },
@@ -20,6 +21,8 @@ export default function AptitudeTest() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [tabSwitches, setTabSwitches] = useState(0)
   const [isTestActive, setIsTestActive] = useState(false)
+  const [warnedNearLimit, setWarnedNearLimit] = useState(false)
+  const disqualifyingRef = useRef(false)
 
   // Proctoring
   const [proctoringViolations, setProctoringViolations] = useState([])
@@ -71,6 +74,9 @@ export default function AptitudeTest() {
 
   async function startCamera() {
     try {
+      // Clear streak counters from any previous test
+      await axios.post('http://localhost:8001/api/proctoring/reset').catch(() => {})
+
       const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
       if (videoRef.current) {
         videoRef.current.srcObject = stream
@@ -110,13 +116,22 @@ export default function AptitudeTest() {
 
       setProctoringStatus(data)
 
+      // Only log confirmed violations — warnings are transient and not penalised
       if (data.status === 'violation') {
-        setProctoringViolations(prev => [...prev, {
-          timestamp: Date.now(),
-          type: data.violation_type,
-          message: data.message,
-          severity: data.severity,
-        }])
+        setProctoringViolations(prev => {
+          // Collapse repeats of the same violation type within 30s
+          const last = prev[prev.length - 1]
+          if (last && last.type === data.violation_type && Date.now() - last.timestamp < 30000) {
+            return prev
+          }
+          return [...prev, {
+            timestamp: Date.now(),
+            type: data.violation_type,
+            message: data.message,
+            severity: data.severity,
+          }]
+        })
+
         if (Notification.permission === 'granted') {
           new Notification('Proctoring Alert', { body: data.message, tag: 'proctoring' })
         }
@@ -143,6 +158,71 @@ export default function AptitudeTest() {
   function handleAnswerSelect(questionId, option) {
     setAnswers(prev => ({ ...prev, [questionId]: option }))
   }
+
+  // --- Disqualification enforcement -------------------------------------
+  const submitDisqualified = useCallback(async (reason) => {
+    if (disqualifyingRef.current) return
+    disqualifyingRef.current = true
+
+    setIsTestActive(false)
+    stopCamera()
+
+    const timeTaken = Math.round((Date.now() - startTime) / 1000)
+    try {
+      setLoading(true)
+      const { data } = await aptitudeAPI.submitTest({
+        answers,
+        time_taken: timeTaken,
+        is_partial: true,
+        tab_switches: tabSwitches,
+        proctoring_violations: proctoringViolations,
+        is_disqualified: true,
+        disqualification_reason: reason,
+      })
+      setResult({ ...data, is_disqualified: true, disqualification_reason: reason })
+    } catch (err) {
+      // Still show the disqualified screen even if the save failed
+      setResult({
+        is_disqualified: true,
+        disqualification_reason: reason,
+        total_score: 0,
+        proctoring_score: 0,
+        aptitude_level: 'beginner',
+      })
+    } finally {
+      setSubmitted(true)
+      setCurrentSection(null)
+      setLoading(false)
+    }
+  }, [answers, startTime, tabSwitches, proctoringViolations])
+
+  useEffect(() => {
+    if (!isTestActive || submitted) return
+
+    const state = { tabSwitches, violations: proctoringViolations }
+    const { disqualified, reason } = evaluateIntegrity(state)
+
+    if (disqualified) {
+      window.alert(
+        `ASSESSMENT TERMINATED\n\n${reason}\n\n` +
+        `Your attempt has been disqualified and the score voided.`
+      )
+      submitDisqualified(reason)
+      return
+    }
+
+    if (!warnedNearLimit && shouldWarn(state)) {
+      setWarnedNearLimit(true)
+      const left = remainingAllowance(state)
+      window.alert(
+        `FINAL WARNING\n\n` +
+        `You are close to being disqualified.\n\n` +
+        `Tab switches remaining: ${left.tabSwitches}\n` +
+        `Violations remaining: ${left.violations}\n\n` +
+        `Further violations will void your attempt.`
+      )
+    }
+  }, [tabSwitches, proctoringViolations, isTestActive, submitted, warnedNearLimit, submitDisqualified])
 
   async function handleSubmit(isPartialExit = false) {
     const timeTaken = Math.round((Date.now() - startTime) / 1000)
@@ -191,6 +271,8 @@ export default function AptitudeTest() {
     setTabSwitches(0)
     setProctoringViolations([])
     setProctoringStatus(null)
+    setWarnedNearLimit(false)
+    disqualifyingRef.current = false
   }
 
   // ---------- Results / Section Selection ----------
@@ -206,7 +288,32 @@ export default function AptitudeTest() {
 
         {submitted && result ? (
           <div className="space-y-6">
-            {result.is_partial && (
+            {result.is_disqualified && (
+              <div className="p-5 rounded-xl border-2 border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950/30">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/50 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-red-800 dark:text-red-300">
+                      Assessment Disqualified
+                    </h2>
+                    <p className="mt-1.5 text-sm text-red-700 dark:text-red-400">
+                      {result.disqualification_reason}
+                    </p>
+                    <p className="mt-3 text-sm text-red-600/80 dark:text-red-400/70">
+                      Your score has been voided. Retake the assessment while following
+                      the proctoring rules: stay visible to the camera, remain alone,
+                      and do not leave the test tab.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!result.is_disqualified && result.is_partial && (
               <div className="p-4 rounded-lg border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/20">
                 <p className="text-sm text-amber-700 dark:text-amber-300">
                   Early exit — scored on {result.total_answered} of {result.total_questions} questions.
@@ -327,6 +434,7 @@ export default function AptitudeTest() {
   const sectionName = SECTIONS.find(s => s.id === currentSection)?.label
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100
   const isViolation = proctoringStatus?.status === 'violation'
+  const nearLimit = shouldWarn({ tabSwitches, violations: proctoringViolations })
 
   return (
     <div className="space-y-6">
@@ -348,9 +456,17 @@ export default function AptitudeTest() {
               {proctoringStatus?.message || 'Camera monitoring active'}
             </span>
           </div>
-          <span className="text-xs text-gray-500 dark:text-zinc-500">
-            {tabSwitches} tab switches · {proctoringViolations.length} violations
+          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-zinc-400'}`}>
+            Tab switches {tabSwitches}/{LIMITS.tabSwitches} · Violations {proctoringViolations.length}/{LIMITS.totalViolations}
           </span>
+        </div>
+      )}
+
+      {nearLimit && (
+        <div className="p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20">
+          <p className="text-sm font-medium text-red-700 dark:text-red-400">
+            Final warning — further violations will disqualify your attempt.
+          </p>
         </div>
       )}
 
