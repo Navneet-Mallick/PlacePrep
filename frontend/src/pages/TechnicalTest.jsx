@@ -390,10 +390,21 @@ export default function TechnicalTest() {
       {result && (
         <div className="card">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation</h3>
+            <div className="flex items-center gap-3">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation</h3>
+              <span className={`badge ${
+                result.category === 'excellent' ? 'badge-green'
+                  : result.category === 'good' ? 'badge-blue'
+                  : result.category === 'fair' ? 'badge-amber'
+                  : 'badge-red'
+              }`}>
+                {result.category || (result.score >= 75 ? 'excellent' : result.score >= 55 ? 'good' : result.score >= 35 ? 'fair' : 'weak')}
+              </span>
+            </div>
             <span className={`text-2xl font-bold ${
-              result.score >= 70 ? 'text-emerald-600 dark:text-emerald-400'
-                : result.score >= 50 ? 'text-amber-600 dark:text-amber-400'
+              result.score >= 75 ? 'text-emerald-600 dark:text-emerald-400'
+                : result.score >= 55 ? 'text-blue-600 dark:text-blue-400'
+                : result.score >= 35 ? 'text-amber-600 dark:text-amber-400'
                 : 'text-red-600 dark:text-red-400'
             }`}>
               {result.score}<span className="text-sm text-gray-400 dark:text-zinc-500">/100</span>

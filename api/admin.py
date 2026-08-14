@@ -57,42 +57,6 @@ class AptitudeQuestionAdmin(admin.ModelAdmin):
         return obj.question_text[:80] + '...' if len(obj.question_text) > 80 else obj.question_text
     question_preview.short_description = 'Question'
 
-    actions = ['mark_easy', 'mark_medium', 'mark_hard']
-
-    @admin.action(description='Mark selected as Easy')
-    def mark_easy(self, request, queryset):
-        queryset.update(difficulty='easy')
-
-    @admin.action(description='Mark selected as Medium')
-    def mark_medium(self, request, queryset):
-        queryset.update(difficulty='medium')
-
-    @admin.action(description='Mark selected as Hard')
-    def mark_hard(self, request, queryset):
-        queryset.update(difficulty='hard')
-
-
-# --- Aptitude Test Attempts ---
-@admin.register(AptitudeTestAttempt)
-class AptitudeTestAttemptAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user_name', 'total_score', 'aptitude_level', 'tab_switches',
-                    'proctoring_score', 'is_disqualified', 'created_at')
-    list_filter = ('aptitude_level', 'is_disqualified', 'created_at')
-    search_fields = ('user__email', 'user__username')
-    readonly_fields = ('created_at', 'answers', 'section_scores', 'proctoring_violations')
-    list_per_page = 25
-    date_hierarchy = 'created_at'
-
-    def user_name(self, obj):
-        return obj.user.username
-    user_name.short_description = 'User'
-
-    actions = ['void_attempts']
-
-    @admin.action(description='Disqualify selected attempts')
-    def void_attempts(self, request, queryset):
-        queryset.update(is_disqualified=True, disqualification_reason='Voided by admin', total_score=0)
-
 
 # --- Technical Questions ---
 @admin.register(TechnicalQuestion)
@@ -101,7 +65,6 @@ class TechnicalQuestionAdmin(admin.ModelAdmin):
     list_filter = ('category', 'difficulty')
     search_fields = ('question_text', 'reference_answer')
     list_per_page = 50
-    list_editable = ('difficulty', 'category')
 
     def question_preview(self, obj):
         return obj.question_text[:80] + '...' if len(obj.question_text) > 80 else obj.question_text
@@ -110,7 +73,7 @@ class TechnicalQuestionAdmin(admin.ModelAdmin):
     def has_reference(self, obj):
         return bool(obj.reference_answer)
     has_reference.boolean = True
-    has_reference.short_description = 'Ref Answer'
+    has_reference.short_description = 'Has Ref'
 
 
 # --- Technical Answers ---
@@ -119,8 +82,11 @@ class TechnicalAnswerAdmin(admin.ModelAdmin):
     list_display = ('id', 'user_name', 'question_preview', 'score_colored', 'similarity_score', 'created_at')
     list_filter = ('score', 'created_at')
     search_fields = ('user__email', 'question__question_text', 'user_answer')
-    readonly_fields = ('created_at',)
+    readonly_fields = ('created_at', 'user', 'question', 'user_answer', 'score', 'similarity_score', 'feedback')
     list_per_page = 25
+
+    def has_add_permission(self, request):
+        return False
 
     def user_name(self, obj):
         return obj.user.username
@@ -134,6 +100,28 @@ class TechnicalAnswerAdmin(admin.ModelAdmin):
         color = '#10b981' if obj.score >= 70 else '#f59e0b' if obj.score >= 50 else '#ef4444'
         return format_html('<span style="color:{};font-weight:bold">{}</span>', color, obj.score)
     score_colored.short_description = 'Score'
+
+
+# --- Aptitude Test Attempts ---
+@admin.register(AptitudeTestAttempt)
+class AptitudeTestAttemptAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'total_score', 'aptitude_level', 'tab_switches',
+                    'proctoring_score', 'is_disqualified', 'created_at')
+    list_filter = ('aptitude_level', 'is_disqualified', 'created_at')
+    search_fields = ('user__email', 'user__username')
+    readonly_fields = ('user', 'created_at', 'answers', 'section_scores', 'proctoring_violations',
+                       'total_score', 'accuracy_percent', 'time_taken', 'aptitude_level',
+                       'tab_switches', 'proctoring_score', 'is_disqualified', 'disqualification_reason')
+    list_per_page = 25
+
+    def has_add_permission(self, request):
+        return False
+
+    actions = ['void_attempts']
+
+    @admin.action(description='Disqualify selected attempts')
+    def void_attempts(self, request, queryset):
+        queryset.update(is_disqualified=True, disqualification_reason='Voided by admin', total_score=0)
 
 
 # --- Recommendations ---

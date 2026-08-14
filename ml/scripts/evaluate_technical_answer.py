@@ -72,6 +72,19 @@ SYNONYM_GROUPS = [
     {"virtual memory", "paging", "page table"},
     {"scheduling", "scheduler", "cpu scheduling"},
     {"file system", "filesystem", "fs"},
+    {"authentication", "login", "verify identity", "sign in"},
+    {"authorization", "permission", "access control"},
+    {"encryption", "encrypt", "cipher", "cryptography"},
+    {"password", "credential", "secret", "passphrase"},
+    {"security", "secure", "protection", "safety"},
+    {"device", "phone", "mobile", "hardware token", "otp"},
+    {"verification", "verify", "confirm", "validate", "check"},
+    {"two factor", "2fa", "multi factor", "mfa", "two step"},
+    {"api", "application programming interface", "endpoint", "rest"},
+    {"server", "backend", "host"},
+    {"client", "frontend", "browser", "user interface"},
+    {"protocol", "http", "https", "tcp", "udp"},
+    {"network", "internet", "web", "connection"},
 ]
 
 
@@ -207,44 +220,54 @@ def score_answer(user_answer: str, reference_answer: str) -> dict:
         length_score = 1.0
     
     # 4. Combined scoring with weights
-    # Concept overlap gets highest weight (semantic understanding)
-    # TF-IDF gets second (word-level matching)
-    # Length is a minor penalty
+    # When user answer is much longer than reference, boost the score
+    # because they're likely providing more detail (not less)
+    length_bonus = 0.0
+    if user_len > ref_len * 1.5:
+        # User wrote significantly more — likely a detailed correct answer
+        length_bonus = 0.1
+    
     combined = (
-        concept_score * 0.50 +      # 50% - Concept/meaning match
-        tfidf_similarity * 0.35 +   # 35% - Word-level similarity
+        concept_score * 0.55 +      # 55% - Concept/meaning match (most important)
+        tfidf_similarity * 0.30 +   # 30% - Word-level similarity
         length_score * 0.15          # 15% - Completeness
-    )
+    ) + length_bonus
+    
+    # Clamp
+    combined = min(1.0, combined)
     
     # Convert to 0-100 with generous scaling
-    # The idea: if you cover 60%+ of concepts, you should get a decent score
-    if combined >= 0.7:
-        final_score = 85 + int((combined - 0.7) * 50)
-    elif combined >= 0.5:
-        final_score = 65 + int((combined - 0.5) * 100)
-    elif combined >= 0.35:
-        final_score = 45 + int((combined - 0.35) * 133)
-    elif combined >= 0.2:
-        final_score = 25 + int((combined - 0.2) * 133)
+    # Key insight: if the user covers 40%+ of reference concepts, it's likely correct
+    if combined >= 0.6:
+        final_score = 80 + int((combined - 0.6) * 50)
+    elif combined >= 0.4:
+        final_score = 55 + int((combined - 0.4) * 125)
+    elif combined >= 0.25:
+        final_score = 35 + int((combined - 0.25) * 133)
+    elif combined >= 0.15:
+        final_score = 20 + int((combined - 0.15) * 150)
     else:
-        final_score = int(combined * 125)
+        final_score = int(combined * 133)
     
     final_score = max(0, min(100, final_score))
     
-    # Generate feedback
-    if final_score >= 80:
-        feedback = "Excellent! Your answer captures the key concepts well."
-    elif final_score >= 60:
-        feedback = "Good answer. You covered the main ideas with some room for more detail."
-    elif final_score >= 40:
-        feedback = "Fair attempt. Try to include more specific technical terms and concepts."
-    elif final_score >= 20:
-        feedback = "Your answer touches on the topic but misses key concepts. Review the reference."
+    # Categorize the answer
+    if final_score >= 75:
+        category = 'excellent'
+        feedback = 'Excellent answer — you clearly understand the concept and explained it well.'
+    elif final_score >= 55:
+        category = 'good'
+        feedback = 'Good answer — you covered the main ideas. Minor improvements possible.'
+    elif final_score >= 35:
+        category = 'fair'
+        feedback = 'Fair attempt — you touched on the topic but missed some key points from the reference.'
     else:
-        feedback = "Your answer doesn't match the expected content. Study the reference answer."
+        category = 'weak'
+        feedback = 'Weak answer — review the reference answer and focus on the core concepts.'
     
     return {
         "score": final_score,
+        "category": category,
         "similarity": round(combined, 4),
         "tfidf_score": round(tfidf_similarity, 4),
         "concept_score": round(concept_score, 4),
