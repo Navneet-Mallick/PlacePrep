@@ -37,12 +37,14 @@ html {
 
 body {
   font-family: var(--font-sans);
-  @apply text-base bg-slate-50 text-gray-900 antialiased;
+  @apply text-base text-gray-900 antialiased;
   letter-spacing: -0.008em;
+  background: #f4f6f9;
 }
 
 html.dark body {
-  @apply bg-[#0a0a0a] text-gray-100;
+  @apply text-gray-100;
+  background: #09090b;
 }
 
 /* Headings a touch tighter than body */

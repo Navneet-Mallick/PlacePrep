@@ -33,9 +33,9 @@ export default function Layout() {
     : []
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#f4f6f9] dark:bg-[#09090b]">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-gray-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-gray-200/80 dark:border-zinc-800/80 bg-[#f4f6f9]/90 dark:bg-[#09090b]/95 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
@@ -119,7 +119,7 @@ export default function Layout() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden border-t border-gray-200 dark:border-zinc-800 bg-slate-50 dark:bg-[#0a0a0a] px-4 py-4 space-y-1">
+          <div className="md:hidden border-t border-gray-200 dark:border-zinc-800 bg-[#f4f6f9] dark:bg-[#09090b] px-4 py-4 space-y-1">
             {navLinks.map(l => (
               <NavLink
                 key={l.to}
