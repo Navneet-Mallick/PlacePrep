@@ -104,7 +104,7 @@ export default function Dashboard() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
-          Your placement readiness — resume, aptitude, technical scores and history
+          Placement Preparation Overview
         </p>
       </div>
 

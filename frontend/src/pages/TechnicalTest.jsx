@@ -23,6 +23,7 @@ export default function TechnicalTest() {
   const [isTestActive, setIsTestActive] = useState(false)
   const [disqualified, setDisqualified] = useState(null)
   const [warnedNearLimit, setWarnedNearLimit] = useState(false)
+  const [showSummary, setShowSummary] = useState(false)
 
   // Proctoring
   const [tabSwitches, setTabSwitches] = useState(0)
@@ -188,13 +189,108 @@ export default function TechnicalTest() {
     setProctoringStatus(null)
     setDisqualified(null)
     setWarnedNearLimit(false)
+    setShowSummary(false)
     stopCamera()
   }
 
   function handleExit() {
-    if (window.confirm('Exit assessment? Your evaluated answers are already saved.')) {
-      resetSession()
+    const evaluated = Object.keys(results).length
+    if (evaluated === 0) {
+      if (window.confirm('Exit without answering any questions?')) {
+        resetSession()
+      }
+      return
     }
+    // Show summary instead of just going back
+    setIsTestActive(false)
+    setShowSummary(true)
+    stopCamera()
+  }
+
+  // ---------- Summary view ----------
+  if (showSummary) {
+    const evaluated = Object.values(results)
+    const avgScore = evaluated.length > 0
+      ? Math.round(evaluated.reduce((sum, r) => sum + (r.score || 0), 0) / evaluated.length)
+      : 0
+    const categoryName = CATEGORIES.find(c => c.id === selectedCategory)?.label
+
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Assessment Complete</h1>
+          <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
+            {categoryName} — {evaluated.length} of {questions.length} questions answered
+          </p>
+        </div>
+
+        {/* Summary metrics */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="card">
+            <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Average Score</p>
+            <p className={`text-3xl font-bold ${
+              avgScore >= 75 ? 'text-emerald-600 dark:text-emerald-400'
+                : avgScore >= 55 ? 'text-blue-600 dark:text-blue-400'
+                : avgScore >= 35 ? 'text-amber-600 dark:text-amber-400'
+                : 'text-red-600 dark:text-red-400'
+            }`}>{avgScore}%</p>
+          </div>
+          <div className="card">
+            <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Answered</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{evaluated.length}/{questions.length}</p>
+          </div>
+          <div className="card">
+            <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Tab Switches</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{tabSwitches}</p>
+          </div>
+          <div className="card">
+            <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Violations</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{proctoringViolations.length}</p>
+          </div>
+        </div>
+
+        {/* Per-question results */}
+        <div className="card">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Question Scores</h2>
+          <div className="divide-y divide-gray-100 dark:divide-zinc-800">
+            {questions.map((q, i) => {
+              const r = results[q.id]
+              return (
+                <div key={q.id} className="py-3 flex items-center justify-between gap-4">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm text-gray-800 dark:text-zinc-200 truncate">
+                      {i + 1}. {q.question_text}
+                    </p>
+                  </div>
+                  {r ? (
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className={`badge ${
+                        r.category === 'excellent' ? 'badge-green'
+                          : r.category === 'good' ? 'badge-blue'
+                          : r.category === 'fair' ? 'badge-amber'
+                          : 'badge-red'
+                      }`}>{r.category || 'scored'}</span>
+                      <span className={`text-lg font-bold ${
+                        r.score >= 75 ? 'text-emerald-600 dark:text-emerald-400'
+                          : r.score >= 55 ? 'text-blue-600 dark:text-blue-400'
+                          : r.score >= 35 ? 'text-amber-600 dark:text-amber-400'
+                          : 'text-red-600 dark:text-red-400'
+                      }`}>{r.score}</span>
+                    </div>
+                  ) : (
+                    <span className="text-sm text-gray-400 dark:text-zinc-500">Not answered</span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          <button onClick={resetSession} className="btn-primary">Back to categories</button>
+        </div>
+      </div>
+    )
   }
 
   // ---------- Category selection ----------
