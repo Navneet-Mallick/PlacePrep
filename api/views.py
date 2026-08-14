@@ -422,42 +422,41 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
             )
 
         try:
-            # Score the test (both complete and partial)
+            # Score the test — ONLY against questions that were loaded for this session
             section_scores = {}
             total_correct = 0
-            total_questions = 0
-            total_answered = len(answers)
+            total_questions_shown = 0
+
+            # Get the question IDs the user actually answered
+            answered_ids = set(answers.keys())
 
             for section in ['quantitative', 'logical', 'technical']:
-                section_questions = AptitudeQuestion.objects.filter(section=section)
+                # Only score questions from this section that the user was shown
+                section_questions = AptitudeQuestion.objects.filter(
+                    section=section, id__in=answered_ids
+                )
                 correct = 0
                 answered = 0
-                total = section_questions.count()
 
                 for question in section_questions:
-                    if str(question.id) in answers:
-                        answered += 1
-                        total_questions += 1
-                        if answers[str(question.id)] == question.correct_option:
-                            correct += 1
-                            total_correct += 1
+                    answered += 1
+                    total_questions_shown += 1
+                    if answers.get(str(question.id)) == question.correct_option:
+                        correct += 1
+                        total_correct += 1
 
-                # Calculate section score based on answered questions only
                 if answered > 0:
                     section_scores[section] = int((correct / answered) * 100)
-                else:
-                    section_scores[section] = 0
 
-            # Calculate overall accuracy and score
-            accuracy = (total_correct / total_questions * 100) if total_questions > 0 else 0
+            # Total questions shown = questions the user actually saw
+            # (use total_questions_shown, NOT all questions in DB)
+            total_answered = len(answers)
             
-            # Industry-standard scoring: penalize unanswered questions
-            all_questions_count = AptitudeQuestion.objects.count()
+            # Score = correct / questions shown × 100
+            total_score = int((total_correct / total_questions_shown * 100)) if total_questions_shown > 0 else 0
             
-            # Total score accounts for unanswered questions (industry standard)
-            total_score = int((total_correct / all_questions_count * 100)) if all_questions_count > 0 else 0
-            
-            # Answered accuracy (for reporting precision)
+            # Accuracy = correct / answered × 100 (same as score when all answered)
+            accuracy = (total_correct / total_answered * 100) if total_answered > 0 else 0
             answered_accuracy = accuracy
 
             # Use ML API to predict aptitude level
@@ -535,8 +534,8 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
             response_data = AptitudeTestAttemptSerializer(attempt).data
             response_data['is_partial'] = is_partial
             response_data['total_answered'] = total_answered
-            response_data['total_questions'] = all_questions_count
-            response_data['unanswered'] = all_questions_count - total_answered
+            response_data['total_questions'] = total_questions_shown
+            response_data['unanswered'] = total_questions_shown - total_answered
             response_data['integrity_score'] = integrity_score
             response_data['answered_accuracy'] = answered_accuracy
             response_data['is_disqualified'] = is_disqualified
