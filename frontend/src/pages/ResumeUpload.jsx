@@ -122,15 +122,20 @@ export default function ResumeUpload() {
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {result.resume_score}<span className="text-sm text-gray-400 dark:text-zinc-600">/100</span>
               </p>
+              <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">Completeness &amp; detail</p>
             </div>
             <div className="card">
-              <p className="text-sm text-gray-700 dark:text-zinc-300 mb-1.5">Predicted role</p>
+              <p className="text-sm text-gray-700 dark:text-zinc-300 mb-1.5">Best match role</p>
               <p className="text-lg font-semibold text-gray-900 dark:text-white mt-1.5">{result.predicted_role}</p>
+              <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">From 11 job categories</p>
             </div>
             <div className="card">
-              <p className="text-sm text-gray-700 dark:text-zinc-300 mb-1.5">Confidence</p>
+              <p className="text-sm text-gray-700 dark:text-zinc-300 mb-1.5">Role match</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {(result.confidence * 100).toFixed(0)}%
+              </p>
+              <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">
+                {result.confidence >= 0.5 ? 'Strong specialist' : result.confidence >= 0.3 ? 'Good fit' : 'Generalist profile'}
               </p>
             </div>
           </div>

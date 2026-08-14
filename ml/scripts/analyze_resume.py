@@ -23,37 +23,60 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def compute_resume_score(entities: dict) -> int:
-    """Compute resume score based on entities found"""
+    """
+    Compute resume score based on entities found.
+    More discriminating than simple presence checks —
+    rewards depth (multiple skills, detailed experience).
+    """
     score = 0
     
-    # Personal info (20 points)
+    # Contact info (15 points max)
     if entities.get("person"):
-        score += 10
+        score += 5
     if entities.get("email"):
-        score += 10
-    
-    # Contact info (5 points)
+        score += 5
     if entities.get("phone"):
         score += 5
     
-    # Skills (30 points max)
+    # Skills (25 points max) — diminishing returns
     skills_count = len(entities.get("skills", []))
-    score += min(skills_count * 3, 30)
+    if skills_count >= 8:
+        score += 25
+    elif skills_count >= 5:
+        score += 20
+    elif skills_count >= 3:
+        score += 15
+    elif skills_count >= 1:
+        score += 8
     
     # Education (15 points)
-    if entities.get("education"):
+    education = entities.get("education", [])
+    if len(education) >= 2:
         score += 15
+    elif len(education) == 1:
+        score += 12
+    
+    # Experience (25 points) — rewards detail
+    experience = entities.get("experience", [])
+    if len(experience) >= 3:
+        score += 25
+    elif len(experience) >= 2:
+        score += 20
+    elif len(experience) == 1:
+        score += 12
     
     # Certifications (10 points)
-    if entities.get("certifications"):
+    certs = entities.get("certifications", [])
+    if len(certs) >= 2:
         score += 10
+    elif len(certs) == 1:
+        score += 7
     
-    # Experience (20 points)
-    if entities.get("experience"):
-        score += 20
-    
-    # Organizations mentioned (5 points)
-    if entities.get("organizations"):
+    # Organizations (10 points)
+    orgs = entities.get("organizations", [])
+    if len(orgs) >= 3:
+        score += 10
+    elif len(orgs) >= 1:
         score += 5
     
     return min(score, 100)
