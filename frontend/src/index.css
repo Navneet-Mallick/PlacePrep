@@ -37,7 +37,7 @@ html {
 
 body {
   font-family: var(--font-sans);
-  @apply text-base bg-gray-50 text-gray-900 antialiased;
+  @apply text-base bg-slate-50 text-gray-900 antialiased;
   letter-spacing: -0.008em;
 }
 
