@@ -184,10 +184,19 @@ def score_answer(user_answer: str, reference_answer: str) -> dict:
     
     # Edge cases
     if not user_answer or len(user_answer) < 5:
-        return {"score": 5, "similarity": 0.05, "feedback": "Answer is too short."}
+        return {"score": 5, "similarity": 0.05, "category": "weak", "feedback": "Answer is too short."}
     
     if not reference_answer:
-        return {"score": 50, "similarity": 0.5, "feedback": "No reference answer available."}
+        return {"score": 50, "similarity": 0.5, "category": "fair", "feedback": "No reference answer available."}
+    
+    # Detect non-answers
+    non_answer = ['i dont know', 'i do not know', 'no idea', 'not sure',
+                  'i have no', 'cannot answer', 'dont remember', 'no answer',
+                  'i am not sure', 'skip', 'pass']
+    lower_answer = user_answer.lower()
+    if any(p in lower_answer for p in non_answer) and len(user_answer.split()) < 15:
+        return {"score": 5, "similarity": 0.05, "category": "weak",
+                "feedback": "Please provide a substantive answer explaining the concept."}
     
     # 1. TF-IDF Cosine Similarity (with synonym expansion)
     expanded_user = expand_with_synonyms(user_answer)

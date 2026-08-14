@@ -346,16 +346,16 @@ git push -u origin feature/name
 | Name | Roll No | Role |
 |------|---------|------|
 | Navneet Mallick | PUR080BCT049 | Full-stack development, ML pipeline, proctoring |
-| Prabin Sah | PUR080BCT054 | Backend, database, testing |
-| Praful Karn | PUR080BCT055 | Frontend, UI/UX, responsive design |
-| Prashant Shah | PUR080BCT062 | ML models, documentation, deployment |
+| Prabin Sah | PUR080BCT054 | Database(PostgreSQL), testing ,MCQ Module |
+| Praful Karn | PUR080BCT055 | ML Model Training | Frontend, UI/UX, responsive design | Subjective Module |
+| Prashant Shah | PUR080BCT062 | Django | ML models, documentation, deployment |
 
 ---
 
 ## Tech Stack Summary
 
 - **Frontend**: React 18, Tailwind CSS v4, Vite, Axios
-- **Backend**: Django 6, Django REST Framework, JWT auth
+- **Backend**: Django 5.2, Django REST Framework, JWT auth
 - **ML Service**: FastAPI, scikit-learn, spaCy, OpenCV DNN
 - **Database**: PostgreSQL
 - **AI**: Google Gemini API
