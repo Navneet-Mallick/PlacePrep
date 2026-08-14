@@ -196,7 +196,10 @@ export default function Layout() {
               <Link to="/dashboard" className="hover:text-gray-900 dark:hover:text-white">Dashboard</Link>
             </nav>
             <p className="text-sm text-gray-400 dark:text-zinc-500">
-              &copy; 2026 Navneet Mallick
+              &copy; 2026 Navneet | Prabin | Praful | Prashant | 
+            </p>
+             <p className="text-sm text-gray-400 dark:text-zinc-500">
+              &copy; IOE Purwanchal Campus
             </p>
           </div>
         </div>
