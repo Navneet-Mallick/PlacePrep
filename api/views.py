@@ -534,6 +534,7 @@ class AptitudeTestAttemptViewSet(viewsets.ModelViewSet):
             response_data = AptitudeTestAttemptSerializer(attempt).data
             response_data['is_partial'] = is_partial
             response_data['total_answered'] = total_answered
+            response_data['total_correct'] = total_correct
             response_data['total_questions'] = total_questions_shown
             response_data['unanswered'] = total_questions_shown - total_answered
             response_data['integrity_score'] = integrity_score

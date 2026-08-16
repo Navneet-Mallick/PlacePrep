@@ -333,9 +333,20 @@ export default function AptitudeTest() {
             {/* Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Metric label="Score" value={`${result.total_score}%`} />
-              <Metric label="Accuracy" value={`${Math.round(result.answered_accuracy ?? result.accuracy_percent ?? 0)}%`} />
+              <Metric label="Correct / Total" value={`${result.total_correct ?? result.total_answered ?? 0} / ${result.total_questions || '?'}`} />
               <Metric label="Level" value={result.aptitude_level} capitalize />
               <Metric label="Proctoring" value={result.proctoring_score ?? 100} />
+            </div>
+
+            {/* Scoring explanation */}
+            <div className="card text-sm text-gray-700 dark:text-zinc-300 space-y-1">
+              <p><strong>How scoring works:</strong></p>
+              <p>Score = (Correct answers / Questions shown) × 100</p>
+              {result.unanswered > 0 && (
+                <p className="text-amber-600 dark:text-amber-400">
+                  {result.unanswered} question{result.unanswered !== 1 ? 's' : ''} left unanswered (counted as wrong)
+                </p>
+              )}
             </div>
 
             {/* Section breakdown */}

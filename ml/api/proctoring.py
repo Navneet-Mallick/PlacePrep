@@ -35,34 +35,36 @@ class ProctoringSystem:
     def __init__(self):
         self.ready = False
         self.net = None
+        self.use_dnn = False
+        self.face_cascade = None
+        self.no_face_streak = 0
+        self.multi_face_streak = 0
+        self.look_away_streak = 0
+        self.prev_center = None
 
+        # Try DNN first
         try:
-            if not PROTOTXT.exists() or not CAFFEMODEL.exists():
-                print(f"[Proctoring] Model files not found at {MODEL_DIR}")
-                print("[Proctoring] Falling back to Haar Cascade")
-                self._init_haar()
+            if PROTOTXT.exists() and CAFFEMODEL.exists():
+                self.net = cv2.dnn.readNetFromCaffe(str(PROTOTXT), str(CAFFEMODEL))
+                self.ready = True
+                self.use_dnn = True
+                print("[Proctoring] DNN face detector loaded (SSD + ResNet-10)")
                 return
-
-            self.net = cv2.dnn.readNetFromCaffe(str(PROTOTXT), str(CAFFEMODEL))
-            self.ready = True
-            self.use_dnn = True
-            print("[Proctoring] DNN face detector loaded (SSD + ResNet-10)")
         except Exception as exc:
-            print(f"[Proctoring] DNN load failed: {exc}, falling back to Haar")
-            self._init_haar()
+            print(f"[Proctoring] DNN load failed: {exc}")
 
-        self.reset_state()
-
-    def _init_haar(self):
-        """Fallback to Haar if DNN model is missing."""
+        # Fallback to Haar
         try:
             path = cv2.data.haarcascades
             self.face_cascade = cv2.CascadeClassifier(path + 'haarcascade_frontalface_default.xml')
-            self.ready = not self.face_cascade.empty()
-            self.use_dnn = False
-            if self.ready:
+            if not self.face_cascade.empty():
+                self.ready = True
+                self.use_dnn = False
                 print("[Proctoring] Haar Cascade loaded as fallback")
-        except Exception:
+            else:
+                print("[Proctoring] WARNING: No face detector available")
+        except Exception as exc:
+            print(f"[Proctoring] WARNING: All detectors failed: {exc}")
             self.ready = False
 
     def reset_state(self):
@@ -161,7 +163,7 @@ class ProctoringSystem:
 
     def analyze_frame(self, frame):
         if not self.ready:
-            return self._r('error', 0, 'Proctoring not initialised', 'unknown')
+            return self._r('ok', 0, 'Proctoring system unavailable — monitoring via tab detection only', 'none')
 
         try:
             h, w = frame.shape[:2]
