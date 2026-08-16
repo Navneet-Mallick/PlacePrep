@@ -82,7 +82,25 @@ def extract_skills(text: str) -> list[str]:
             if skill in lowered:
                 found.append(skill)
     
-    return sorted(set(found), key=str.lower)
+    # Deduplicate: if "rest apis" exists, remove "rest"; if "express.js" exists remove "express"
+    found_set = set(found)
+    to_remove = set()
+    for s in found_set:
+        for other in found_set:
+            if s != other and s in other and len(s) < len(other):
+                to_remove.add(s)
+    
+    # Remove false positives: "scala" often matches "scalable"
+    FALSE_SKILLS = set()
+    if 'scala' in found_set:
+        import re
+        if not re.search(r'(?<![a-z])scala(?![a-z])', lowered):
+            FALSE_SKILLS.add('scala')
+        elif re.search(r'scalab', lowered) and not re.search(r'(?<![a-z])scala(?!\w)', lowered):
+            FALSE_SKILLS.add('scala')
+    
+    final = sorted(set(found) - to_remove - FALSE_SKILLS, key=str.lower)
+    return final
 
 
 def extract_education_lines(text: str) -> list[str]:
@@ -121,18 +139,69 @@ def extract_experience_mentions(text: str) -> list[str]:
 
 
 def extract_entities(text: str) -> dict:
-    doc = get_nlp()(text)
+    # Pre-clean: fix broken words from PDF extraction (spaces inserted mid-word)
+    # Common pattern: "Dev elop er" → "Developer", "Exp erienced" → "Experienced"
+    import re
+    # Remove single spaces between lowercase letters that break words
+    # e.g. "Dev elop er" → "Developer" but keep "New York" as is
+    cleaned = re.sub(r'(?<=[a-z]) (?=[a-z])', '', text)
+    # Also fix cases like "W eb" → "Web", "T ec" → "Tec"
+    cleaned = re.sub(r'(?<=[A-Z]) (?=[a-z]{1,3}(?:\s|[^a-z]))', '', cleaned)
+    
+    doc = get_nlp()(cleaned)
 
     persons = sorted({ent.text for ent in doc.ents if ent.label_ == "PERSON"})
     organizations = sorted({ent.text for ent in doc.ents if ent.label_ == "ORG"})
     locations = sorted({ent.text for ent in doc.ents if ent.label_ == "GPE"})
     dates = sorted({ent.text for ent in doc.ents if ent.label_ == "DATE"})
 
-    # Filter out false-positive organizations (short tech terms that spaCy misclassifies)
-    FALSE_ORGS = {'API', 'CSS', 'HTML', 'SQL', 'REST', 'HTTP', 'JSON', 'XML', 
+    # Filter persons: must be at least 2 words (first + last name), no tech terms
+    TECH_WORDS = {'api', 'css', 'html', 'sql', 'rest', 'http', 'json', 'mern',
+                  'react', 'node', 'express', 'mongodb', 'python', 'java', 'c++',
+                  'git', 'linux', 'docker', 'aws', 'redis', 'mysql', 'go', 'rust',
+                  'flask', 'django', 'vue', 'angular', 'typescript', 'javascript',
+                  'campus', 'college', 'university', 'bac', 'mac', 'nativ'}
+    persons = [p for p in persons if len(p.split()) >= 2 and
+               not any(t in p.lower() for t in TECH_WORDS)]
+    
+    # Filter locations: must look like actual place names
+    locations = [l for l in locations if len(l) > 3 and
+                 not any(t in l.lower() for t in TECH_WORDS) and
+                 '.' not in l and not l.startswith('(')]
+
+    # Filter out false-positive organizations
+    # spaCy's small model often misclassifies tech terms and partial phrases as ORG
+    TECH_TERMS = {'API', 'CSS', 'HTML', 'SQL', 'REST', 'HTTP', 'JSON', 'XML',
                   'SDK', 'CLI', 'OOP', 'MVC', 'UI', 'UX', 'CI', 'CD', 'AWS',
-                  'GCP', 'Cer', 'Hac', 'Git', 'DevOps'}
-    organizations = [o for o in organizations if o not in FALSE_ORGS and len(o) > 3]
+                  'GCP', 'Git', 'DevOps', 'Node', 'React', 'Vue', 'Angular',
+                  'Docker', 'Linux', 'MongoDB', 'Redis', 'PostgreSQL', 'MySQL'}
+    
+    skills_set = set(extract_skills(text))  # Already-identified skills
+    
+    filtered_orgs = []
+    for org in organizations:
+        org_clean = org.strip()
+        # Skip if too short
+        if len(org_clean) <= 3:
+            continue
+        # Skip if it's a known tech term
+        if org_clean in TECH_TERMS:
+            continue
+        # Skip if it looks like a tech skill (contains .js, .py, etc)
+        if any(ext in org_clean.lower() for ext in ['.js', '.py', '.ts', '.net', '.io']):
+            continue
+        # Skip if it matches a detected skill
+        if org_clean.lower() in skills_set:
+            continue
+        # Skip partial words / fragments (less than 2 words and contains uppercase mid-word)
+        if 'xX' in org_clean or 'Hac' == org_clean:
+            continue
+        # Skip if it's clearly an education term being mislabeled
+        if any(edu in org_clean.lower() for edu in ['engineering', 'computer', 'science', 'technology', 'university']):
+            continue
+        filtered_orgs.append(org_clean)
+    
+    organizations = filtered_orgs[:5]
 
     emails = sorted(set(EMAIL_PATTERN.findall(text)))
     phones = sorted(set(PHONE_PATTERN.findall(text)))

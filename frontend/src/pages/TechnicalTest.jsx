@@ -253,7 +253,7 @@ export default function TechnicalTest() {
         <div className="card">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Question Scores</h2>
           <div className="divide-y divide-gray-100 dark:divide-zinc-800">
-            {questions.map((q, i) => {
+            {questions.filter(q => results[q.id]).map((q, i) => {
               const r = results[q.id]
               return (
                 <div key={q.id} className="py-3 flex items-center justify-between gap-4">
@@ -262,24 +262,20 @@ export default function TechnicalTest() {
                       {i + 1}. {q.question_text}
                     </p>
                   </div>
-                  {r ? (
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className={`badge ${
-                        r.category === 'excellent' ? 'badge-green'
-                          : r.category === 'good' ? 'badge-blue'
-                          : r.category === 'fair' ? 'badge-amber'
-                          : 'badge-red'
-                      }`}>{r.category || 'scored'}</span>
-                      <span className={`text-lg font-bold ${
-                        r.score >= 75 ? 'text-emerald-600 dark:text-emerald-400'
-                          : r.score >= 55 ? 'text-blue-600 dark:text-blue-400'
-                          : r.score >= 35 ? 'text-amber-600 dark:text-amber-400'
-                          : 'text-red-600 dark:text-red-400'
-                      }`}>{r.score}</span>
-                    </div>
-                  ) : (
-                    <span className="text-sm text-gray-400 dark:text-zinc-500">Not answered</span>
-                  )}
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className={`badge ${
+                      r.category === 'excellent' ? 'badge-green'
+                        : r.category === 'good' ? 'badge-blue'
+                        : r.category === 'fair' ? 'badge-amber'
+                        : 'badge-red'
+                    }`}>{r.category || 'scored'}</span>
+                    <span className={`text-lg font-bold ${
+                      r.score >= 75 ? 'text-emerald-600 dark:text-emerald-400'
+                        : r.score >= 55 ? 'text-blue-600 dark:text-blue-400'
+                        : r.score >= 35 ? 'text-amber-600 dark:text-amber-400'
+                        : 'text-red-600 dark:text-red-400'
+                    }`}>{r.score}</span>
+                  </div>
                 </div>
               )
             })}
