@@ -55,9 +55,33 @@ def get_nlp():
 
 
 def extract_skills(text: str) -> list[str]:
+    """Extract skills using word-boundary matching to avoid false positives."""
     lowered = text.lower()
     lexicon = load_skill_lexicon()
-    found = [skill for skill in lexicon if skill in lowered]
+    
+    # Short skills (<=2 chars) that are too ambiguous to substring-match
+    AMBIGUOUS_SHORT = {'go', 'r', 'c', 'ai', 'bi', 'it', 'os', 'ui', 'ux', 'qa'}
+    
+    found = []
+    for skill in lexicon:
+        if len(skill) <= 2 and skill in AMBIGUOUS_SHORT:
+            # For short ambiguous skills, require word boundary (space/punctuation around it)
+            import re
+            if re.search(r'(?<![a-z])' + re.escape(skill) + r'(?![a-z])', lowered):
+                # Extra check: "go" only counts if it's clearly a programming language context
+                if skill == 'go' and not re.search(r'\b(golang|go\s*(lang|programming|framework))\b', lowered):
+                    continue
+                found.append(skill)
+        elif len(skill) <= 3:
+            # For 3-char skills (css, sql, git, etc), use word boundary
+            import re
+            if re.search(r'(?<![a-z])' + re.escape(skill) + r'(?![a-z])', lowered):
+                found.append(skill)
+        else:
+            # Longer skills (4+ chars) are safe for substring match
+            if skill in lowered:
+                found.append(skill)
+    
     return sorted(set(found), key=str.lower)
 
 
@@ -83,10 +107,15 @@ def extract_certifications(text: str) -> list[str]:
 
 def extract_experience_mentions(text: str) -> list[str]:
     lines = [line.strip() for line in text.splitlines() if line.strip()]
-    pattern = re.compile(r"\b(\d+)\+?\s*years?\s+of\s+experience\b", re.IGNORECASE)
+    pattern = re.compile(r"\b(\d+)\+?\s*years?\s+(of\s+)?experience\b", re.IGNORECASE)
+    role_pattern = re.compile(r"(developer|engineer|intern|analyst|designer|manager|lead|consultant)\b", re.IGNORECASE)
     matches = []
     for line in lines:
-        if pattern.search(line) or "experience" in line.lower():
+        # Skip lines that are just section headers
+        if line.lower().strip() in ('experience', 'work experience', 'professional experience', 'experiences'):
+            continue
+        # Match lines with years of experience OR job-role-like lines under experience section
+        if pattern.search(line) or (role_pattern.search(line) and len(line) > 15):
             matches.append(line)
     return matches[:5]
 
@@ -98,6 +127,12 @@ def extract_entities(text: str) -> dict:
     organizations = sorted({ent.text for ent in doc.ents if ent.label_ == "ORG"})
     locations = sorted({ent.text for ent in doc.ents if ent.label_ == "GPE"})
     dates = sorted({ent.text for ent in doc.ents if ent.label_ == "DATE"})
+
+    # Filter out false-positive organizations (short tech terms that spaCy misclassifies)
+    FALSE_ORGS = {'API', 'CSS', 'HTML', 'SQL', 'REST', 'HTTP', 'JSON', 'XML', 
+                  'SDK', 'CLI', 'OOP', 'MVC', 'UI', 'UX', 'CI', 'CD', 'AWS',
+                  'GCP', 'Cer', 'Hac', 'Git', 'DevOps'}
+    organizations = [o for o in organizations if o not in FALSE_ORGS and len(o) > 3]
 
     emails = sorted(set(EMAIL_PATTERN.findall(text)))
     phones = sorted(set(PHONE_PATTERN.findall(text)))
