@@ -1,8 +1,10 @@
 """
 Extract resume entities using spaCy NER and pattern matching.
 
-Usage:
-    python ml/scripts/extract_entities.py "resume text here"
+Designed to handle:
+- Broken PDF text (spaces in middle of words)
+- Concatenated text (no spaces)
+- False positive filtering for tech terms
 """
 
 import re
@@ -18,34 +20,33 @@ RESUME_DATA_PATH = PROJECT_ROOT / "Datasets" / "Synthetic Nepali Resume Dataset"
 
 EMAIL_PATTERN = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
 PHONE_PATTERN = re.compile(r"(\+?\d[\d\s\-().]{7,}\d)")
+
 EDUCATION_KEYWORDS = (
-    "b.tech",
-    "b.e.",
-    "bsc",
-    "b.sc",
-    "m.tech",
-    "mtech",
-    "msc",
-    "mba",
-    "bca",
-    "diploma",
-    "phd",
-    "computer science",
-    "information technology",
+    "b.tech", "b.e.", "bsc", "b.sc", "m.tech", "mtech", "msc", "mba",
+    "bca", "diploma", "phd", "computer science", "information technology",
+    "bachelor", "master", "engineering", "degree",
 )
-CERTIFICATION_KEYWORDS = ("certified", "certification", "certificate", "cka", "pmp", "aws certified")
+
+CERTIFICATION_KEYWORDS = (
+    "certified", "certification", "certificate", "aws certified",
+    "google certified", "microsoft certified", "coursera", "udemy",
+)
+
+# Skills that are too short to safely substring-match
+AMBIGUOUS_SKILLS = {'go', 'r', 'c', 'ai', 'bi', 'it', 'os', 'ui', 'ux', 'qa', 'ml'}
 
 
 @lru_cache(maxsize=1)
-def load_skill_lexicon() -> set[str]:
+def load_skill_lexicon() -> set:
+    """Load skill names from the resume dataset."""
     df = pd.read_csv(RESUME_DATA_PATH, usecols=["skills", "stack"])
-    tokens: set[str] = set()
+    tokens = set()
     for column in ("skills", "stack"):
         for value in df[column].dropna():
             for item in str(value).split(";"):
-                skill = item.strip()
-                if skill:
-                    tokens.add(skill.lower())
+                skill = item.strip().lower()
+                if skill and len(skill) > 1:
+                    tokens.add(skill)
     return tokens
 
 
@@ -54,202 +55,264 @@ def get_nlp():
     return spacy.load("en_core_web_sm")
 
 
-def extract_skills(text: str) -> list[str]:
-    """Extract skills using word-boundary matching to avoid false positives."""
+def clean_pdf_text(text: str) -> str:
+    """Fix common PDF extraction artifacts."""
+    # Fix spaces inserted mid-word: "Dev elop er" → "Developer"
+    # Only join when a lowercase follows a lowercase with single space
+    text = re.sub(r'(?<=[a-z]) (?=[a-z]{1,2}\b)', '', text)
+    # Fix "W eb" → "Web" (capital + space + short lowercase)
+    text = re.sub(r'(?<=[A-Z]) (?=[a-z]{1,3}\b)', '', text)
+    return text
+
+
+def extract_skills(text: str) -> list:
+    """Extract technical skills with word-boundary matching."""
     lowered = text.lower()
     lexicon = load_skill_lexicon()
-    
-    # Short skills (<=2 chars) that are too ambiguous to substring-match
-    AMBIGUOUS_SHORT = {'go', 'r', 'c', 'ai', 'bi', 'it', 'os', 'ui', 'ux', 'qa'}
-    
-    found = []
+    found = set()
+
     for skill in lexicon:
-        if len(skill) <= 2 and skill in AMBIGUOUS_SHORT:
-            # For short ambiguous skills, require word boundary (space/punctuation around it)
-            import re
-            if re.search(r'(?<![a-z])' + re.escape(skill) + r'(?![a-z])', lowered):
-                # Extra check: "go" only counts if it's clearly a programming language context
-                if skill == 'go' and not re.search(r'\b(golang|go\s*(lang|programming|framework))\b', lowered):
+        if skill in AMBIGUOUS_SKILLS:
+            # Require exact word boundary for short/ambiguous skills
+            pattern = r'(?<![a-zA-Z])' + re.escape(skill) + r'(?![a-zA-Z])'
+            if re.search(pattern, lowered):
+                # Extra: "go" only if golang context
+                if skill == 'go' and not re.search(r'(golang|go\s*lang)', lowered):
                     continue
-                found.append(skill)
+                found.add(skill)
         elif len(skill) <= 3:
-            # For 3-char skills (css, sql, git, etc), use word boundary
-            import re
-            if re.search(r'(?<![a-z])' + re.escape(skill) + r'(?![a-z])', lowered):
-                found.append(skill)
+            # Short skills (css, sql, git) — word boundary
+            pattern = r'(?<![a-zA-Z])' + re.escape(skill) + r'(?![a-zA-Z])'
+            if re.search(pattern, lowered):
+                found.add(skill)
         else:
-            # Longer skills (4+ chars) are safe for substring match
+            # 4+ char skills — substring match is safe
             if skill in lowered:
-                found.append(skill)
-    
-    # Deduplicate: if "rest apis" exists, remove "rest"; if "express.js" exists remove "express"
-    found_set = set(found)
+                # But check "scala" vs "scalable"
+                if skill == 'scala' and 'scalab' in lowered:
+                    if not re.search(r'(?<![a-zA-Z])scala(?![a-zA-Z])', lowered):
+                        continue
+                found.add(skill)
+
+    # Deduplicate: remove "rest" if "rest apis" exists
     to_remove = set()
-    for s in found_set:
-        for other in found_set:
+    for s in found:
+        for other in found:
             if s != other and s in other and len(s) < len(other):
                 to_remove.add(s)
-    
-    # Remove false positives: "scala" often matches "scalable"
-    FALSE_SKILLS = set()
-    if 'scala' in found_set:
-        import re
-        if not re.search(r'(?<![a-z])scala(?![a-z])', lowered):
-            FALSE_SKILLS.add('scala')
-        elif re.search(r'scalab', lowered) and not re.search(r'(?<![a-z])scala(?!\w)', lowered):
-            FALSE_SKILLS.add('scala')
-    
-    final = sorted(set(found) - to_remove - FALSE_SKILLS, key=str.lower)
-    return final
+
+    return sorted(found - to_remove)
 
 
-def extract_education_lines(text: str) -> list[str]:
+def extract_education(text: str) -> list:
+    """Extract education entries."""
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     matches = []
     for line in lines:
         lowered = line.lower()
-        if any(keyword in lowered for keyword in EDUCATION_KEYWORDS):
-            matches.append(line)
-    return matches
-
-
-def extract_certifications(text: str) -> list[str]:
-    lines = [line.strip() for line in text.splitlines() if line.strip()]
-    matches = []
-    for line in lines:
-        lowered = line.lower()
-        # Must contain certification keywords
-        if any(keyword in lowered for keyword in CERTIFICATION_KEYWORDS):
-            # But skip section headers themselves
-            if lowered.strip() in ('certifications', 'training/certifications', 'certificates', 'training'):
-                continue
-            # Skip if it's clearly a project description (too long or contains action verbs)
-            if len(line) > 100:
-                continue
-            if any(verb in lowered for verb in ['developed', 'built', 'created', 'implemented', 'designed']):
-                continue
-            matches.append(line)
-    return matches
-
-
-def extract_experience_mentions(text: str) -> list[str]:
-    lines = [line.strip() for line in text.splitlines() if line.strip()]
-    pattern = re.compile(r"\b(\d+)\+?\s*years?\s+(of\s+)?experience\b", re.IGNORECASE)
-    role_pattern = re.compile(r"(developer|engineer|intern|analyst|designer|manager|lead|consultant)\b", re.IGNORECASE)
-    matches = []
-    for line in lines:
-        # Skip lines that are just section headers
-        if line.lower().strip() in ('experience', 'work experience', 'professional experience', 'experiences'):
+        # Skip section headers
+        if lowered in ('education', 'academic background', 'qualification'):
             continue
-        # Match lines with years of experience OR job-role-like lines under experience section
-        if pattern.search(line) or (role_pattern.search(line) and len(line) > 15):
-            matches.append(line)
+        if any(kw in lowered for kw in EDUCATION_KEYWORDS):
+            # Skip very short lines (just the keyword alone)
+            if len(line) > 10:
+                matches.append(line[:150])  # Truncate long lines
+    return matches[:4]
+
+
+def extract_certifications(text: str) -> list:
+    """Extract certifications — skip headers and project descriptions."""
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    matches = []
+    for line in lines:
+        lowered = line.lower()
+        # Must contain a certification keyword
+        if not any(kw in lowered for kw in CERTIFICATION_KEYWORDS):
+            continue
+        # Skip section headers
+        if lowered.rstrip(':') in ('certifications', 'training/certifications',
+                                    'certificates', 'training', 'courses'):
+            continue
+        # Skip project descriptions (contain action verbs)
+        if any(v in lowered for v in ['developed', 'built', 'created', 'implemented',
+                                       'designed', 'deployed', 'integrated']):
+            continue
+        # Skip overly long lines (likely descriptions, not cert names)
+        if len(line) > 120:
+            continue
+        matches.append(line[:100])
+    return matches[:4]
+
+
+def extract_experience(text: str) -> list:
+    """Extract work experience entries."""
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    role_pattern = re.compile(
+        r'(developer|engineer|intern|analyst|designer|manager|lead|consultant|'
+        r'trainee|associate|specialist|coordinator|supervisor|freelanc)',
+        re.IGNORECASE
+    )
+    year_pattern = re.compile(r'(20\d{2}|19\d{2})')
+    matches = []
+
+    for line in lines:
+        lowered = line.lower()
+        # Skip section headers
+        if lowered.rstrip(':') in ('experience', 'work experience',
+                                    'professional experience', 'internship'):
+            continue
+        # Match lines with job-role keywords OR year ranges
+        has_role = role_pattern.search(line)
+        has_year = year_pattern.search(line)
+        if has_role and len(line) > 10:
+            matches.append(line[:150])
+        elif has_year and 'present' in lowered:
+            matches.append(line[:150])
     return matches[:5]
 
 
+def filter_organizations(orgs: list, skills: set) -> list:
+    """Remove false-positive organizations — very strict."""
+    filtered = []
+    for org in orgs:
+        org = org.strip()
+        # Length checks
+        if len(org) <= 4 or len(org) > 40:
+            continue
+        # No spaces in 12+ char = concatenated garbage
+        if len(org) > 12 and ' ' not in org:
+            continue
+        # Contains broken space pattern (single char then space then word)
+        if re.search(r'\b[A-Z]\s[a-z]', org):
+            continue
+        # Starts with digit
+        if org[0].isdigit():
+            continue
+        # Contains slash
+        if '/' in org:
+            continue
+        # Is a skill
+        if org.lower() in skills:
+            continue
+        # Tech extensions
+        if any(ext in org for ext in ['.js', '.py', '.ts', '.net', '.io', 'API', 'ML']):
+            continue
+        # Bad keywords
+        bad = ['engineering', 'computer', 'science', 'technology', 'position',
+               'rank', 'built', 'developed', 'model', 'predict', 'using',
+               'based', 'system', 'platform', 'hackathon', 'project',
+               'learning', 'certificate', 'stack', 'fastapi', 'mern',
+               'fast', 'men', 'anc']
+        if any(w in org.lower() for w in bad):
+            continue
+        filtered.append(org)
+    return filtered[:3]
+
+
+def filter_persons(persons: list) -> list:
+    """Keep only likely real names (2+ words, no tech terms)."""
+    tech = {'api', 'css', 'html', 'sql', 'rest', 'mern', 'react', 'node',
+            'express', 'python', 'java', 'c++', 'git', 'linux', 'docker',
+            'campus', 'college', 'bac', 'mac', 'nativ', 'intern', 'stack'}
+    filtered = []
+    for p in persons:
+        words = p.split()
+        if len(words) < 2:
+            continue
+        if any(t in p.lower() for t in tech):
+            continue
+        if len(p) > 40:
+            continue
+        filtered.append(p)
+    return filtered[:2]
+
+
+def filter_locations(locations: list) -> list:
+    """Keep only likely real locations — very strict."""
+    bad = {'express', 'react', 'node', 'mern', 'nativ', 'flask',
+           'django', 'angular', 'vue', 'redis', 'mongo', 'hac',
+           'linux', 'scikit', 'memb', 'stack', 'fast', 'python',
+           'java', 'docker', 'aws', 'git', 'api', 'rest', 'css',
+           'html', 'sql', 'mysql', 'http', 'json', 'xml'}
+    # Known real locations to whitelist
+    real_places = {'nepal', 'india', 'kathmandu', 'dharan', 'biratnagar',
+                   'pokhara', 'lalitpur', 'bhaktapur', 'chitwan', 'morang'}
+    filtered = []
+    for loc in locations:
+        loc_lower = loc.lower().strip()
+        if len(loc) <= 3:
+            continue
+        if loc_lower in bad or any(b in loc_lower for b in bad):
+            continue
+        if '.' in loc or '/' in loc:
+            continue
+        # Only keep if it looks like a real place (capitalized, reasonable length)
+        if loc[0].isupper() and len(loc) < 30:
+            filtered.append(loc)
+    return filtered[:4]
+
+
 def extract_entities(text: str) -> dict:
-    # Pre-clean: fix broken words from PDF extraction
-    import re
-    # Remove single spaces between lowercase letters that break words
-    cleaned = re.sub(r'(?<=[a-z]) (?=[a-z])', '', text)
-    # Fix cases like "W eb" → "Web"
-    cleaned = re.sub(r'(?<=[A-Z]) (?=[a-z]{1,3}(?:\s|[^a-z]))', '', cleaned)
-    # Fix concatenated words without spaces (insert space before uppercase in middle of word)
-    # e.g., "3rdrankamongparticipants" — skip these, they're broken
-    # But fix "DataCamp" style which is fine
-    
-    doc = get_nlp()(cleaned)
+    """Main extraction function. Uses pattern matching primarily, NER as supplement."""
+    # Clean PDF artifacts
+    cleaned = clean_pdf_text(text)
 
-    persons = sorted({ent.text for ent in doc.ents if ent.label_ == "PERSON"})
-    organizations = sorted({ent.text for ent in doc.ents if ent.label_ == "ORG"})
-    locations = sorted({ent.text for ent in doc.ents if ent.label_ == "GPE"})
-    dates = sorted({ent.text for ent in doc.ents if ent.label_ == "DATE"})
-
-    # Filter persons: must be at least 2 words (first + last name), no tech terms
-    TECH_WORDS = {'api', 'css', 'html', 'sql', 'rest', 'http', 'json', 'mern',
-                  'react', 'node', 'express', 'mongodb', 'python', 'java', 'c++',
-                  'git', 'linux', 'docker', 'aws', 'redis', 'mysql', 'go', 'rust',
-                  'flask', 'django', 'vue', 'angular', 'typescript', 'javascript',
-                  'campus', 'college', 'university', 'bac', 'mac', 'nativ'}
-    persons = [p for p in persons if len(p.split()) >= 2 and
-               not any(t in p.lower() for t in TECH_WORDS)]
-    
-    # Filter locations: must look like actual place names
-    locations = [l for l in locations if len(l) > 3 and
-                 not any(t in l.lower() for t in TECH_WORDS) and
-                 '.' not in l and not l.startswith('(')]
-
-    # Filter out false-positive organizations
-    # spaCy's small model often misclassifies tech terms and partial phrases as ORG
-    TECH_TERMS = {'API', 'CSS', 'HTML', 'SQL', 'REST', 'HTTP', 'JSON', 'XML',
-                  'SDK', 'CLI', 'OOP', 'MVC', 'UI', 'UX', 'CI', 'CD', 'AWS',
-                  'GCP', 'Git', 'DevOps', 'Node', 'React', 'Vue', 'Angular',
-                  'Docker', 'Linux', 'MongoDB', 'Redis', 'PostgreSQL', 'MySQL'}
-    
-    skills_set = set(extract_skills(text))  # Already-identified skills
-    
-    filtered_orgs = []
-    for org in organizations:
-        org_clean = org.strip()
-        # Skip if too short
-        if len(org_clean) <= 4:
-            continue
-        # Skip if it's a known tech term
-        if org_clean in TECH_TERMS:
-            continue
-        # Skip if it looks like a tech skill (contains .js, .py, etc)
-        if any(ext in org_clean.lower() for ext in ['.js', '.py', '.ts', '.net', '.io']):
-            continue
-        # Skip if it matches a detected skill
-        if org_clean.lower() in skills_set:
-            continue
-        # Skip if contains concatenated text (no spaces in long string = broken PDF)
-        if len(org_clean) > 20 and ' ' not in org_clean:
-            continue
-        # Skip fragments with mixed case gibberish or very long strings
-        if len(org_clean) > 50:
-            continue
-        # Skip if it's clearly an education term being mislabeled
-        if any(edu in org_clean.lower() for edu in ['engineering', 'computer', 'science', 'technology', 'university', 'position', 'rank', 'built', 'developed', 'model', 'predict']):
-            continue
-        # Skip ordinals and numbered items
-        if org_clean[0].isdigit():
-            continue
-        # Skip if it's just an acronym slash combo like "AI/ML"
-        if '/' in org_clean and len(org_clean) < 10:
-            continue
-        filtered_orgs.append(org_clean)
-    
-    organizations = filtered_orgs[:5]
-
+    # Pattern-based extraction (RELIABLE for resumes)
     emails = sorted(set(EMAIL_PATTERN.findall(text)))
     phones = sorted(set(PHONE_PATTERN.findall(text)))
-    
-    # Clean null bytes from all strings
-    def clean_strings(items):
-        return [str(item).replace('\x00', '').strip() for item in items if item]
+    skills = extract_skills(text)
+    education = extract_education(text)
+    certifications = extract_certifications(text)
+    experience = extract_experience(text)
+
+    # For person name: use the FIRST line of the resume (standard resume format)
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+    person = []
+    if lines:
+        first_line = lines[0].strip()
+        # First line is usually the name if it's short (< 40 chars) and doesn't contain @ or http
+        if len(first_line) < 40 and '@' not in first_line and 'http' not in first_line:
+            # Clean broken spaces in name
+            name = re.sub(r'\s+', ' ', first_line).strip()
+            if len(name.split()) <= 4 and len(name) > 3:
+                person = [name]
+
+    # For organizations: only extract from NER if they pass STRICT filtering
+    # Run spaCy only for orgs that look like real company names
+    doc = get_nlp()(cleaned)
+    raw_orgs = sorted({ent.text for ent in doc.ents if ent.label_ == "ORG"})
+    skills_set = set(skills)
+    organizations = filter_organizations(raw_orgs, skills_set)
+
+    # For locations: extract from NER but filter aggressively
+    raw_locations = sorted({ent.text for ent in doc.ents if ent.label_ == "GPE"})
+    locations = filter_locations(raw_locations)
+
+    # Clean null bytes
+    def clean(items):
+        return [str(item).replace('\x00', '').strip() for item in items if item and str(item).strip()]
 
     return {
-        "person": clean_strings(persons[:3]),
-        "email": clean_strings(emails),
-        "phone": clean_strings(phones),
-        "organizations": clean_strings(organizations[:10]),
-        "locations": clean_strings(locations[:5]),
-        "dates": clean_strings(dates[:10]),
-        "skills": clean_strings(extract_skills(text)),
-        "education": clean_strings(extract_education_lines(text)),
-        "certifications": clean_strings(extract_certifications(text)),
-        "experience": clean_strings(extract_experience_mentions(text)),
+        "person": clean(person),
+        "email": clean(emails),
+        "phone": clean(phones[:3]),
+        "organizations": clean(organizations),
+        "locations": clean(locations),
+        "dates": [],  # Dates are unreliable from broken PDFs, skip
+        "skills": clean(skills),
+        "education": clean(education),
+        "certifications": clean(certifications),
+        "experience": clean(experience),
     }
 
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print('Usage: python ml/scripts/extract_entities.py "resume text"')
+        print('Usage: python extract_entities.py "resume text"')
         sys.exit(1)
-
     text = " ".join(sys.argv[1:])
-    print(extract_entities(text))
+    import json
+    print(json.dumps(extract_entities(text), indent=2))
 
 
 if __name__ == "__main__":
