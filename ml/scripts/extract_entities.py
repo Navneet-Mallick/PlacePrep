@@ -118,7 +118,16 @@ def extract_certifications(text: str) -> list[str]:
     matches = []
     for line in lines:
         lowered = line.lower()
+        # Must contain certification keywords
         if any(keyword in lowered for keyword in CERTIFICATION_KEYWORDS):
+            # But skip section headers themselves
+            if lowered.strip() in ('certifications', 'training/certifications', 'certificates', 'training'):
+                continue
+            # Skip if it's clearly a project description (too long or contains action verbs)
+            if len(line) > 100:
+                continue
+            if any(verb in lowered for verb in ['developed', 'built', 'created', 'implemented', 'designed']):
+                continue
             matches.append(line)
     return matches
 
@@ -139,14 +148,15 @@ def extract_experience_mentions(text: str) -> list[str]:
 
 
 def extract_entities(text: str) -> dict:
-    # Pre-clean: fix broken words from PDF extraction (spaces inserted mid-word)
-    # Common pattern: "Dev elop er" → "Developer", "Exp erienced" → "Experienced"
+    # Pre-clean: fix broken words from PDF extraction
     import re
     # Remove single spaces between lowercase letters that break words
-    # e.g. "Dev elop er" → "Developer" but keep "New York" as is
     cleaned = re.sub(r'(?<=[a-z]) (?=[a-z])', '', text)
-    # Also fix cases like "W eb" → "Web", "T ec" → "Tec"
+    # Fix cases like "W eb" → "Web"
     cleaned = re.sub(r'(?<=[A-Z]) (?=[a-z]{1,3}(?:\s|[^a-z]))', '', cleaned)
+    # Fix concatenated words without spaces (insert space before uppercase in middle of word)
+    # e.g., "3rdrankamongparticipants" — skip these, they're broken
+    # But fix "DataCamp" style which is fine
     
     doc = get_nlp()(cleaned)
 
@@ -182,7 +192,7 @@ def extract_entities(text: str) -> dict:
     for org in organizations:
         org_clean = org.strip()
         # Skip if too short
-        if len(org_clean) <= 3:
+        if len(org_clean) <= 4:
             continue
         # Skip if it's a known tech term
         if org_clean in TECH_TERMS:
@@ -193,11 +203,20 @@ def extract_entities(text: str) -> dict:
         # Skip if it matches a detected skill
         if org_clean.lower() in skills_set:
             continue
-        # Skip partial words / fragments (less than 2 words and contains uppercase mid-word)
-        if 'xX' in org_clean or 'Hac' == org_clean:
+        # Skip if contains concatenated text (no spaces in long string = broken PDF)
+        if len(org_clean) > 20 and ' ' not in org_clean:
+            continue
+        # Skip fragments with mixed case gibberish or very long strings
+        if len(org_clean) > 50:
             continue
         # Skip if it's clearly an education term being mislabeled
-        if any(edu in org_clean.lower() for edu in ['engineering', 'computer', 'science', 'technology', 'university']):
+        if any(edu in org_clean.lower() for edu in ['engineering', 'computer', 'science', 'technology', 'university', 'position', 'rank', 'built', 'developed', 'model', 'predict']):
+            continue
+        # Skip ordinals and numbered items
+        if org_clean[0].isdigit():
+            continue
+        # Skip if it's just an acronym slash combo like "AI/ML"
+        if '/' in org_clean and len(org_clean) < 10:
             continue
         filtered_orgs.append(org_clean)
     
