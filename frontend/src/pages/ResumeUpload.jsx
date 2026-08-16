@@ -162,7 +162,6 @@ export default function ResumeUpload() {
                 <EntityList label="Education" items={result.entities.education} />
                 <EntityList label="Experience" items={result.entities.experience} />
                 <EntityList label="Certifications" items={result.entities.certifications} />
-                <EntityList label="Organizations" items={result.entities.organizations} />
               </div>
 
               {result.entities.email?.length > 0 && (

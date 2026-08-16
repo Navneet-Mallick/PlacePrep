@@ -52,7 +52,11 @@ def load_skill_lexicon() -> set:
 
 @lru_cache(maxsize=1)
 def get_nlp():
-    return spacy.load("en_core_web_sm")
+    # Try medium model first (better NER accuracy), fall back to small
+    try:
+        return spacy.load("en_core_web_md")
+    except OSError:
+        return spacy.load("en_core_web_sm")
 
 
 def clean_pdf_text(text: str) -> str:
