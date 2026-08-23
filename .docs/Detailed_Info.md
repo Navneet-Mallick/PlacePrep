@@ -93,7 +93,7 @@ cd frontend && npm run dev
 ```
 User Browser (React, port 5173)
     ↕ REST API (Axios)
-Django Backend (port 8000)          ← Auth, DB, scoring, question management
+Django Backend (port 8000)          ← Auth, ring, quDB, scoestion management
     ↕ HTTP
 FastAPI ML Service (port 8001)      ← Resume NLP, proctoring, code execution
     ↕

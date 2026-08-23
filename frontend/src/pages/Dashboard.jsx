@@ -182,7 +182,7 @@ export default function Dashboard() {
                 {history.technical.slice(0, 5).map((answer, i) => (
                   <div key={i} className="py-3 flex items-center justify-between">
                     <div className="max-w-[70%]">
-                      <p className="text-sm text-zinc-200 truncate">
+                      <p className="text-sm text-gray-800 dark:text-zinc-200 truncate">
                         {answer.question?.question_text || `Question ${i + 1}`}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">

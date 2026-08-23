@@ -64,7 +64,7 @@ export default function CodePractice() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Code Practice</h1>
           <p className="mt-1 text-sm text-gray-700 dark:text-zinc-300">
-            Solve problems or use the free terminal to run any Python code.
+            Solve problems or use the free terminal to run Python code.
           </p>
         </div>
       </div>
@@ -172,7 +172,7 @@ export default function CodePractice() {
       {tab === 'terminal' && (
         <div className="space-y-4">
           <p className="text-sm text-gray-700 dark:text-zinc-300">
-            Free-form Python execution. Write any code, provide stdin input, and run.
+            Write Python code, provide input, and run it.
           </p>
 
           <div className="grid lg:grid-cols-3 gap-4">

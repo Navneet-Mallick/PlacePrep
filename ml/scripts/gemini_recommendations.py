@@ -29,15 +29,13 @@ def _load_env():
 # Load env on import and allow reloading when the helper is called
 _load_env()
 
-# Try gemini models in order of preference
+# Try gemini models in order of preference (confirmed working names)
 GEMINI_MODELS = [
     "gemini-2.5-flash",
-    "gemini-flash-latest",
+    "gemini-2.0-flash",
+    "gemini-1.5-flash",
+    "gemini-1.5-pro",
     "gemini-2.5-pro",
-    "gemini-pro-latest",
-    "gemini-2.5-flash-lite",
-    "gemini-3-flash-preview",
-    "gemini-3.1-flash-preview",
 ]
 # Also try the full resource name format if short name is not accepted
 GEMINI_MODELS = GEMINI_MODELS + [f"models/{model}" for model in GEMINI_MODELS]
@@ -57,6 +55,13 @@ def _get_client():
     if api_key.startswith("your_"):
         raise ValueError("GEMINI_API_KEY contains placeholder value. Get a real key from https://aistudio.google.com/apikey")
     
+    if not api_key.startswith("AIza"):
+        raise ValueError(
+            f"GEMINI_API_KEY looks invalid (starts with '{api_key[:4]}...'). "
+            "Valid Gemini API keys start with 'AIza'. "
+            "Get one from https://aistudio.google.com/apikey"
+        )
+    
     try:
         client = genai.Client(api_key=api_key)
         return client
@@ -75,36 +80,41 @@ def _parse_json_response(text: str) -> dict:
 
 def _call_gemini(client, prompt: str) -> str:
     """Call Gemini API with retry logic and model fallback"""
+    import sys
     last_error = None
 
     for model in GEMINI_MODELS:
-        for attempt in range(3):  # 3 attempts per model
-            try:
-                response = client.models.generate_content(
-                    model=model,
-                    contents=prompt
-                )
-                return response.text
-            except Exception as exc:
-                last_error = exc
-                message = str(exc)
-                
-                # Rate limit - retry with backoff
-                if "429" in message or "RESOURCE_EXHAUSTED" in message:
-                    wait_time = min(2 ** attempt, 32)  # Exponential backoff, max 32s
-                    print(f"Rate limited on {model}, waiting {wait_time}s before retry...", 
-                          file=__import__('sys').stderr)
-                    time.sleep(wait_time)
-                    continue
-                
-                # API key invalid - don't retry
-                if "400" in message and "INVALID_ARGUMENT" in message and "API key" in message:
-                    raise RuntimeError(f"Invalid API key: {message}")
-                
-                # Other errors - try next model
-                print(f"Model {model} failed: {type(exc).__name__}", 
-                      file=__import__('sys').stderr)
-                break
+        try:
+            print(f"[Gemini] Trying model: {model}", file=sys.stderr)
+            response = client.models.generate_content(
+                model=model,
+                contents=prompt
+            )
+            print(f"[Gemini] Success with model: {model}", file=sys.stderr)
+            return response.text
+        except Exception as exc:
+            last_error = exc
+            message = str(exc)
+            
+            # Rate limit - retry with backoff on same model
+            if "429" in message or "RESOURCE_EXHAUSTED" in message:
+                print(f"[Gemini] Rate limited on {model}, trying next...", file=sys.stderr)
+                time.sleep(2)
+                continue
+            
+            # API key invalid - don't retry at all
+            if "API key" in message or "INVALID_ARGUMENT" in message:
+                print(f"[Gemini] API key error: {message}", file=sys.stderr)
+                raise RuntimeError(f"Invalid API key: {message}")
+            
+            # Model not found - try next
+            if "404" in message or "not found" in message.lower():
+                print(f"[Gemini] Model {model} not found, trying next...", file=sys.stderr)
+                continue
+            
+            # Other errors - try next model
+            print(f"[Gemini] Model {model} failed: {type(exc).__name__}: {message[:100]}", file=sys.stderr)
+            continue
 
     raise last_error or RuntimeError("All Gemini models exhausted")
 

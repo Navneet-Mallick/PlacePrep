@@ -62,7 +62,19 @@ export default function AptitudeTest() {
 
     const onVisibilityChange = () => {
       if (document.hidden) {
-        setTabSwitches(prev => prev + 1)
+        setTabSwitches(prev => {
+          const newCount = prev + 1
+          // Alert the user on every tab switch
+          setTimeout(() => {
+            window.alert(
+              `⚠️ TAB SWITCH DETECTED (#${newCount})\n\n` +
+              `You left the test tab. This has been recorded.\n` +
+              `Tab switches: ${newCount}/${LIMITS.tabSwitches}\n\n` +
+              `${LIMITS.tabSwitches - newCount} more will disqualify you.`
+            )
+          }, 100)
+          return newCount
+        })
       }
     }
     const onBeforeUnload = (e) => {
@@ -140,9 +152,22 @@ export default function AptitudeTest() {
           }]
         })
 
+        // Alert for violations
+        window.alert(
+          `🚨 PROCTORING VIOLATION\n\n${data.message}\n\n` +
+          `Severity: ${data.severity}\n` +
+          `Please follow the rules to avoid disqualification.`
+        )
+
         if (Notification.permission === 'granted') {
           new Notification('Proctoring Alert', { body: data.message, tag: 'proctoring' })
         }
+      } else if (data.status === 'warning') {
+        // Show a non-blocking alert for warnings too
+        window.alert(
+          `⚠️ PROCTORING WARNING\n\n${data.message}\n\n` +
+          `This is a warning. Continued violations will be recorded.`
+        )
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
@@ -290,8 +315,7 @@ export default function AptitudeTest() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Aptitude Assessment</h1>
           <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
-            Timed MCQ tests across quantitative, logical, and technical domains. 
-            Camera proctoring monitors integrity. ML predicts your aptitude level after submission.
+            Select a section to begin. Camera proctoring is active during the test.
           </p>
         </div>
 

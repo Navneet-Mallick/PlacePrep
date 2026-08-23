@@ -4,22 +4,22 @@ import { useAuth } from '../context/AuthContext'
 const features = [
   {
     title: 'Resume Analysis',
-    desc: 'Upload your resume and get instant feedback — role prediction, skill extraction, and improvement suggestions.',
+    desc: 'Upload your resume and get a detailed breakdown of your skills, experience, and best-fit role.',
     to: '/resume',
   },
   {
     title: 'Aptitude Tests',
-    desc: 'Timed MCQs across quantitative, logical, and technical domains with ML-based scoring.',
+    desc: 'Timed MCQs across quantitative, logical, and technical sections with proctoring.',
     to: '/aptitude',
   },
   {
     title: 'Technical Assessment',
-    desc: 'Answer subjective questions and get scored on how well you explain core CS concepts.',
+    desc: 'Answer subjective questions from core CS domains and see how you score.',
     to: '/technical',
   },
   {
     title: 'Code Practice',
-    desc: 'Solve coding problems, run your code instantly, and compare output against expected results.',
+    desc: 'Solve coding problems or run any Python code in the built-in terminal.',
     to: '/practice',
   },
 ]
@@ -39,7 +39,7 @@ export default function Home() {
 
           <p className="mt-5 text-base sm:text-lg text-gray-700 dark:text-zinc-300 leading-relaxed">
             One platform for resume analysis, aptitude tests, technical assessments,
-            and coding practice — with real-time proctoring and AI-powered evaluation.
+            and coding practice — with proctored evaluations and personalized feedback.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">

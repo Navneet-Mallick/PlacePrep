@@ -1,0 +1,6 @@
+Resume Analyser Module
+Stratified splitting - 25% test size 
+Used TF-IDF + Logistic Regression + NER
+
+Aptitude Classifier Model
+Used Random Forest 

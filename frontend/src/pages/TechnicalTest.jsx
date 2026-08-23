@@ -53,7 +53,20 @@ export default function TechnicalTest() {
   useEffect(() => {
     if (!isTestActive) return
     const onVisibilityChange = () => {
-      if (document.hidden) setTabSwitches(prev => prev + 1)
+      if (document.hidden) {
+        setTabSwitches(prev => {
+          const newCount = prev + 1
+          setTimeout(() => {
+            window.alert(
+              `⚠️ TAB SWITCH DETECTED (#${newCount})\n\n` +
+              `You left the test tab. This has been recorded.\n` +
+              `Tab switches: ${newCount}/${LIMITS.tabSwitches}\n\n` +
+              `${LIMITS.tabSwitches - newCount} more will disqualify you.`
+            )
+          }, 100)
+          return newCount
+        })
+      }
     }
     document.addEventListener('visibilitychange', onVisibilityChange)
     return () => document.removeEventListener('visibilitychange', onVisibilityChange)
@@ -141,6 +154,17 @@ export default function TechnicalTest() {
             severity: data.severity,
           }]
         })
+
+        window.alert(
+          `🚨 PROCTORING VIOLATION\n\n${data.message}\n\n` +
+          `Severity: ${data.severity}\n` +
+          `Please follow the rules to avoid disqualification.`
+        )
+      } else if (data.status === 'warning') {
+        window.alert(
+          `⚠️ PROCTORING WARNING\n\n${data.message}\n\n` +
+          `This is a warning. Continued violations will be recorded.`
+        )
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
@@ -236,8 +260,13 @@ export default function TechnicalTest() {
             }`}>{avgScore}%</p>
           </div>
           <div className="card">
-            <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Answered</p>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white">{evaluated.length}/{questions.length}</p>
+            <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Evaluated</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{evaluated.length}<span className="text-base text-gray-500 dark:text-zinc-500">/{questions.length}</span></p>
+            {questions.length - evaluated.length > 0 && (
+              <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                {questions.length - evaluated.length} unanswered
+              </p>
+            )}
           </div>
           <div className="card">
             <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Tab Switches</p>
@@ -247,6 +276,13 @@ export default function TechnicalTest() {
             <p className="text-sm text-gray-600 dark:text-zinc-400 mb-1">Violations</p>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">{proctoringViolations.length}</p>
           </div>
+        </div>
+
+        {/* Scoring explanation */}
+        <div className="card text-sm text-gray-700 dark:text-zinc-300 space-y-1">
+          <p><strong>How scoring works:</strong></p>
+          <p>Each answer is scored 0–100 based on how well it covers the key concepts from the reference answer.</p>
+          <p>Categories: Excellent (≥75), Good (≥55), Fair (≥35), Weak (&lt;35)</p>
         </div>
 
         {/* Per-question results */}
@@ -296,8 +332,7 @@ export default function TechnicalTest() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Technical Assessment</h1>
           <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
-            Answer subjective questions from core CS domains. Your responses are evaluated 
-            using TF-IDF cosine similarity with synonym-aware semantic matching.
+            Select a category and answer subjective questions. Camera proctoring is active.
           </p>
         </div>
 

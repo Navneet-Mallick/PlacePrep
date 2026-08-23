@@ -20,6 +20,7 @@ RESUME_DATA_PATH = PROJECT_ROOT / "Datasets" / "Synthetic Nepali Resume Dataset"
 
 EMAIL_PATTERN = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
 PHONE_PATTERN = re.compile(r"(\+?\d[\d\s\-().]{7,}\d)")
+YEAR_RANGE_PATTERN = re.compile(r"^\d{4}\s*[-–]\s*\d{4}$")
 
 EDUCATION_KEYWORDS = (
     "b.tech", "b.e.", "bsc", "b.sc", "m.tech", "mtech", "msc", "mba",
@@ -60,12 +61,31 @@ def get_nlp():
 
 
 def clean_pdf_text(text: str) -> str:
-    """Fix common PDF extraction artifacts."""
-    # Fix spaces inserted mid-word: "Dev elop er" → "Developer"
-    # Only join when a lowercase follows a lowercase with single space
-    text = re.sub(r'(?<=[a-z]) (?=[a-z]{1,2}\b)', '', text)
-    # Fix "W eb" → "Web" (capital + space + short lowercase)
-    text = re.sub(r'(?<=[A-Z]) (?=[a-z]{1,3}\b)', '', text)
+    """Fix common PDF extraction artifacts — aggressive rejoining."""
+    # Pass 1: Fix single-char fragments: "D e v e l o p e r" → "Developer"
+    # Collapse sequences of single chars separated by spaces
+    text = re.sub(r'\b(\w) (?=\w\b)', r'\1', text)
+    
+    # Pass 2: Fix spaces mid-word: "Dev elop er" → "Developer"
+    # Join when a lowercase is followed by space + short lowercase fragment (1-3 chars)
+    text = re.sub(r'(?<=[a-z]) (?=[a-z]{1,3}\b)', '', text)
+    
+    # Pass 3: Fix "W eb" / "Py thon" (capital + space + lowercase)
+    text = re.sub(r'(?<=[A-Z]) (?=[a-z]{1,4}\b)', '', text)
+    
+    # Pass 4: Fix broken camelCase-style: "Java Script" → "JavaScript"
+    text = re.sub(r'(?<=[a-z]) (?=[A-Z][a-z])', '', text)
+    
+    # Pass 5: Fix "Purw anc hal" type breaks (consonant + space + short fragment)
+    text = re.sub(r'(?<=[bcdfghjklmnpqrstvwxyz]) (?=[a-z]{1,3}\b)', '', text)
+    
+    # Pass 6: Fix "IOE Purw anchal" — don't rejoin acronyms with words
+    # But do rejoin fragments that clearly belong together
+    text = re.sub(r'(?<=[a-z]{2}) (?=[a-z]{2,4}\b)', '', text)
+    
+    # Clean up multiple spaces
+    text = re.sub(r'  +', ' ', text)
+    
     return text
 
 
@@ -117,6 +137,11 @@ def extract_education(text: str) -> list:
         # Skip section headers
         if lowered in ('education', 'academic background', 'qualification'):
             continue
+        # Skip objective/seeking/summary lines
+        if any(kw in lowered for kw in ('seeking', 'looking for', 'objective',
+                                         'aspiring', 'passionate', 'motivated',
+                                         'career goal', 'summary')):
+            continue
         if any(kw in lowered for kw in EDUCATION_KEYWORDS):
             # Skip very short lines (just the keyword alone)
             if len(line) > 10:
@@ -149,30 +174,105 @@ def extract_certifications(text: str) -> list:
 
 
 def extract_experience(text: str) -> list:
-    """Extract work experience entries."""
+    """Extract work experience entries — looks for job titles, company names, and date ranges."""
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     role_pattern = re.compile(
         r'(developer|engineer|intern|analyst|designer|manager|lead|consultant|'
-        r'trainee|associate|specialist|coordinator|supervisor|freelanc)',
+        r'trainee|associate|specialist|coordinator|supervisor|freelanc|'
+        r'administrator|technician|officer|executive|scientist|researcher)',
+        re.IGNORECASE
+    )
+    company_pattern = re.compile(
+        r'(at|@|,)\s+[A-Z][a-zA-Z\s]+',
         re.IGNORECASE
     )
     year_pattern = re.compile(r'(20\d{2}|19\d{2})')
+    date_range_pattern = re.compile(r'(20\d{2}|19\d{2})\s*[-–—]\s*(20\d{2}|present|current|now)', re.IGNORECASE)
     matches = []
+    
+    # Track if we're in an experience section
+    in_experience_section = False
 
-    for line in lines:
+    for i, line in enumerate(lines):
         lowered = line.lower()
-        # Skip section headers
+        
+        # Detect experience section headers
         if lowered.rstrip(':') in ('experience', 'work experience',
-                                    'professional experience', 'internship'):
+                                    'professional experience', 'internship',
+                                    'internships', 'employment', 'work history'):
+            in_experience_section = True
             continue
-        # Match lines with job-role keywords OR year ranges
+        
+        # Detect other section headers (end of experience section)
+        if lowered.rstrip(':') in ('education', 'academic background', 'qualification',
+                                    'skills', 'certifications', 'projects', 'achievements',
+                                    'awards', 'hobbies', 'interests', 'references',
+                                    'objective', 'summary', 'contact', 'languages'):
+            in_experience_section = False
+            continue
+        
+        # Skip education entries (contains degree keywords)
+        if any(kw in lowered for kw in ('bachelor', 'master', 'b.tech', 'b.e.', 'mba',
+                                         'bsc', 'msc', 'phd', 'diploma', 'bca', 'pursuing',
+                                         'b.sc', 'm.tech', 'degree')):
+            continue
+        # Skip certification lines
+        if any(kw in lowered for kw in CERTIFICATION_KEYWORDS):
+            continue
+        # Skip objective/seeking lines
+        if any(kw in lowered for kw in ('seeking', 'looking for', 'objective', 'aspiring',
+                                         'passionate about', 'motivated')):
+            continue
+        # Skip action/description lines (start with verbs) unless they contain a role
+        action_verbs = ('developed', 'built', 'created', 'implemented', 'designed',
+                       'deployed', 'integrated', 'managed', 'maintained', 'optimized',
+                       'used', 'worked on', 'responsible for', 'contributed',
+                       'led', 'conducted', 'performed', 'assisted', 'collaborated',
+                       'improved', 'reduced', 'increased', 'automated', 'wrote',
+                       'tested', 'debugged', 'resolved', 'configured', 'monitored')
+        stripped_lower = lowered.lstrip('•·-– ')
+        if any(stripped_lower.startswith(v) for v in action_verbs) and not role_pattern.search(line):
+            continue
+        # Skip very short lines and bullet symbols
+        cleaned_line = line.lstrip('•·-–— ')
+        if len(cleaned_line) < 8:
+            continue
+        
         has_role = role_pattern.search(line)
+        has_date_range = date_range_pattern.search(line)
         has_year = year_pattern.search(line)
-        if has_role and len(line) > 10:
-            matches.append(line[:150])
-        elif has_year and 'present' in lowered:
-            matches.append(line[:150])
-    return matches[:5]
+        has_company = company_pattern.search(line)
+        
+        # Strong match: role keyword + date range
+        if has_role and has_date_range:
+            matches.append(cleaned_line[:150])
+        # Good match: role keyword + company indicator
+        elif has_role and has_company and len(line) > 15:
+            matches.append(cleaned_line[:150])
+        # Context-aware: in experience section with role or date
+        elif in_experience_section:
+            if has_role and len(line) > 12:
+                matches.append(cleaned_line[:150])
+            elif has_date_range and len(line) > 12:
+                matches.append(cleaned_line[:150])
+            elif has_year and 'present' in lowered and has_role:
+                matches.append(cleaned_line[:150])
+        # Standalone match: role keyword but NOT in education context
+        elif has_role and len(line) > 15 and not in_experience_section:
+            # Only if line doesn't look like an education entry
+            if has_year or has_company:
+                matches.append(cleaned_line[:150])
+    
+    # Deduplicate
+    seen = set()
+    unique = []
+    for m in matches:
+        key = m.lower().strip()
+        if key not in seen:
+            seen.add(key)
+            unique.append(m)
+    
+    return unique[:5]
 
 
 def filter_organizations(orgs: list, skills: set) -> list:
@@ -192,8 +292,8 @@ def filter_organizations(orgs: list, skills: set) -> list:
         # Starts with digit
         if org[0].isdigit():
             continue
-        # Contains slash
-        if '/' in org:
+        # Contains slash or year range
+        if '/' in org or re.search(r'\d{4}', org):
             continue
         # Is a skill
         if org.lower() in skills:
@@ -201,12 +301,19 @@ def filter_organizations(orgs: list, skills: set) -> list:
         # Tech extensions
         if any(ext in org for ext in ['.js', '.py', '.ts', '.net', '.io', 'API', 'ML']):
             continue
+        # Contains role keywords (NER false positive on job title lines)
+        role_words = ['intern', 'developer', 'engineer', 'designer', 'manager',
+                      'analyst', 'consultant', 'lead', 'specialist']
+        if any(w in org.lower() for w in role_words):
+            continue
         # Bad keywords
         bad = ['engineering', 'computer', 'science', 'technology', 'position',
                'rank', 'built', 'developed', 'model', 'predict', 'using',
                'based', 'system', 'platform', 'hackathon', 'project',
                'learning', 'certificate', 'stack', 'fastapi', 'mern',
-               'fast', 'men', 'anc']
+               'fast', 'men', 'anc', 'tensor', 'random', 'forest',
+               'opencv', 'sklearn', 'pytorch', 'keras', 'numpy', 'pandas',
+               'scipy', 'matplotlib', 'flask', 'django']
         if any(w in org.lower() for w in bad):
             continue
         filtered.append(org)
@@ -256,40 +363,110 @@ def filter_locations(locations: list) -> list:
     return filtered[:4]
 
 
+def extract_person_ner(doc) -> list:
+    """Extract person name using spaCy NER (PERSON entity)."""
+    persons = []
+    for ent in doc.ents:
+        if ent.label_ == "PERSON":
+            name = ent.text.strip()
+            # Valid name: 2-4 words, reasonable length, no tech terms
+            words = name.split()
+            if 2 <= len(words) <= 4 and 3 < len(name) < 40:
+                # Skip if contains tech keywords
+                tech = {'api', 'css', 'html', 'sql', 'rest', 'mern', 'react',
+                        'node', 'python', 'java', 'c++', 'git', 'linux', 'docker',
+                        'stack', 'intern', 'campus', 'engineer'}
+                if not any(t in name.lower() for t in tech):
+                    persons.append(name)
+    return persons[:2]
+
+
+def extract_dates_ner(doc) -> list:
+    """Extract dates using spaCy NER (DATE entity)."""
+    dates = []
+    for ent in doc.ents:
+        if ent.label_ == "DATE":
+            date_text = ent.text.strip()
+            # Keep meaningful dates (years, month-year combos)
+            if re.search(r'(20\d{2}|19\d{2})', date_text):
+                if len(date_text) < 30:  # Skip overly long date strings
+                    dates.append(date_text)
+    # Deduplicate and sort
+    return sorted(set(dates))[:6]
+
+
 def extract_entities(text: str) -> dict:
-    """Main extraction function. Uses pattern matching primarily, NER as supplement."""
+    """
+    Main extraction function using hybrid approach:
+    - spaCy NER for: PERSON, ORG, GPE, DATE entities
+    - Pattern/Regex for: email, phone, skills, education, experience, certifications
+    
+    The hybrid approach combines statistical NER with deterministic patterns
+    for maximum accuracy on resume documents.
+    """
     # Clean PDF artifacts
     cleaned = clean_pdf_text(text)
 
-    # Pattern-based extraction (RELIABLE for resumes)
+    # =========================================================
+    # STEP 1: Run spaCy NER on cleaned text (statistical NLP)
+    # =========================================================
+    doc = get_nlp()(cleaned)
+    
+    # NER-based extraction
+    ner_persons = extract_person_ner(doc)
+    raw_orgs = sorted({ent.text for ent in doc.ents if ent.label_ == "ORG"})
+    raw_locations = sorted({ent.text for ent in doc.ents if ent.label_ == "GPE"})
+    ner_dates = extract_dates_ner(doc)
+
+    # =========================================================
+    # STEP 2: Pattern-based extraction (deterministic, reliable)
+    # =========================================================
     emails = sorted(set(EMAIL_PATTERN.findall(text)))
-    phones = sorted(set(PHONE_PATTERN.findall(text)))
-    skills = extract_skills(text)
+    phones = sorted(set(
+        p for p in PHONE_PATTERN.findall(text)
+        if not YEAR_RANGE_PATTERN.match(p.strip()) and len(re.sub(r'\D', '', p)) >= 7
+    ))
+    skills = extract_skills(cleaned)
     education = extract_education(text)
     certifications = extract_certifications(text)
     experience = extract_experience(text)
 
-    # For person name: use the FIRST line of the resume (standard resume format)
-    lines = [l.strip() for l in text.splitlines() if l.strip()]
-    person = []
-    if lines:
-        first_line = lines[0].strip()
-        # First line is usually the name if it's short (< 40 chars) and doesn't contain @ or http
-        if len(first_line) < 40 and '@' not in first_line and 'http' not in first_line:
-            # Clean broken spaces in name
-            name = re.sub(r'\s+', ' ', first_line).strip()
-            if len(name.split()) <= 4 and len(name) > 3:
-                person = [name]
+    # =========================================================
+    # STEP 3: Person name — NER first, heuristic fallback
+    # =========================================================
+    person = ner_persons  # Prefer NER-detected names
+    
+    if not person:
+        # Fallback: use the FIRST non-empty line that looks like a name
+        lines = [l.strip() for l in text.splitlines() if l.strip()]
+        for line in lines[:5]:
+            line = line.strip()
+            if '@' in line or 'http' in line or ':' in line:
+                continue
+            if any(line.lower().startswith(h) for h in ['objective', 'summary', 'profile', 'address', 'contact']):
+                continue
+            if PHONE_PATTERN.search(line):
+                continue
+            words = line.split()
+            if 2 <= len(words) <= 4 and len(line) < 40 and len(line) > 3:
+                if all(w[0].isupper() for w in words if w):
+                    name = re.sub(r'\s+', ' ', line).strip()
+                    person = [name]
+                    break
+        
+        # Last fallback: first line
+        if not person and lines:
+            first_line = lines[0].strip()
+            if len(first_line) < 40 and '@' not in first_line and 'http' not in first_line:
+                name = re.sub(r'\s+', ' ', first_line).strip()
+                if len(name.split()) <= 4 and len(name) > 3:
+                    person = [name]
 
-    # For organizations: only extract from NER if they pass STRICT filtering
-    # Run spaCy only for orgs that look like real company names
-    doc = get_nlp()(cleaned)
-    raw_orgs = sorted({ent.text for ent in doc.ents if ent.label_ == "ORG"})
+    # =========================================================
+    # STEP 4: Filter NER-extracted orgs and locations
+    # =========================================================
     skills_set = set(skills)
     organizations = filter_organizations(raw_orgs, skills_set)
-
-    # For locations: extract from NER but filter aggressively
-    raw_locations = sorted({ent.text for ent in doc.ents if ent.label_ == "GPE"})
     locations = filter_locations(raw_locations)
 
     # Clean null bytes
@@ -302,7 +479,7 @@ def extract_entities(text: str) -> dict:
         "phone": clean(phones[:3]),
         "organizations": clean(organizations),
         "locations": clean(locations),
-        "dates": [],  # Dates are unreliable from broken PDFs, skip
+        "dates": clean(ner_dates),
         "skills": clean(skills),
         "education": clean(education),
         "certifications": clean(certifications),
