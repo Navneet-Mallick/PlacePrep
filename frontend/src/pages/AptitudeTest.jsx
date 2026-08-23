@@ -62,19 +62,7 @@ export default function AptitudeTest() {
 
     const onVisibilityChange = () => {
       if (document.hidden) {
-        setTabSwitches(prev => {
-          const newCount = prev + 1
-          // Alert the user on every tab switch
-          setTimeout(() => {
-            window.alert(
-              `⚠️ TAB SWITCH DETECTED (#${newCount})\n\n` +
-              `You left the test tab. This has been recorded.\n` +
-              `Tab switches: ${newCount}/${LIMITS.tabSwitches}\n\n` +
-              `${LIMITS.tabSwitches - newCount} more will disqualify you.`
-            )
-          }, 100)
-          return newCount
-        })
+        setTabSwitches(prev => prev + 1)
       }
     }
     const onBeforeUnload = (e) => {
@@ -136,12 +124,12 @@ export default function AptitudeTest() {
 
       setProctoringStatus(data)
 
-      // Only log confirmed violations — warnings are transient and not penalised
+      // Only log confirmed violations
       if (data.status === 'violation') {
         setProctoringViolations(prev => {
-          // Collapse repeats of the same violation type within 30s
+          // Collapse repeats of the same violation type within 10s
           const last = prev[prev.length - 1]
-          if (last && last.type === data.violation_type && Date.now() - last.timestamp < 30000) {
+          if (last && last.type === data.violation_type && Date.now() - last.timestamp < 10000) {
             return prev
           }
           return [...prev, {
@@ -151,23 +139,6 @@ export default function AptitudeTest() {
             severity: data.severity,
           }]
         })
-
-        // Alert for violations
-        window.alert(
-          `🚨 PROCTORING VIOLATION\n\n${data.message}\n\n` +
-          `Severity: ${data.severity}\n` +
-          `Please follow the rules to avoid disqualification.`
-        )
-
-        if (Notification.permission === 'granted') {
-          new Notification('Proctoring Alert', { body: data.message, tag: 'proctoring' })
-        }
-      } else if (data.status === 'warning') {
-        // Show a non-blocking alert for warnings too
-        window.alert(
-          `⚠️ PROCTORING WARNING\n\n${data.message}\n\n` +
-          `This is a warning. Continued violations will be recorded.`
-        )
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
@@ -488,7 +459,7 @@ export default function AptitudeTest() {
       </div>
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* Proctoring bar */}
+      {/* Proctoring bar — shows when camera is active */}
       {cameraEnabled && (
         <div className={`flex items-center justify-between px-4 py-2.5 rounded-lg border text-sm ${
           isViolation
@@ -498,10 +469,10 @@ export default function AptitudeTest() {
           <div className="flex items-center gap-2.5">
             <span className={`w-2 h-2 rounded-full ${isViolation ? 'bg-red-500' : 'bg-emerald-500'} animate-pulse`} />
             <span className={isViolation ? 'text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-zinc-300'}>
-              {proctoringStatus?.message || 'Camera monitoring active'}
+              {proctoringStatus?.message || 'Monitoring active'}
             </span>
           </div>
-          <span className={`text-sm ${nearLimit ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-zinc-300'}`}>
+          <span className={`text-sm font-medium ${nearLimit ? 'text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-zinc-300'}`}>
             Tab switches {tabSwitches}/{LIMITS.tabSwitches} · Violations {proctoringViolations.length}/{LIMITS.totalViolations}
           </span>
         </div>

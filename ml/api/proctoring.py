@@ -24,7 +24,7 @@ PROTOTXT = MODEL_DIR / "deploy.prototxt"
 CAFFEMODEL = MODEL_DIR / "face_detector.caffemodel"
 
 CONFIDENCE_THRESHOLD = 0.5     # minimum detection confidence (0-1)
-NO_FACE_GRACE = 3              # frames before no-face becomes a violation
+NO_FACE_GRACE = 2              # frames before no-face becomes a violation
 MULTI_FACE_GRACE = 1           # frames before multi-face becomes a violation
 CENTER_LIMIT = 0.55            # how far off-center (0=center, 1=edge)
 LOOK_AWAY_GRACE = 3            # frames off-center before warning

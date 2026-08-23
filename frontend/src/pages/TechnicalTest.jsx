@@ -53,20 +53,7 @@ export default function TechnicalTest() {
   useEffect(() => {
     if (!isTestActive) return
     const onVisibilityChange = () => {
-      if (document.hidden) {
-        setTabSwitches(prev => {
-          const newCount = prev + 1
-          setTimeout(() => {
-            window.alert(
-              `⚠️ TAB SWITCH DETECTED (#${newCount})\n\n` +
-              `You left the test tab. This has been recorded.\n` +
-              `Tab switches: ${newCount}/${LIMITS.tabSwitches}\n\n` +
-              `${LIMITS.tabSwitches - newCount} more will disqualify you.`
-            )
-          }, 100)
-          return newCount
-        })
-      }
+      if (document.hidden) setTabSwitches(prev => prev + 1)
     }
     document.addEventListener('visibilitychange', onVisibilityChange)
     return () => document.removeEventListener('visibilitychange', onVisibilityChange)
@@ -144,7 +131,7 @@ export default function TechnicalTest() {
       if (data.status === 'violation') {
         setProctoringViolations(prev => {
           const last = prev[prev.length - 1]
-          if (last && last.type === data.violation_type && Date.now() - last.timestamp < 30000) {
+          if (last && last.type === data.violation_type && Date.now() - last.timestamp < 10000) {
             return prev
           }
           return [...prev, {
@@ -154,17 +141,6 @@ export default function TechnicalTest() {
             severity: data.severity,
           }]
         })
-
-        window.alert(
-          `🚨 PROCTORING VIOLATION\n\n${data.message}\n\n` +
-          `Severity: ${data.severity}\n` +
-          `Please follow the rules to avoid disqualification.`
-        )
-      } else if (data.status === 'warning') {
-        window.alert(
-          `⚠️ PROCTORING WARNING\n\n${data.message}\n\n` +
-          `This is a warning. Continued violations will be recorded.`
-        )
       }
     } catch (err) {
       console.error('Proctoring check failed:', err)
