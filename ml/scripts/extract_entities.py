@@ -129,7 +129,7 @@ def extract_skills(text: str) -> list:
 
 
 def extract_education(text: str) -> list:
-    """Extract education entries."""
+    """Extract education entries — degree/institution lines only."""
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     matches = []
     for line in lines:
@@ -137,16 +137,20 @@ def extract_education(text: str) -> list:
         # Skip section headers
         if lowered in ('education', 'academic background', 'qualification'):
             continue
-        # Skip objective/seeking/summary lines
+        # Skip objective/seeking/summary/interest lines
         if any(kw in lowered for kw in ('seeking', 'looking for', 'objective',
                                          'aspiring', 'passionate', 'motivated',
-                                         'career goal', 'summary')):
+                                         'career goal', 'summary', 'interest in',
+                                         'strong interest', 'experience in',
+                                         'working on', 'supervised')):
+            continue
+        # Skip lines that are too long (likely descriptions, not degree names)
+        if len(line) > 100:
             continue
         if any(kw in lowered for kw in EDUCATION_KEYWORDS):
-            # Skip very short lines (just the keyword alone)
             if len(line) > 10:
-                matches.append(line[:150])  # Truncate long lines
-    return matches[:4]
+                matches.append(line[:150])
+    return matches[:3]
 
 
 def extract_certifications(text: str) -> list:
@@ -221,7 +225,14 @@ def extract_experience(text: str) -> list:
             continue
         # Skip objective/seeking lines
         if any(kw in lowered for kw in ('seeking', 'looking for', 'objective', 'aspiring',
-                                         'passionate about', 'motivated')):
+                                         'passionate about', 'motivated', 'strong interest',
+                                         'interest in', 'experience in')):
+            continue
+        # Skip student/summary description lines
+        if 'student' in lowered and ('year' in lowered or 'campus' in lowered or 'interest' in lowered):
+            continue
+        # Skip lines > 90 chars that look like descriptions (not job titles)
+        if len(line) > 90 and not re.search(r'(20\d{2}\s*[-–]\s*(20\d{2}|present))', lowered):
             continue
         # Skip action/description lines (start with verbs) unless they contain a role
         action_verbs = ('developed', 'built', 'created', 'implemented', 'designed',
@@ -229,7 +240,9 @@ def extract_experience(text: str) -> list:
                        'used', 'worked on', 'responsible for', 'contributed',
                        'led', 'conducted', 'performed', 'assisted', 'collaborated',
                        'improved', 'reduced', 'increased', 'automated', 'wrote',
-                       'tested', 'debugged', 'resolved', 'configured', 'monitored')
+                       'tested', 'debugged', 'resolved', 'configured', 'monitored',
+                       'supervised', 'supported', 'coordinated', 'organized',
+                       'handled', 'analyzed', 'researched', 'published')
         stripped_lower = lowered.lstrip('•·-– ')
         if any(stripped_lower.startswith(v) for v in action_verbs) and not role_pattern.search(line):
             continue

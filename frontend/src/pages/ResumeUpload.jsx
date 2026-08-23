@@ -211,39 +211,8 @@ export default function ResumeUpload() {
                 </div>
               )}
 
-              {/* Additional details */}
-              <div className="grid md:grid-cols-3 gap-4 pt-3 border-t border-gray-100 dark:border-zinc-800">
-                {result.entities.dates?.length > 0 && (
-                  <div>
-                    <p className="section-label mb-2">Dates</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {result.entities.dates.map((d, i) => (
-                        <span key={i} className="badge badge-amber">{d}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {result.entities.organizations?.length > 0 && (
-                  <div>
-                    <p className="section-label mb-2">Organizations</p>
-                    <ul className="space-y-1">
-                      {result.entities.organizations.map((item, i) => (
-                        <li key={i} className="text-sm text-gray-800 dark:text-zinc-200">{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {result.entities.locations?.length > 0 && (
-                  <div>
-                    <p className="section-label mb-2">Locations</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {result.entities.locations.map((loc, i) => (
-                        <span key={i} className="badge badge-green">{loc}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              {/* Additional details - only show if reliable */}
+              {/* Organizations/Locations/Dates hidden - unreliable on real PDF text */}
 
               {/* Contact info */}
               {result.entities.email?.length > 0 && (
