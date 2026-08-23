@@ -25,7 +25,9 @@ YEAR_RANGE_PATTERN = re.compile(r"^\d{4}\s*[-–]\s*\d{4}$")
 EDUCATION_KEYWORDS = (
     "b.tech", "b.e.", "bsc", "b.sc", "m.tech", "mtech", "msc", "mba",
     "bca", "diploma", "phd", "computer science", "information technology",
-    "bachelor", "master", "engineering", "degree",
+    "bachelor", "master", "engineering", "degree", "university", "college",
+    "campus", "+2", "higher secondary", "csit", "beit", "mca",
+    "bach elor",  # broken PDF version
 )
 
 CERTIFICATION_KEYWORDS = (
@@ -61,38 +63,59 @@ def get_nlp():
 
 
 def clean_pdf_text(text: str) -> str:
-    """Fix common PDF extraction artifacts — aggressive rejoining."""
-    # Pass 1: Fix single-char fragments: "D e v e l o p e r" → "Developer"
-    # Collapse sequences of single chars separated by spaces
-    text = re.sub(r'\b(\w) (?=\w\b)', r'\1', text)
-    
-    # Pass 2: Fix spaces mid-word: "Dev elop er" → "Developer"
-    # Join when a lowercase is followed by space + short lowercase fragment (1-3 chars)
-    text = re.sub(r'(?<=[a-z]) (?=[a-z]{1,3}\b)', '', text)
-    
-    # Pass 3: Fix "W eb" / "Py thon" (capital + space + lowercase)
-    text = re.sub(r'(?<=[A-Z]) (?=[a-z]{1,4}\b)', '', text)
-    
-    # Pass 4: Fix broken camelCase-style: "Java Script" → "JavaScript"
-    text = re.sub(r'(?<=[a-z]) (?=[A-Z][a-z])', '', text)
-    
-    # Pass 5: Fix "Purw anc hal" type breaks (consonant + space + short fragment)
-    text = re.sub(r'(?<=[bcdfghjklmnpqrstvwxyz]) (?=[a-z]{1,3}\b)', '', text)
-    
-    # Pass 6: Fix "IOE Purw anchal" — don't rejoin acronyms with words
-    # But do rejoin fragments that clearly belong together
-    text = re.sub(r'(?<=[a-z]{2}) (?=[a-z]{2,4}\b)', '', text)
-    
-    # Clean up multiple spaces
+    """Light cleaning of PDF artifacts — only fix the most common patterns."""
+    # Fix "Engine ering" → "Engineering"
+    text = re.sub(r'(\w{3,}) (ering|tion|ment)\b', r'\1\2', text)
+    # Fix "Jav aScript" → "JavaScript"  
+    text = re.sub(r'\b([A-Z][a-z]{1,3}) ([a-z]+[A-Z][a-z]+)\b', r'\1\2', text)
+    # Fix "Pr esent" → "Present"
+    text = re.sub(r'\b([A-Z][a-z]) ([a-z]{3,6})\b', r'\1\2', text)
+    # Clean double spaces
     text = re.sub(r'  +', ' ', text)
-    
     return text
+
+
+def clean_display_text(text: str) -> str:
+    """Aggressively clean text for final display to user."""
+    # Fix suffix breaks: "Engine ering" → "Engineering"
+    text = re.sub(r'(\w{2,}) (ering|tion|ment|ness|ible|able|ance|ence|ling|ning|ring|ting|sing)\b', r'\1\2', text)
+    # Fix "Pr esent" / "Pr ofessional"
+    text = re.sub(r'\b([A-Z][a-z]{1,2}) ([a-z]{3,})\b',
+                  lambda m: m.group(1) + m.group(2) if not m.group(2)[0].isupper() else m.group(0), text)
+    # Fix "Dev elop er" style triple fragments
+    text = re.sub(r'\b(\w{2,4}) (\w{2,5}) (er|or|ed|ing|ly)\b', r'\1\2\3', text)
+    # Fix remaining "Develop er" / "Design er" (word + space + short suffix)
+    text = re.sub(r'(\w{4,}) (er|or|ed|al|ly|ing)\b', r'\1\2', text)
+    # Fix "Jav aScript"
+    text = re.sub(r'\b([A-Z][a-z]{1,3}) ([a-z]+[A-Z][a-z]+)\b', r'\1\2', text)
+    # Clean bullet point artifacts
+    text = re.sub(r'^[\u2022\u2023\u25e6\u2043\u2219•·]\s*', '', text)
+    # Clean double spaces
+    text = re.sub(r'  +', ' ', text)
+    return text.strip()
 
 
 def extract_skills(text: str) -> list:
     """Extract technical skills with word-boundary matching."""
     lowered = text.lower()
     lexicon = load_skill_lexicon()
+    
+    # Supplement with common skills that may not be in the dataset
+    EXTRA_SKILLS = {
+        'sql', 'pandas', 'numpy', 'matplotlib', 'tensorflow', 'pytorch',
+        'keras', 'scikit-learn', 'opencv', 'flask', 'fastapi', 'spring boot',
+        'angular', 'vue.js', 'svelte', 'next.js', 'nuxt.js', 'tailwind',
+        'bootstrap', 'sass', 'less', 'graphql', 'rest api', 'rest apis',
+        'microservices', 'ci/cd', 'jenkins', 'github actions', 'terraform',
+        'ansible', 'linux', 'nginx', 'apache', 'rabbitmq', 'kafka',
+        'elasticsearch', 'data analysis', 'machine learning', 'deep learning',
+        'nlp', 'computer vision', 'data science', 'power bi', 'tableau',
+        'excel', 'jupyter', 'postman', 'figma', 'photoshop', 'illustrator',
+        'blender', 'unity', 'unreal', 'c#', 'rust', 'scala', 'perl',
+        'bash', 'powershell', 'matlab', 'r', 'hadoop', 'spark', 'airflow',
+        'dbt', 'snowflake', 'bigquery', 'supabase', 'firebase',
+    }
+    lexicon = lexicon | EXTRA_SKILLS
     found = set()
 
     for skill in lexicon:
@@ -147,6 +170,13 @@ def extract_education(text: str) -> list:
         # Skip lines that are too long (likely descriptions, not degree names)
         if len(line) > 100:
             continue
+        # Skip lines with many commas (skill listings like "Python, Java, SQL")
+        if line.count(',') >= 3:
+            continue
+        # Skip lines that look like skill categories ("Engineering System Design, ...")
+        if any(cat in lowered for cat in ('system design', 'performance', 'observability',
+                                           'security', 'testing', 'optimization')):
+            continue
         if any(kw in lowered for kw in EDUCATION_KEYWORDS):
             if len(line) > 10:
                 matches.append(line[:150])
@@ -164,7 +194,10 @@ def extract_certifications(text: str) -> list:
             continue
         # Skip section headers
         if lowered.rstrip(':') in ('certifications', 'training/certifications',
-                                    'certificates', 'training', 'courses'):
+                                    'certificates', 'training', 'courses',
+                                    'certifications & activities',
+                                    'certificates & activities',
+                                    'certifications and activities'):
             continue
         # Skip project descriptions (contain action verbs)
         if any(v in lowered for v in ['developed', 'built', 'created', 'implemented',
@@ -203,7 +236,9 @@ def extract_experience(text: str) -> list:
         # Detect experience section headers
         if lowered.rstrip(':') in ('experience', 'work experience',
                                     'professional experience', 'internship',
-                                    'internships', 'employment', 'work history'):
+                                    'internships', 'employment', 'work history',
+                                    'experience / training', 'professional experience',
+                                    'training', 'experience/training'):
             in_experience_section = True
             continue
         
@@ -218,10 +253,18 @@ def extract_experience(text: str) -> list:
         # Skip education entries (contains degree keywords)
         if any(kw in lowered for kw in ('bachelor', 'master', 'b.tech', 'b.e.', 'mba',
                                          'bsc', 'msc', 'phd', 'diploma', 'bca', 'pursuing',
-                                         'b.sc', 'm.tech', 'degree')):
+                                         'b.sc', 'm.tech', 'degree', 'university', 'college',
+                                         'campus', '+2', 'higher secondary', 'csit')):
+            continue
+        # Also skip "BE " or "BSc " at start of line (common education format)
+        if re.match(r'^(BE|BSc|MSc|BCA|MCA|MBA|BTech|MTech)\s', line):
             continue
         # Skip certification lines
         if any(kw in lowered for kw in CERTIFICATION_KEYWORDS):
+            continue
+        # Skip lines mentioning cloud certifications (often misdetected as experience)
+        if any(kw in lowered for kw in ('aws certified', 'google cloud', 'azure fundamentals',
+                                         'cka certified', 'mongodb certified', 'microsoft certified')):
             continue
         # Skip objective/seeking lines
         if any(kw in lowered for kw in ('seeking', 'looking for', 'objective', 'aspiring',
@@ -242,13 +285,20 @@ def extract_experience(text: str) -> list:
                        'improved', 'reduced', 'increased', 'automated', 'wrote',
                        'tested', 'debugged', 'resolved', 'configured', 'monitored',
                        'supervised', 'supported', 'coordinated', 'organized',
-                       'handled', 'analyzed', 'researched', 'published')
+                       'handled', 'analyzed', 'researched', 'published',
+                       'worked', 'served', 'participated', 'mentored', 'owned',
+                       'introduced', 'architected', 'partnered', 'delivered')
         stripped_lower = lowered.lstrip('•·-– ')
-        if any(stripped_lower.startswith(v) for v in action_verbs) and not role_pattern.search(line):
-            continue
+        if any(stripped_lower.startswith(v) for v in action_verbs):
+            # Only keep if it STARTS with a role title (not just contains one somewhere)
+            if not re.match(r'^(senior |junior |lead )?(software |web |backend |frontend |full stack |mobile |data |devops |qa )?(developer|engineer|intern|analyst|designer|manager|lead|consultant)', stripped_lower):
+                continue
         # Skip very short lines and bullet symbols
         cleaned_line = line.lstrip('•·-–— ')
         if len(cleaned_line) < 8:
+            continue
+        # Skip skill listing lines (many commas)
+        if line.count(',') >= 3:
             continue
         
         has_role = role_pattern.search(line)
@@ -381,14 +431,16 @@ def extract_person_ner(doc) -> list:
     persons = []
     for ent in doc.ents:
         if ent.label_ == "PERSON":
-            name = ent.text.strip()
+            # Clean: remove newlines and extra whitespace
+            name = ' '.join(ent.text.split()).strip()
             # Valid name: 2-4 words, reasonable length, no tech terms
             words = name.split()
             if 2 <= len(words) <= 4 and 3 < len(name) < 40:
                 # Skip if contains tech keywords
                 tech = {'api', 'css', 'html', 'sql', 'rest', 'mern', 'react',
                         'node', 'python', 'java', 'c++', 'git', 'linux', 'docker',
-                        'stack', 'intern', 'campus', 'engineer'}
+                        'stack', 'intern', 'campus', 'engineer', 'senior', 'junior',
+                        'software', 'developer', 'manager', 'lead', 'architect'}
                 if not any(t in name.lower() for t in tech):
                     persons.append(name)
     return persons[:2]
@@ -447,7 +499,19 @@ def extract_entities(text: str) -> dict:
     # =========================================================
     # STEP 3: Person name — NER first, heuristic fallback
     # =========================================================
+    # Tech terms that should NEVER be detected as a name
+    tech_not_names = {'javascript', 'typescript', 'python', 'react', 'angular', 'vue',
+                      'node', 'django', 'flask', 'fastapi', 'express', 'mongodb',
+                      'postgresql', 'mysql', 'docker', 'kubernetes', 'linux', 'git',
+                      'html', 'css', 'aws', 'azure', 'redis', 'graphql', 'rest',
+                      'java', 'kotlin', 'swift', 'flutter', 'tensorflow', 'pytorch',
+                      'jupyter', 'jupyternotebook', 'notebook', 'postman', 'vscode',
+                      'numpy', 'pandas', 'matplotlib', 'vite', 'tailwind'}
+    
     person = ner_persons  # Prefer NER-detected names
+    
+    # Filter out tech terms from NER results
+    person = [p for p in person if p.lower().replace(' ', '') not in tech_not_names]
     
     if not person:
         # Fallback: use the FIRST non-empty line that looks like a name
@@ -460,6 +524,10 @@ def extract_entities(text: str) -> dict:
                 continue
             if PHONE_PATTERN.search(line):
                 continue
+            # Skip if it looks like a tech term (even with broken spaces)
+            joined = line.lower().replace(' ', '')
+            if joined in tech_not_names:
+                continue
             words = line.split()
             if 2 <= len(words) <= 4 and len(line) < 40 and len(line) > 3:
                 if all(w[0].isupper() for w in words if w):
@@ -467,13 +535,18 @@ def extract_entities(text: str) -> dict:
                     person = [name]
                     break
         
-        # Last fallback: first line
+        # Last fallback: first line if short enough and not a tech term
         if not person and lines:
             first_line = lines[0].strip()
-            if len(first_line) < 40 and '@' not in first_line and 'http' not in first_line:
+            joined_first = first_line.lower().replace(' ', '')
+            if (len(first_line) < 40 and '@' not in first_line and 
+                'http' not in first_line and joined_first not in tech_not_names):
                 name = re.sub(r'\s+', ' ', first_line).strip()
                 if len(name.split()) <= 4 and len(name) > 3:
-                    person = [name]
+                    # Final check: must have at least 2 words that look like names
+                    words = name.split()
+                    if len(words) >= 2 and all(w[0].isupper() and w.isalpha() for w in words):
+                        person = [name]
 
     # =========================================================
     # STEP 4: Filter NER-extracted orgs and locations
@@ -482,9 +555,18 @@ def extract_entities(text: str) -> dict:
     organizations = filter_organizations(raw_orgs, skills_set)
     locations = filter_locations(raw_locations)
 
-    # Clean null bytes
+    # Clean null bytes and fix remaining broken words in output
     def clean(items):
-        return [str(item).replace('\x00', '').strip() for item in items if item and str(item).strip()]
+        cleaned = []
+        for item in items:
+            if not item or not str(item).strip():
+                continue
+            s = str(item).replace('\x00', '').strip()
+            # Apply display cleaning to fix broken words in output
+            s = clean_display_text(s)
+            if s:
+                cleaned.append(s)
+        return cleaned
 
     return {
         "person": clean(person),

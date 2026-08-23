@@ -55,13 +55,6 @@ def _get_client():
     if api_key.startswith("your_"):
         raise ValueError("GEMINI_API_KEY contains placeholder value. Get a real key from https://aistudio.google.com/apikey")
     
-    if not api_key.startswith("AIza"):
-        raise ValueError(
-            f"GEMINI_API_KEY looks invalid (starts with '{api_key[:4]}...'). "
-            "Valid Gemini API keys start with 'AIza'. "
-            "Get one from https://aistudio.google.com/apikey"
-        )
-    
     try:
         client = genai.Client(api_key=api_key)
         return client

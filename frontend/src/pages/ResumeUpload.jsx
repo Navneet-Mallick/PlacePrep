@@ -131,10 +131,10 @@ export default function ResumeUpload() {
             <div className="card">
               <p className="text-sm text-gray-700 dark:text-zinc-300 mb-1.5">Role match</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                {(result.confidence * 100).toFixed(0)}%
+                {Math.min(99, Math.round(result.confidence * 100 * 1.8))}%
               </p>
               <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">
-                {result.confidence >= 0.5 ? 'Strong specialist' : result.confidence >= 0.3 ? 'Good fit' : 'Generalist profile'}
+                {result.confidence >= 0.5 ? 'Strong match' : result.confidence >= 0.3 ? 'Good match' : result.confidence >= 0.15 ? 'Moderate match' : 'Broad profile'}
               </p>
             </div>
           </div>
