@@ -23,7 +23,7 @@ MODEL_DIR = Path(__file__).resolve().parent.parent / "models"
 PROTOTXT = MODEL_DIR / "deploy.prototxt"
 CAFFEMODEL = MODEL_DIR / "face_detector.caffemodel"
 
-CONFIDENCE_THRESHOLD = 0.5     # minimum detection confidence (0-1)
+CONFIDENCE_THRESHOLD = 0.35     # minimum detection confidence (balanced sensitivity)
 NO_FACE_GRACE = 2              # frames before no-face becomes a violation
 MULTI_FACE_GRACE = 1           # frames before multi-face becomes a violation
 CENTER_LIMIT = 0.55            # how far off-center (0=center, 1=edge)
