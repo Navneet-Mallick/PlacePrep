@@ -95,7 +95,7 @@ export default function TechnicalTest() {
         videoRef.current.srcObject = stream
         streamRef.current = stream
         setCameraEnabled(true)
-        intervalRef.current = setInterval(checkProctoring, 5000)
+        intervalRef.current = setInterval(checkProctoring, 3500)
       }
     } catch (err) {
       console.error('Camera access denied:', err)

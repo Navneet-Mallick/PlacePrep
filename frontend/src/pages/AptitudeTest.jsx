@@ -90,7 +90,7 @@ export default function AptitudeTest() {
         videoRef.current.srcObject = stream
         streamRef.current = stream
         setCameraEnabled(true)
-        intervalRef.current = setInterval(checkProctoring, 5000)
+        intervalRef.current = setInterval(checkProctoring, 3500)
       }
     } catch (err) {
       console.error('Camera access denied:', err)
@@ -317,10 +317,10 @@ export default function AptitudeTest() {
               </div>
             )}
 
-            {!result.is_disqualified && result.is_partial && (
+            {!result.is_disqualified && result.is_partial && result.total_answered < result.total_questions && (
               <div className="p-4 rounded-lg border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/20">
                 <p className="text-sm text-amber-700 dark:text-amber-300">
-                  Early exit — scored on {result.total_answered} of {result.total_questions} questions.
+                  You answered {result.total_answered} out of {result.total_questions} questions. {result.total_questions - result.total_answered} left unanswered.
                 </p>
               </div>
             )}
@@ -369,34 +369,36 @@ export default function AptitudeTest() {
               </div>
             )}
 
-            {/* Proctoring report */}
-            {(proctoringViolations.length > 0 || tabSwitches > 0) && (
-              <div className="card">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Proctoring Report</h2>
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <p className="text-xs text-gray-700 dark:text-zinc-300">Violations</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{proctoringViolations.length}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-700 dark:text-zinc-300">Tab switches</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{tabSwitches}</p>
-                  </div>
+            {/* Proctoring report - always show */}
+            <div className="card">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Proctoring Report</h2>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <p className="text-xs text-gray-700 dark:text-zinc-300">Tab Switches</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{tabSwitches}<span className="text-sm text-gray-400 dark:text-zinc-600">/{LIMITS.tabSwitches}</span></p>
                 </div>
-                {proctoringViolations.length > 0 && (
-                  <div className="max-h-48 overflow-y-auto divide-y divide-gray-100 dark:divide-zinc-800">
-                    {proctoringViolations.map((v, i) => (
-                      <div key={i} className="py-2">
-                        <p className="text-sm text-gray-700 dark:text-zinc-300 capitalize">
-                          {v.type?.replace(/_/g, ' ')}
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-zinc-500">{v.message}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <div>
+                  <p className="text-xs text-gray-700 dark:text-zinc-300">Violations</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{proctoringViolations.length}<span className="text-sm text-gray-400 dark:text-zinc-600">/{LIMITS.totalViolations}</span></p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-700 dark:text-zinc-300">Proctoring Score</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{result.proctoring_score ?? 100}%</p>
+                </div>
               </div>
-            )}
+              {proctoringViolations.length > 0 && (
+                <div className="mt-4 max-h-32 overflow-y-auto divide-y divide-gray-100 dark:divide-zinc-800">
+                  {proctoringViolations.map((v, i) => (
+                    <div key={i} className="py-2">
+                      <p className="text-sm text-gray-700 dark:text-zinc-300 capitalize">
+                        {v.type?.replace(/_/g, ' ')}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-zinc-500">{v.message}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <button onClick={resetTest} className="btn-primary">Take another test</button>
           </div>
