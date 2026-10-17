@@ -6,6 +6,7 @@ Usage:
     python ml/api/server.py
 """
 
+import os
 import sys
 import tempfile
 import subprocess
@@ -19,10 +20,32 @@ SCRIPTS_DIR = Path(__file__).resolve().parent.parent / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from analyze_resume import analyze_file, analyze_text
-from evaluate_technical_answer import score_answer
+# ---------------------------------------------------------------------------
+# Lazy imports — heavy modules (spaCy, OpenCV, scikit-learn) are NOT imported
+# at startup. They are loaded on first request. This keeps idle RAM under
+# ~200 MB so the service survives on Render's free 512 MB tier.
+# ---------------------------------------------------------------------------
+_analyze_file = None
+_analyze_text = None
+_score_answer = None
 
-# Try to import proctoring (optional, requires YOLO/torch)
+
+def _load_resume_analyzer():
+    global _analyze_file, _analyze_text
+    if _analyze_file is None:
+        from analyze_resume import analyze_file, analyze_text
+        _analyze_file = analyze_file
+        _analyze_text = analyze_text
+
+
+def _load_technical_evaluator():
+    global _score_answer
+    if _score_answer is None:
+        from evaluate_technical_answer import score_answer
+        _score_answer = score_answer
+
+
+# Try to import proctoring (optional, requires OpenCV)
 try:
     from proctoring import check_proctoring, reset_proctoring_state
     PROCTORING_AVAILABLE = True
@@ -55,9 +78,18 @@ class ProctoringRequest(BaseModel):
 
 app = FastAPI(title="PlacementPrep ML API")
 
+# CORS: read allowed origins from env var so production URLs work without
+# code changes. Falls back to localhost for local dev.
+_cors_env = os.environ.get("CORS_ALLOWED_ORIGINS", "")
+_cors_origins = (
+    [o.strip() for o in _cors_env.split(",") if o.strip()]
+    if _cors_env
+    else ["http://localhost:5173", "http://localhost:3000"]
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:8001"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -76,6 +108,8 @@ async def analyze_resume(
 ):
     """Analyze a resume from file or text"""
     try:
+        _load_resume_analyzer()  # lazy-load spaCy + classifier on first call
+
         if resume and resume.filename:
             suffix = Path(resume.filename).suffix.lower()
             if suffix not in {".pdf", ".docx"}:
@@ -89,7 +123,7 @@ async def analyze_resume(
                 tmp_path = Path(tmp.name)
 
             try:
-                result = analyze_file(tmp_path)
+                result = _analyze_file(tmp_path)
                 return result
             except Exception as e:
                 print(f"Error analyzing file: {e}")
@@ -103,7 +137,7 @@ async def analyze_resume(
                 tmp_path.unlink(missing_ok=True)
 
         elif text and text.strip():
-            result = analyze_text(text.strip(), use_gemini=True)
+            result = _analyze_text(text.strip(), use_gemini=True)
             return result
         else:
             return {"error": "Please provide either a resume file or text"}
@@ -122,7 +156,8 @@ async def analyze_resume(
 async def evaluate_technical(request: TechnicalEvaluationRequest):
     """Evaluate a technical answer using TF-IDF + cosine similarity"""
     try:
-        result = score_answer(request.user_answer, request.reference_answer)
+        _load_technical_evaluator()  # lazy-load scikit-learn on first call
+        result = _score_answer(request.user_answer, request.reference_answer)
         
         # Generate feedback based on score
         score = result["score"]

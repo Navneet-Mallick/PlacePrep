@@ -1,0 +1,62 @@
+# Render.com deployment configuration
+# Deploy both Django backend and FastAPI ML service as free-tier web services.
+# Database is hosted on Supabase (free) — set the DB_* env vars below in the
+# Render dashboard after creating your Supabase project.
+
+services:
+  # ── Django Backend ─────────────────────────────────────────────────────────
+  - type: web
+    name: placeprep-backend
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: |
+      pip install -r requirements-django.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate --noinput
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    healthCheckPath: /api/health/
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true          # Render auto-generates a random value
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: placeprep-backend.onrender.com   # update after first deploy
+      - key: DB_ENGINE
+        value: postgresql
+      # ── Set these after creating your Supabase project ──────────────────
+      - key: DB_NAME
+        value: postgres
+      - key: DB_USER
+        sync: false                  # fill in Render dashboard
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_HOST
+        sync: false                  # e.g. db.xxxx.supabase.co
+      - key: DB_PORT
+        value: "5432"
+      # ── Set this after the ML service is deployed ────────────────────────
+      - key: ML_API_URL
+        value: https://placeprep-ml.onrender.com/api   # update with real URL
+      # ── Set this after the frontend is deployed on Vercel ────────────────
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://your-app.vercel.app              # update with real URL
+
+  # ── FastAPI ML Service ─────────────────────────────────────────────────────
+  - type: web
+    name: placeprep-ml
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: |
+      pip install -r requirements-ml.txt
+      python -m spacy download en_core_web_sm
+    startCommand: uvicorn ml.api.server:app --host 0.0.0.0 --port $PORT
+    rootDir: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false                  # fill in Render dashboard
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://your-app.vercel.app   # update with real Vercel URL

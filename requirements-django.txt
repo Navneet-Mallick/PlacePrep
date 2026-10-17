@@ -1,0 +1,11 @@
+# Django & REST — no ML/CV dependencies (keeps the Django container lean)
+Django==5.2.17
+djangorestframework==3.18.0
+django-cors-headers==4.9.0
+djangorestframework-simplejwt==5.5.1
+python-decouple==3.8
+python-dotenv==1.2.2
+psycopg2-binary==2.9.12
+gunicorn==23.0.0
+whitenoise==6.9.0
+requests==2.34.2
