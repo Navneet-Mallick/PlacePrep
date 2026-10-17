@@ -3,6 +3,8 @@ import { technicalAPI } from '../services/api'
 import axios from 'axios'
 import { LIMITS, evaluateIntegrity, shouldWarn } from '../utils/proctoringRules'
 
+const ML_API_URL = import.meta.env.VITE_ML_API_URL || 'http://localhost:8001/api'
+
 const CATEGORIES = [
   { id: 'dsa', label: 'Data Structures & Algorithms' },
   { id: 'dbms', label: 'Database Management' },
@@ -88,7 +90,7 @@ export default function TechnicalTest() {
 
   async function startCamera() {
     try {
-      await axios.post('http://localhost:8001/api/proctoring/reset').catch(() => {})
+      await axios.post(`${ML_API_URL}/proctoring/reset`).catch(() => {})
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
       if (videoRef.current) {
@@ -123,7 +125,7 @@ export default function TechnicalTest() {
       canvas.height = video.videoHeight
       canvas.getContext('2d').drawImage(video, 0, 0)
 
-      const { data } = await axios.post('http://localhost:8001/api/proctoring/check', {
+      const { data } = await axios.post(`${ML_API_URL}/proctoring/check`, {
         image: canvas.toDataURL('image/jpeg', 0.8),
       })
       setProctoringStatus(data)

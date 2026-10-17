@@ -85,7 +85,7 @@ export default function AptitudeTest() {
   async function startCamera() {
     try {
       // Clear streak counters from any previous test
-      await axios.post('http://localhost:8001/api/proctoring/reset').catch(() => {})
+      await axios.post(`${ML_API_URL}/proctoring/reset`).catch(() => {})
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
       if (videoRef.current) {
@@ -120,7 +120,7 @@ export default function AptitudeTest() {
       canvas.height = video.videoHeight
       canvas.getContext('2d').drawImage(video, 0, 0)
 
-      const { data } = await axios.post('http://localhost:8001/api/proctoring/check', {
+      const { data } = await axios.post(`${ML_API_URL}/proctoring/check`, {
         image: canvas.toDataURL('image/jpeg', 0.9),
       })
 
