@@ -1,6 +1,6 @@
 .env
 __pycache__/
 *.pyc
-ml/models/*.joblib
+# ml/models/*.joblib  <-- removed so model files get deployed to Render
 node_modules/
 frontend/dist/
