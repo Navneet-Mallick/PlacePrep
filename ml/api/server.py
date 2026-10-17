@@ -17,8 +17,12 @@ from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 SCRIPTS_DIR = Path(__file__).resolve().parent.parent / "scripts"
+API_DIR = Path(__file__).resolve().parent  # ml/api directory
+
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
+if str(API_DIR) not in sys.path:
+    sys.path.insert(0, str(API_DIR))
 
 # ---------------------------------------------------------------------------
 # Lazy imports — heavy modules (spaCy, OpenCV, scikit-learn) are NOT imported
