@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from decouple import config as env_config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,10 +80,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-# Use SQLite for development, PostgreSQL for production
-if env_config('DB_ENGINE', default='sqlite') == 'sqlite':
+# Supports three modes:
+#   1. DATABASE_URL env var (Render PostgreSQL — easiest for production)
+#   2. DB_ENGINE=postgresql with individual vars (Supabase etc.)
+#   3. DB_ENGINE=sqlite (local dev default)
+_database_url = env_config('DATABASE_URL', default='')
+if _database_url:
+    DATABASES = {
+        'default': dj_database_url.parse(_database_url, conn_max_age=600)
+    }
+elif env_config('DB_ENGINE', default='sqlite') == 'sqlite':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

@@ -9,7 +9,7 @@ services:
     name: placeprep-backend
     runtime: python
     plan: free
-    region: oregon
+    region: singapore
     buildCommand: |
       pip install -r requirements-django.txt
       python manage.py collectstatic --noinput
@@ -48,7 +48,7 @@ services:
     name: placeprep-ml
     runtime: python
     plan: free
-    region: oregon
+    region: singapore
     buildCommand: |
       pip install -r requirements-ml.txt
       python -m spacy download en_core_web_sm

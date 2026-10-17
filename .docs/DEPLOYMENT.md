@@ -26,7 +26,7 @@ git push origin main
 ## Step 2 — Set up Supabase (Database)
 
 1. Go to [supabase.com](https://supabase.com) → **New project**
-2. Choose a region close to `oregon` (to match Render)
+2. Choose a region close to `singapore` (Southeast Asia) to match Render
 3. After creation, go to **Settings → Database**
 4. Copy these values — you'll need them for Render:
    - **Host** → `DB_HOST` (looks like `db.xxxx.supabase.co`)
