@@ -3,6 +3,8 @@ import { aptitudeAPI } from '../services/api'
 import axios from 'axios'
 import { LIMITS, evaluateIntegrity, shouldWarn, remainingAllowance } from '../utils/proctoringRules'
 
+const ML_API_URL = import.meta.env.VITE_ML_API_URL || 'http://localhost:8001/api'
+
 const SECTIONS = [
   { id: 'quantitative', label: 'Quantitative', description: 'Math and numerical reasoning' },
   { id: 'logical', label: 'Logical Reasoning', description: 'Patterns and problem solving' },
