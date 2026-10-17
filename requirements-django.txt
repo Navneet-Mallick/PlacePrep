@@ -6,6 +6,7 @@ djangorestframework-simplejwt==5.5.1
 python-decouple==3.8
 python-dotenv==1.2.2
 psycopg2-binary==2.9.12
+dj-database-url==2.3.0
 gunicorn==23.0.0
 whitenoise==6.9.0
 requests==2.34.2
