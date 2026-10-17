@@ -188,6 +188,12 @@ else:
         "http://localhost:3000",
         "http://127.0.0.1:5173",
     ]
+
+# Always allow these regardless of env var
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+    r"^https://.*\.onrender\.com$",
+]
 CORS_ALLOW_CREDENTIALS = True
 
 # ML service
