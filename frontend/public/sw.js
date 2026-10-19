@@ -1,5 +1,11 @@
-const CACHE_NAME = 'placeprep-v1'
-const STATIC_ASSETS = ['/', '/favicon.svg', '/manifest.json']
+const CACHE_NAME = 'placeprep-v2'
+const STATIC_ASSETS = [
+  '/',
+  '/favicon.svg',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -18,12 +24,31 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
-  // Network-first for API calls, cache-first for static assets
-  if (event.request.url.includes('/api/')) {
-    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)))
-  } else {
+  const { request } = event
+
+  // Only handle GET requests — skip POST/PUT/DELETE etc.
+  if (request.method !== 'GET') return
+
+  // Network-first for API calls
+  if (request.url.includes('/api/')) {
     event.respondWith(
-      caches.match(event.request).then((cached) => cached || fetch(event.request))
+      fetch(request).catch(() => caches.match(request))
     )
+    return
   }
+
+  // Cache-first for static assets
+  event.respondWith(
+    caches.match(request).then((cached) => {
+      if (cached) return cached
+      return fetch(request).then((response) => {
+        // Cache valid responses
+        if (response && response.status === 200 && response.type === 'basic') {
+          const clone = response.clone()
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+        }
+        return response
+      })
+    })
+  )
 })
