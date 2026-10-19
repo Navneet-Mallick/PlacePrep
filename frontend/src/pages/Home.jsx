@@ -39,7 +39,7 @@ export default function Home() {
 
           <p className="mt-5 text-base sm:text-lg text-gray-700 dark:text-zinc-300 leading-relaxed">
             One platform for resume analysis, aptitude tests, technical assessments,
-            and coding practice — with proctored evaluations and personalized feedback.
+            and coding practice, with proctored evaluations and personalized feedback.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">

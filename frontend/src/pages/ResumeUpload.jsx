@@ -64,7 +64,7 @@ export default function ResumeUpload() {
               <>
                 <p className="text-sm font-medium text-gray-900 dark:text-white">{file.name}</p>
                 <p className="mt-1 text-xs text-gray-500 dark:text-zinc-500">
-                  {(file.size / 1024).toFixed(0)} KB — click to change
+                  {(file.size / 1024).toFixed(0)} KB, click to change
                 </p>
               </>
             ) : (
@@ -101,7 +101,7 @@ export default function ResumeUpload() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
-            Resume analyzed successfully — results below
+            Resume analyzed successfully. Results below.
           </p>
         </div>
       )}

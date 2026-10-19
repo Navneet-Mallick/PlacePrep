@@ -1,7 +1,7 @@
 {
   "name": "PlacementPrep",
   "short_name": "PlacePrep",
-  "description": "Placement Preparation Platform — Resume Analysis, Aptitude Tests, Technical Assessment, Code Practice",
+  "description": "Placement Preparation Platform for Resume Analysis, Aptitude Tests, Technical Assessment and Code Practice",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

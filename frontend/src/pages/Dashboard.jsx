@@ -147,7 +147,7 @@ export default function Dashboard() {
                     <div key={i} className="py-3 flex items-center justify-between">
                       <div>
                         <p className="text-sm text-gray-800 dark:text-zinc-200">
-                          {attempt.section || 'Mixed'} — {attempt.aptitude_level || 'N/A'}
+                          {attempt.section || 'Mixed'}: {attempt.aptitude_level || 'N/A'}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">
                           {formatDate(attempt.created_at)}

@@ -222,7 +222,7 @@ export default function TechnicalTest() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Assessment Complete</h1>
           <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300">
-            {categoryName} — {evaluated.length} of {questions.length} questions answered
+            {categoryName}: {evaluated.length} of {questions.length} questions answered
           </p>
         </div>
 
@@ -428,7 +428,7 @@ export default function TechnicalTest() {
       {nearLimit && (
         <div className="p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">
-            Final warning — further violations will disqualify your attempt.
+            Final warning. Further violations will disqualify your attempt.
           </p>
         </div>
       )}

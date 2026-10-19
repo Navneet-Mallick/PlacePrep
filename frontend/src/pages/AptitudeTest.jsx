@@ -485,7 +485,7 @@ export default function AptitudeTest() {
       {nearLimit && (
         <div className="p-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">
-            Final warning — further violations will disqualify your attempt.
+            Final warning. Further violations will disqualify your attempt.
           </p>
         </div>
       )}
