@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const ML_API_URL = 'http://localhost:8001/api'
+const ML_API_URL = import.meta.env.VITE_ML_API_URL || 'http://localhost:8001/api'
 
 const diffBadge = (d) =>
   d === 'Easy' ? 'badge-green' : d === 'Medium' ? 'badge-amber' : 'badge-red'
